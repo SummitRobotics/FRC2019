@@ -7,22 +7,43 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  //// CREATING BUTTONS
-  // One type of button is a joystick button which is any button on a
-  //// joystick.
-  // You create one by telling it which joystick it's on and which button
-  // number it is.
-  // Joystick stick = new Joystick(port);
-  // Button button = new JoystickButton(stick, buttonNumber);
+  public XboxController gamepad;
 
-  // There are a few additional built in buttons you can use. Additionally,
-  // by subclassing Button you can create custom triggers and bind those to
-  // commands the same as any other Button.
+  public OI(){
+    gamepad = new XboxController(RobotConstants.Ports.CONTROLLER_PORT);
+  }
+
+  public double getLeftTrigger(){
+    return gamepad.getTriggerAxis(GenericHID.Hand.kLeft);
+  }
+  public double getRightTrigger(){
+    return gamepad.getTriggerAxis(GenericHID.Hand.kRight);
+  }
+  public double getLeftJoystickX(){
+    return gamepad.getX(GenericHID.Hand.kLeft);
+  }
+
+
+  public double getRotationalInput(){
+    return makeCurve(getLeftJoystickX());
+  }
+  public double getForwardInput(){
+    return makeCurve(getRightTrigger() - getLeftTrigger());
+  }
+
+  //TODO - Trig-based power curve?
+  public double makeCurve(double input){
+    return Math.pow(Math.cos((Math.PI/2)*(1-input)), 4);
+  }
+
 
   //// TRIGGERING COMMANDS WITH BUTTONS
   // Once you have a button, it's trivial to bind it to a button in one of
