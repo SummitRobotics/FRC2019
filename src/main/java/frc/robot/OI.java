@@ -1,48 +1,78 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.Shift;
 
-/**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
- */
 public class OI {
-  public XboxController gamepad;
 
-  public OI(){
-    gamepad = new XboxController(RobotConstants.Ports.CONTROLLER_PORT);
-  }
+    double deadzoneDefault = 0.15;
 
-  public double getLeftTrigger(){
-    return gamepad.getTriggerAxis(GenericHID.Hand.kLeft);
-  }
-  public double getRightTrigger(){
-    return gamepad.getTriggerAxis(GenericHID.Hand.kRight);
-  }
-  public double getLeftJoystickX(){
-    return gamepad.getX(GenericHID.Hand.kLeft);
-  }
+    XboxController controller = new XboxController(0);
+
+    Button shifter = new Button(){
+        @Override
+        public boolean get() {
+            return controller.getBButton();
+        }
+    };
+
+    public OI(){
+
+    }
 
 
-  public double getRotationalInput(){
-    return makeCurve(getLeftJoystickX());
-  }
-  public double getForwardInput(){
-    return makeCurve(getRightTrigger() - getLeftTrigger());
-  }
+    //Now here's a bunch of methods for calling all these values.
+    public double getLeftJoystickX() {
+        return controller.getX(GenericHID.Hand.kLeft);
+    }
+    public double getLeftJoystickY() {
+        return controller.getY(GenericHID.Hand.kLeft);
+    }
+    public double getRightJoystickX() {
+        return controller.getX(GenericHID.Hand.kRight);
+    }
+    public double getRightJoystickY() {
+        return controller.getY(GenericHID.Hand.kRight);
+    }
 
-  //TODO - Trig-based power curve?
-  public double makeCurve(double input){
-    return Math.pow(Math.cos((Math.PI/2)*(1-input)), 4);
-  }
+    public boolean isButtonA() {
+        return controller.getAButton();
+    }
+    public boolean isButtonB() {
+        return controller.getBButton();
+    }
+    public boolean isButtonX() {
+        return controller.getXButton();
+    }
+    public boolean isButtonY() {
+        return controller.getYButton();
+    }
+
+    public double getLeftTrigger() {
+        return controller.getTriggerAxis(GenericHID.Hand.kLeft);
+    }
+    public double getRightTrigger() {
+        return controller.getTriggerAxis(GenericHID.Hand.kRight);
+    }
+
+        public double makeCurve(double input){
+            return (Math.pow(2, input) -1);
+        }
+    
+        public double getForwardPower(){
+            return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
+        }
+        public double getRotationalPower(){
+            return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
+        }
+        public void shiftGear(){
+            shifter.whenPressed(new Shift());
+        }
+    
+        
 
 
   //// TRIGGERING COMMANDS WITH BUTTONS
