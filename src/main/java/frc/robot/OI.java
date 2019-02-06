@@ -2,22 +2,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.Shift;
 
 public class OI {
 
     double deadzoneDefault = 0.15;
 
     XboxController controller = new XboxController(0);
-
-    Button shifter = new Button(){
-        @Override
-        public boolean get() {
-            return controller.getBButton();
-        }
-    };
 
     public OI(){
 
@@ -50,6 +43,12 @@ public class OI {
     public boolean isButtonY() {
         return controller.getYButton();
     }
+    public boolean isLeftBumper(){
+        return controller.getBumper(Hand.kLeft);
+    }
+    public boolean isRightBumper(){
+        return controller.getBumper(Hand.kRight);
+    }
 
     public double getLeftTrigger() {
         return controller.getTriggerAxis(GenericHID.Hand.kLeft);
@@ -67,9 +66,6 @@ public class OI {
         }
         public double getRotationalPower(){
             return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
-        }
-        public void shiftGear(){
-            shifter.whenPressed(new Shift());
         }
     
         

@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotConstants;
@@ -17,20 +17,11 @@ public class Drivetrain extends Subsystem{
     public DifferentialDrive robotDrive;
     public CANEncoder leftEncoder, rightEncoder;
 
-    public Solenoid gearShifter; 
-    public Gear gearState;
+    public DoubleSolenoid gearShifter;
+    private boolean gearState;
 
-    public enum Gear {
-		LOW(false),
-		HIGH(true);
-
-		public final boolean value;
-
-		Gear(boolean value){
-			this.value = value;
-		}
-	}
-
+    public DoubleSolenoid PTOshifter;
+    private boolean PTOstate;
     
     public Drivetrain(){
         leftDrive0 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_MAIN, MotorType.kBrushless);
@@ -52,7 +43,8 @@ public class Drivetrain extends Subsystem{
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
         robotDrive.setSafetyEnabled(false);
 
-        gearShifter = new Solenoid(RobotConstants.Ports.DRIVE_SOLENOID);
+        gearShifter = new DoubleSolenoid(RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
+        
     }
 
     //TODO - better sequencing
@@ -68,12 +60,17 @@ public class Drivetrain extends Subsystem{
         return rightEncoder.getPosition();
     }
 
-    public void setGear(Gear gear){
-        gearShifter.set(gear.value);
-        gearState = gear; 
+    public void engageHighGear(){
+        gearShifter.set(Value.kForward);
+        gearState = true;
     }
-    public Gear getGearState(){
-        return gearState;
+    public void engageLowGear(){
+        gearShifter.set(Value.kReverse);
+        gearState = false;
+    }
+
+    public void togglePTO(){
+        /*OWEN DO THE TOGGLE THINGY*/
     }
 
 }
