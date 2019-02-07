@@ -1,8 +1,8 @@
 package frc.robot;
 
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Peg;
+import frc.robot.panelClaw.Claw;
+import frc.robot.drivetrain.Drivetrain;
+import frc.robot.panelClaw.Peg;
 
 public class RobotBuilder{
     public Drivetrain drivetrain;

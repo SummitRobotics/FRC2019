@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.panelClaw;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -21,6 +21,8 @@ public class Claw extends Subsystem {
 
     private ColorSensor panelSensor;
 
+    private static Claw instance;
+
     public Claw() {
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_ARM);
         clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -31,6 +33,13 @@ public class Claw extends Subsystem {
         openClaw();
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
+    }
+
+    public static Claw getIntance(){
+        if(instance == null){
+            instance = new Claw();
+        }
+        return instance;
     }
 
     @Override

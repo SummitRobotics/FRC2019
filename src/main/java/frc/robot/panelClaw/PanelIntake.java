@@ -1,6 +1,7 @@
-package frc.robot.commands;
+package frc.robot.panelClaw;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.CommandInterface;
 
 public class PanelIntake extends Command implements CommandInterface{
 
