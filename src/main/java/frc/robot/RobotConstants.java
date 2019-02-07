@@ -1,6 +1,15 @@
 package frc.robot;
 
 public class RobotConstants {
+  public static final double WHEEL_DIAMETER = 4.0;
+  public static final double TALON_TICKS_PER_ROT = 4096;
+
+  public static double TALON_INCHES_TO_TICKS(double inch){
+    return (inch / (WHEEL_DIAMETER * Math.PI) * TALON_TICKS_PER_ROT);
+  }
+  public static double TALON_TICKS_TO_INCHES(double tick){
+    return (tick / TALON_TICKS_PER_ROT * (WHEEL_DIAMETER * Math.PI));
+  }
   public class Ports{
 
     public static final int CONTROLLER_PORT = 0;
@@ -20,6 +29,12 @@ public class RobotConstants {
     CLAW_SOLENOID_OPEN = 4, 
     CLAW_SOLENOID_CLOSE = 5,
     PANEL_SOLENOID_OPEN = 6,
-    PANEL_SOLENOID_CLOSE = 7;
+    PANEL_SOLENOID_CLOSE = 7,
+
+    CLAW_ARM = 0,
+    INTAKE_ARM = 0,
+    INTAKE_ROLLER = 0,
+
+    PEG_SERVO = 0;
   }
 }
