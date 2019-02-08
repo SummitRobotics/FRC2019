@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.panelClaw.PanelIntake;;
+import frc.robot.panelClaw.ActuateClaw;
+import frc.robot.panelClaw.Claw.ClawState;
 
 public class OI {
 
@@ -20,8 +21,19 @@ public class OI {
         }
     };
 
+    Button shift = new Button(){
+    
+        @Override
+        public boolean get() {
+            return controller.getBumper(Hand.kRight)
+        }
+    };
+
     public OI(){
-        claw.whenActive(new PanelIntake());
+        //TODO - toggle
+        claw.whenActive(new ActuateClaw(ClawState.OPEN));
+        //shift.whileHeld(new)
+
     }
 
 

@@ -1,29 +1,25 @@
 package frc.robot.panelClaw;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.panelClaw.Claw.ClawState;
 
-public class ActuateClaw extends Command{
-
+public class DetectPanel extends Command{
     private Claw claw = Claw.getIntance();
-    private ClawState clawValue;
-    private boolean isComplete = false;
 
-    public ActuateClaw(ClawState clawValue){
+    public DetectPanel(){
         requires(claw);
-        this.clawValue = clawValue;
     }
+
     @Override
     protected void initialize() {
+        super.initialize();
     }
     @Override
     protected void execute() {
-        claw.setClaw(clawValue);
-        isComplete = true;
+        super.execute();
     }
     @Override
     protected boolean isFinished() {
-        return isComplete;
+        return claw.isPanelPresent();
     }
     @Override
     protected void end() {

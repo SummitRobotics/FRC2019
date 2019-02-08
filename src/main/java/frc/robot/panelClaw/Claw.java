@@ -13,8 +13,19 @@ import edu.wpi.first.wpilibj.I2C;
 
 public class Claw extends Subsystem {
 
+    public enum ClawState{
+        OPEN(Value.kForward),
+        CLOSE(Value.kReverse);
+
+        public final Value value;
+
+        ClawState(Value value){
+            this.value = value;
+        }
+
+    }
+
     private DoubleSolenoid claw;
-    private boolean isClawOpen;
 
     private TalonSRX clawArm;
     private boolean isClawArmRaised;
@@ -22,15 +33,14 @@ public class Claw extends Subsystem {
     private ColorSensor panelSensor;
 
     private static Claw instance;
+    private ClawState clawState;
 
-    public Claw() {
+    private Claw() {
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_ARM);
         clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         isClawArmRaised = true;
 
-        isClawOpen = true;
-        claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
-        openClaw();
+        claw = new DoubleSolenoid(0, 1);
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
     }
@@ -47,44 +57,29 @@ public class Claw extends Subsystem {
         
     }
 
-    public void openClaw() {
-        if (!isClawOpen) {
-            claw.set(Value.kForward);
-            isClawOpen = true;
-        }
-    }
-    public void closeClaw() {
-        if (isClawOpen) {
-            claw.set(Value.kReverse);
-            isClawOpen = false;
-        }
+    public void setClaw(ClawState clawValue){
+            claw.set(clawValue.value);
+            clawState = clawValue;
     }
 
-    //TODO - Command?
-    public void raiseClaw(){
-        if(!isClawArmRaised){
-            while(clawArm.getSelectedSensorPosition() < (2/Math.PI * RobotConstants.TALON_TICKS_PER_ROT)){
-                clawArm.set(ControlMode.PercentOutput, 0.2);
-            }
-            isClawArmRaised = true;
-        }
+    public void runArm(double power){
+        clawArm.set(ControlMode.PercentOutput, power);
     }
-        //TODO - command?
-        public void lowerClaw(){
-            if(isClawArmRaised){
-                while(clawArm.getSelectedSensorPosition() < (2/Math.PI * RobotConstants.TALON_TICKS_PER_ROT)){
-                    clawArm.set(ControlMode.PercentOutput, 0.2);
-                }
-                isClawArmRaised = false;
-            }
-        }
+    public double getArmDistance(){
+        return clawArm.getSelectedSensorPosition();
+    }
 
     public boolean isPanelPresent(){
         return panelSensor.detectPanel(panelSensor.red, panelSensor.green, panelSensor.blue);
     }
 
     public boolean isClawOpen(){
-        return isClawOpen;
+        if(clawState.value == Value.kForward){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public boolean isClawArmRaised(){
         return isClawArmRaised;

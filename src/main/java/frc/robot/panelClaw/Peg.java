@@ -10,7 +10,7 @@ public class Peg extends Subsystem{
 
     private static Peg instance;
 
-    public Peg(){
+    private Peg(){
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
         //TODO - pegServo.setBounds(max, deadbandMax, center, deadbandMin, min);
 

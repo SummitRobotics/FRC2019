@@ -13,7 +13,7 @@ public class RobotBuilder{
 
     private RobotBuilder(){
         drivetrain = new Drivetrain();
-        claw = new Claw();
+        claw = Claw.getIntance();
         oi = new OI();
         peg = new Peg();
     }
