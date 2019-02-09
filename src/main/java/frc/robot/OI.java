@@ -25,7 +25,7 @@ public class OI {
     
         @Override
         public boolean get() {
-            return controller.getBumper(Hand.kRight)
+            return controller.getBumper(Hand.kRight);
         }
     };
 

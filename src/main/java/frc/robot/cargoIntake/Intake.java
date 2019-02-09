@@ -8,16 +8,33 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotConstants;
 
 public class Intake extends Subsystem{
+    public enum IntakeState{
+        UP(90),
+        DOWN(-90);
+
+        public final double value;
+        IntakeState(double value){
+            this.value = value;
+        }
+    }
     private TalonSRX arm, rollers;
-    private final double ROTATION_DEG = 120;
-    private final double ROTATION_RAD = Math.toRadians(ROTATION_DEG);
-    private boolean isIntakeRaised;
+    private final double POWER = 0.7;
+    private IntakeState intakeState;
+
+    private static Intake instance;
     
-    public Intake(){
+    private Intake(){
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_ARM);
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
         rollers = new TalonSRX(RobotConstants.Ports.INTAKE_ROLLER);
+    }
+
+    public static Intake getInstance(){
+        if(instance == null){
+            instance = new Intake();
+        }
+        return instance;
     }
     @Override
     protected void initDefaultCommand() {
@@ -28,11 +45,15 @@ public class Intake extends Subsystem{
         rollers.set(ControlMode.PercentOutput, 1 * direction);
     }
 
-    public void raiseIntake(){
-        if(!isIntakeRaised){
-            while(arm.getSelectedSensorPosition() < (ROTATION_RAD * RobotConstants.TALON_TICKS_PER_ROT)){
-                arm.set(ControlMode.PercentOutput, 0.2);
+    public void raiseIntake(IntakeState intakePosition){
+        if(intakePosition != intakeState){
+            if(intakePosition == IntakeState.UP){
+                arm.set(ControlMode.PercentOutput, POWER);
+            }
+            else if(intakePosition == IntakeState.DOWN){
+                arm.set(ControlMode.PercentOutput, -POWER);
             }
         }
+        
     }
 }

@@ -22,6 +22,11 @@ public class RobotConstants {
     RIGHT_DRIVE_1 = 21,
     RIGHT_DRIVE_2 = 20,
 
+    MAST_DRIVER = 0,
+
+    LOW_LIMIT_SWITCH = 0,
+    HIGH_LIMIT_SWITCH = 0,
+
     DRIVE_SOLENOID_OPEN = 4,
     DRIVE_SOLENOID_CLOSE = 5,
     PTO_SOLENOID_OPEN = 2,

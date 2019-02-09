@@ -1,0 +1,58 @@
+package frc.robot.lift;
+
+import com.revrobotics.CANDigitalInput;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotConstants;
+
+public class Lift extends Subsystem{
+    public enum LiftState{
+        LOW(0),
+        MID(1),
+        HIGH(2);
+
+        private int value;
+        LiftState(int value){
+            this.value = value;
+        }
+    }
+
+    private CANSparkMax mastDriver; 
+    private CANEncoder encoder;
+    private DigitalInput lowLimit, highLimit;
+
+    private static Lift instance;
+
+    private Lift(){
+        mastDriver = new CANSparkMax(RobotConstants.Ports.MAST_DRIVER, MotorType.kBrushless);
+        encoder = new CANEncoder(mastDriver);
+        lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);
+        highLimit = new DigitalInput(RobotConstants.Ports.HIGH_LIMIT_SWITCH);
+    }
+    public static Lift getInstance(){
+        if(instance == null){
+            instance = new Lift();
+        }
+        return instance;
+    }
+
+    public double getEncoderPos(){
+        return encoder.getPosition();
+    }
+
+    public void runLift(double power, double distance){
+        if(!lowLimit.get() && !highLimit.get()){
+            mastDriver.set(power);
+        }
+    }
+
+
+    @Override
+    protected void initDefaultCommand() {
+        
+    }
+}
