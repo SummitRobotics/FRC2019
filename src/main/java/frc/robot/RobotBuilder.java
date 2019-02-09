@@ -12,10 +12,10 @@ public class RobotBuilder{
     private static RobotBuilder instance;
 
     private RobotBuilder(){
-        drivetrain = new Drivetrain();
+        drivetrain = Drivetrain.getInstance();
         claw = Claw.getIntance();
         oi = new OI();
-        peg = new Peg();
+        peg = Peg.getInstance();
     }
     public static RobotBuilder getInstance() {
         if (instance == null) {

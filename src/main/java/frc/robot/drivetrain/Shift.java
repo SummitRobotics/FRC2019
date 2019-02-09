@@ -7,12 +7,12 @@ public class Shift extends Command{
     private boolean isDone;
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
-    private GearState gearState;
+    private GearState gearValue;
 
-    public Shift(GearState gearState){
+    public Shift(GearState gearValue){
         requires(drivetrain);
         setInterruptible(false);
-        this.gearState = gearState;
+        this.gearValue = gearValue;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Shift extends Command{
     }
     @Override
     protected void execute() {
-        super.execute();
+        drivetrain.shiftGear(gearValue);
     }
     @Override
     protected boolean isFinished() {
