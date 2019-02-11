@@ -57,7 +57,7 @@ public class Drivetrain extends Subsystem{
     }
     private CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
     private SpeedControllerGroup leftDrive, rightDrive;
-    private DifferentialDrive robotDrive;
+    public DifferentialDrive robotDrive;
     private CANEncoder leftEncoder, rightEncoder;
 
     private DoubleSolenoid gearShifter;
