@@ -1,21 +1,19 @@
 package frc.robot;
 
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Peg;
+import frc.robot.panelClaw.Claw;
+import frc.robot.drivetrain.Drivetrain;
+import frc.robot.panelClaw.Peg;
 
 public class RobotBuilder{
     public Drivetrain drivetrain;
     public Claw claw;
     public Peg peg;
-    public OI oi;
     private static RobotBuilder instance;
 
     private RobotBuilder(){
-        drivetrain = new Drivetrain();
-        claw = new Claw();
-        oi = new OI();
-        peg = new Peg();
+        drivetrain = Drivetrain.getInstance();
+        claw = Claw.getIntance();
+        peg = Peg.getInstance();
     }
     public static RobotBuilder getInstance() {
         if (instance == null) {

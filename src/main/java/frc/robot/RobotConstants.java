@@ -22,12 +22,17 @@ public class RobotConstants {
     RIGHT_DRIVE_1 = 21,
     RIGHT_DRIVE_2 = 20,
 
-    DRIVE_SOLENOID_OPEN = 0,
-    DRIVE_SOLENOID_CLOSE = 1,
+    MAST_DRIVER = 0,
+
+    LOW_LIMIT_SWITCH = 0,
+    HIGH_LIMIT_SWITCH = 0,
+
+    DRIVE_SOLENOID_OPEN = 4,
+    DRIVE_SOLENOID_CLOSE = 5,
     PTO_SOLENOID_OPEN = 2,
     PTO_SOLENOID_CLOSE = 3, 
-    CLAW_SOLENOID_OPEN = 4, 
-    CLAW_SOLENOID_CLOSE = 5,
+    CLAW_SOLENOID_OPEN = 0, 
+    CLAW_SOLENOID_CLOSE = 1,
     PANEL_SOLENOID_OPEN = 6,
     PANEL_SOLENOID_CLOSE = 7,
 
@@ -35,6 +40,10 @@ public class RobotConstants {
     INTAKE_ARM = 0,
     INTAKE_ROLLER = 0,
 
-    PEG_SERVO = 0;
+    PEG_SERVO = 0,
+
+    BLINKIN_LED = 3,
+
+    GYRO = 0;
   }
 }

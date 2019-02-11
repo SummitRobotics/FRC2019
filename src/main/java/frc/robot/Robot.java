@@ -9,17 +9,26 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.lift.MoveMast;
 import frc.robot.teleop.TeleopArcade;
 
 
 public class Robot extends TimedRobot {
   public RobotBuilder robot;
   public static TeleopArcade teleop;
+  public OI gamepad = OI.getInstance();
+
+  public static SendableChooser<OI.Driver_Profile> DriverProfileChooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
     robot = RobotBuilder.getInstance();
     teleop = new TeleopArcade();
+
+    DriverProfileChooser.setDefaultOption("Alex Driver Profile", gamepad.new Alex_Driver());
+    DriverProfileChooser.addOption("Colin Driver Profile", gamepad.new Colin_Driver());
+    //DriverProfileChooser.addOption("Jake Driver Profile", gamepad.new Jake_Driver());
 
   }
 
@@ -44,6 +53,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+
   }
 
   @Override
@@ -60,7 +70,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    //Scheduler.getInstance().run();
+    Scheduler.getInstance().run();
     teleop.run();
   }
 

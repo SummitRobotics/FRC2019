@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.panelClaw;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -8,11 +8,19 @@ public class Peg extends Subsystem{
     private Servo pegServo;
     private boolean isPegUp;
 
-    public Peg(){
+    private static Peg instance;
+
+    private Peg(){
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
         //TODO - pegServo.setBounds(max, deadbandMax, center, deadbandMin, min);
 
         isPegUp = false;
+    }
+    public static Peg getInstance(){
+        if(instance == null){
+            instance = new Peg();
+        }
+        return instance;
     }
 
     @Override

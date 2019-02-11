@@ -4,15 +4,19 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.commands.PanelIntake;
+import frc.robot.drivetrain.Drivetrain;
+import frc.robot.drivetrain.Shift;
+import frc.robot.drivetrain.Drivetrain.Blinkin;
+import frc.robot.drivetrain.Drivetrain.GearState;
+import frc.robot.panelClaw.ActuateClaw;
+import frc.robot.panelClaw.IntakePanel;
+import frc.robot.panelClaw.Claw.ClawState;
 
 public class OI {
 
-    double deadzoneDefault = 0.15;
-
     XboxController controller = new XboxController(0);
 
-    Button claw = new Button(){
+    Button YButtonCmd = new Button(){
     
         @Override
         public boolean get() {
@@ -20,8 +24,32 @@ public class OI {
         }
     };
 
-    public OI(){
-        claw.whenActive(new PanelIntake());
+    Button rightBumperCmd = new Button(){
+    
+        @Override
+        public boolean get() {
+            return controller.getBumper(Hand.kRight);
+        }
+    };
+
+    Button leftBumperCmd = new Button(){
+    
+        @Override
+        public boolean get() {
+            return controller.getBumper(Hand.kLeft);
+        }
+    };
+
+    private static OI instance;
+
+    private OI(){
+
+    }
+    public static OI getInstance(){
+        if(instance == null){
+            instance = new OI();
+        }
+        return instance;
     }
 
 
@@ -65,33 +93,85 @@ public class OI {
         return controller.getTriggerAxis(GenericHID.Hand.kRight);
     }
 
-        public double makeCurve(double input){
-            return (Math.pow(2, input) -1);
-        }
+    public double makeCurve(double input){
+        return (Math.pow(2, input) -1);
+    }
     
+    public double getForwardPower(){
+        return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
+    }
+    public double getRotationalPower(){
+        return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
+    }
+
+    //Magic abstractation. Do not touch. 
+    public abstract class Driver_Profile{
+        public Driver_Profile(){
+
+        }
+        public abstract double getForwardPower();
+        public abstract double getRotationalPower();
+        public abstract double getTrimPower();
+    }
+
+
+
+    public class Alex_Driver extends Driver_Profile{
+        public Alex_Driver(){
+            rightBumperCmd.whenPressed(new Shift(GearState.HIGH));
+            YButtonCmd.whenPressed(new IntakePanel());
+        }
+        @Override
         public double getForwardPower(){
             return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
         }
+        @Override
         public double getRotationalPower(){
             return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
         }
+        @Override
+        public double getTrimPower(){
+            return getRightJoystickY();
+        }
+    }
+
+
+    public class Colin_Driver extends Driver_Profile{
+        public Colin_Driver(){
+            rightBumperCmd.whileHeld(new Shift(GearState.HIGH));
+        }
+        @Override
+        public double getForwardPower(){
+            return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
+        }
+        @Override
+        public double getRotationalPower(){
+            return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
+        }
+        @Override
+        public double getTrimPower(){
+            return getRightJoystickY();
+        }
+    }
+
     
-        
-
-
-  //// TRIGGERING COMMANDS WITH BUTTONS
-  // Once you have a button, it's trivial to bind it to a button in one of
-  // three ways:
-
-  // Start the command when the button is pressed and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenPressed(new ExampleCommand());
-
-  // Run the command while the button is being held down and interrupt it once
-  // the button is released.
-  // button.whileHeld(new ExampleCommand());
-
-  // Start the command when the button is released and let it run the command
-  // until it is finished as determined by it's isFinished method.
-  // button.whenReleased(new ExampleCommand());
+    public class Jake_Driver extends Driver_Profile{
+        public Jake_Driver(){
+            rightBumperCmd.whenPressed(new Shift(GearState.HIGH));
+            leftBumperCmd.whenPressed(new Shift(GearState.LOW));
+        }
+        @Override
+        public double getForwardPower(){
+            return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
+        }
+        @Override
+        public double getRotationalPower(){
+            return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
+        }
+        @Override
+        public double getTrimPower(){
+            return getRightJoystickY();
+        }
+    }
 }
+    
