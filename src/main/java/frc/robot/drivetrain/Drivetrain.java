@@ -1,14 +1,17 @@
 package frc.robot.drivetrain;
 
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotConstants;
 
 public class Drivetrain extends Subsystem{
@@ -32,16 +35,41 @@ public class Drivetrain extends Subsystem{
             this.value = value;
         }
     }
-    public CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
-    public SpeedControllerGroup leftDrive, rightDrive;
-    public DifferentialDrive robotDrive;
-    public CANEncoder leftEncoder, rightEncoder;
 
-    public DoubleSolenoid gearShifter;
+    public enum Blinkin{
+        RAINBOW_PALETTE(-0.99),
+        RAINBOW_PARTY(-0.97),
+        RAINBOW_OCEAN(-0.95),
+        LARSON_SCANNER_RED(-0.35),
+        COLOR_1_SLOW(0.03),
+        COLOR_1_MED(0.05),
+        COLOR_1_FAST(0.07),
+        COLOR_1_2(0.53),
+        BLUE(0.87),
+        BLUE_VIOLET(0.89),
+        VIOLET(0.91);
+
+        public final double value;
+
+        Blinkin(double value){
+            this.value = value;
+        }
+    }
+    private CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
+    private SpeedControllerGroup leftDrive, rightDrive;
+    private DifferentialDrive robotDrive;
+    private CANEncoder leftEncoder, rightEncoder;
+
+    private DoubleSolenoid gearShifter;
     private GearState gearState;
 
-    public DoubleSolenoid PTOshifter;
+    private DoubleSolenoid PTOshifter;
     private PTOState ptoState;
+
+    private Spark blinkin;
+    private Blinkin RGBState;
+
+    private PigeonIMU gyro;
 
     private static Drivetrain instance;
     
@@ -64,6 +92,10 @@ public class Drivetrain extends Subsystem{
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
         robotDrive.setSafetyEnabled(false);
+
+        blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
+
+        gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
         gearShifter = new DoubleSolenoid(RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
     }
@@ -88,6 +120,10 @@ public class Drivetrain extends Subsystem{
         return rightEncoder.getPosition();
     }
 
+    public void resetGyro(){
+        
+    }
+
     public void shiftGear(GearState gearValue){
         gearShifter.set(gearValue.value);
         gearState = gearValue;
@@ -97,5 +133,9 @@ public class Drivetrain extends Subsystem{
         PTOshifter.set(ptoValue.value);
         ptoState = ptoValue;
     }
-
+    public void setLEDColor(Blinkin blinkinValue){
+        blinkin.set(blinkinValue.value);
+        SmartDashboard.putNumber("value", blinkinValue.value);
+        RGBState = blinkinValue;
+    }
 }

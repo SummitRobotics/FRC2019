@@ -18,7 +18,6 @@ public class Intake extends Subsystem{
         }
     }
     private TalonSRX arm, rollers;
-    private final double POWER = 0.7;
     private IntakeState intakeState;
 
     private static Intake instance;
@@ -45,15 +44,14 @@ public class Intake extends Subsystem{
         rollers.set(ControlMode.PercentOutput, 1 * direction);
     }
 
-    public void raiseIntake(IntakeState intakePosition){
+    public void raiseIntake(IntakeState intakePosition, double power){
         if(intakePosition != intakeState){
             if(intakePosition == IntakeState.UP){
-                arm.set(ControlMode.PercentOutput, POWER);
+                arm.set(ControlMode.PercentOutput, power);
             }
             else if(intakePosition == IntakeState.DOWN){
-                arm.set(ControlMode.PercentOutput, -POWER);
+                arm.set(ControlMode.PercentOutput, -power);
             }
         }
-        
     }
 }

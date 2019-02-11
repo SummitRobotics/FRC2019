@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
+import frc.robot.drivetrain.Drivetrain;
+import frc.robot.drivetrain.Drivetrain.Blinkin;
 import frc.robot.panelClaw.ActuateClaw;
 import frc.robot.panelClaw.Claw.ClawState;
 
@@ -87,6 +89,11 @@ public class OI {
         public double getRotationalPower(){
             return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
         }
+    public void changeColor(){
+        if(isButtonY()){
+            Drivetrain.getInstance().setLEDColor(Blinkin.VIOLET);
+        }
+    }
     
         
 

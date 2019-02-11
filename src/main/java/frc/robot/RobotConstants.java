@@ -40,6 +40,10 @@ public class RobotConstants {
     INTAKE_ARM = 0,
     INTAKE_ROLLER = 0,
 
-    PEG_SERVO = 0;
+    PEG_SERVO = 0,
+
+    BLINKIN_LED = 3,
+
+    GYRO = 0;
   }
 }

@@ -3,8 +3,10 @@ package frc.robot.cargoIntake;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveIntake extends Command{
+    private Intake intake = Intake.getInstance();
 
     public MoveIntake(){
+        requires(intake);
 
     }
     @Override
@@ -13,7 +15,7 @@ public class MoveIntake extends Command{
     }
     @Override
     protected void execute() {
-        super.execute();
+        
     }
     @Override
     protected boolean isFinished() {

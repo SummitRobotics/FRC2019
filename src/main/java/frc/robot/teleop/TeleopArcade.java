@@ -19,6 +19,7 @@ public class TeleopArcade {
 
         //Potentially implement curvatureDrive in the future?
         robot.drivetrain.robotDrive.arcadeDrive(xSpeed, -zRotation);
+        robot.oi.changeColor();
         
         SmartDashboard.putNumber("Left Encoder", robot.drivetrain.getLeftEncoderPos());
         SmartDashboard.putNumber("Right Encoder", robot.drivetrain.getRightEncoderPos());
