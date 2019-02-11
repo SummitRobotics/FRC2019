@@ -113,6 +113,10 @@ public class Drivetrain extends Subsystem{
        setDefaultCommand(new ArcadeDrive());
     }
 
+    public void stopRobot(){
+        robotDrive.tankDrive(0, 0);
+    }
+
     public double getLeftEncoderPos(){
         return leftEncoder.getPosition();
     }

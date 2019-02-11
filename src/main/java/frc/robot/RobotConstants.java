@@ -3,12 +3,20 @@ package frc.robot;
 public class RobotConstants {
   public static final double WHEEL_DIAMETER = 4.0;
   public static final double TALON_TICKS_PER_ROT = 4096;
+  public static final double NEO_TICKS_PER_REV = 42;
 
   public static double TALON_INCHES_TO_TICKS(double inch){
     return (inch / (WHEEL_DIAMETER * Math.PI) * TALON_TICKS_PER_ROT);
   }
   public static double TALON_TICKS_TO_INCHES(double tick){
     return (tick / TALON_TICKS_PER_ROT * (WHEEL_DIAMETER * Math.PI));
+  }
+
+  public static double NEO_INCHES_TO_TICKS(double inch){
+    return (inch / (WHEEL_DIAMETER * Math.PI) * NEO_TICKS_PER_REV);
+  }
+  public static double NEO_TICKS_TO_INCHES(double tick){
+    return (tick / NEO_TICKS_PER_REV * (WHEEL_DIAMETER * Math.PI));
   }
   public class Ports{
 
