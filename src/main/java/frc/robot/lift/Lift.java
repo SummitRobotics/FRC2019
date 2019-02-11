@@ -44,7 +44,7 @@ public class Lift extends Subsystem{
         return encoder.getPosition();
     }
 
-    public void runLift(double power, double distance){
+    public void runLiftManual(double power){
         if(!lowLimit.get() && !highLimit.get()){
             mastDriver.set(power);
         }
@@ -53,6 +53,6 @@ public class Lift extends Subsystem{
 
     @Override
     protected void initDefaultCommand() {
-        
+        setDefaultCommand(new TrimMast());
     }
 }

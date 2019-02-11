@@ -8,13 +8,11 @@ public class RobotBuilder{
     public Drivetrain drivetrain;
     public Claw claw;
     public Peg peg;
-    public OI oi;
     private static RobotBuilder instance;
 
     private RobotBuilder(){
         drivetrain = Drivetrain.getInstance();
         claw = Claw.getIntance();
-        oi = new OI();
         peg = Peg.getInstance();
     }
     public static RobotBuilder getInstance() {

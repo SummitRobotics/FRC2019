@@ -1,6 +1,8 @@
 package frc.robot.panelClaw;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.lift.MoveMast;
+import frc.robot.lift.Lift.LiftState;
 import frc.robot.panelClaw.Claw.ClawState;
 
 public class IntakePanel extends CommandGroup{
