@@ -110,7 +110,7 @@ public class Drivetrain extends Subsystem{
     //TODO - better sequencing
     @Override
     protected void initDefaultCommand() {
-       
+       setDefaultCommand(new ArcadeDrive());
     }
 
     public double getLeftEncoderPos(){
