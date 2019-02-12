@@ -12,10 +12,10 @@ import frc.robot.RobotConstants;
 public class Lift extends Subsystem{
     public enum LiftState{
         LOW(0),
-        MID(1),
-        HIGH(2);
+        MID(28),
+        HIGH(56);
 
-        private int value;
+        public final int value;
         LiftState(int value){
             this.value = value;
         }
