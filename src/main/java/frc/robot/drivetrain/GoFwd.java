@@ -24,7 +24,7 @@ public class GoFwd extends Command{
     @Override
     protected void execute() {
         while(((leftError > THRESHOLD) || (leftError < -THRESHOLD)) && ((rightError > THRESHOLD) || (rightError < -THRESHOLD))){
-            drivetrain.robotDrive.tankDrive(power * leftDirection, power * rightDirection);
+            drivetrain.robotDrive.tankDrive(power, power);
             leftError = leftTarget - drivetrain.getLeftEncoderPos();
             rightError = rightTarget - drivetrain.getRightEncoderPos();
         }
