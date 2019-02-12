@@ -70,7 +70,7 @@ public class Claw extends Subsystem {
     }
 
     public boolean isPanelPresent(){
-        return panelSensor.isActive();
+        return panelSensor.detectPanel(panelSensor.red, panelSensor.green, panelSensor.blue);
     }
 
     public boolean isClawOpen(){

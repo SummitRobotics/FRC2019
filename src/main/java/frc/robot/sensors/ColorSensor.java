@@ -30,6 +30,7 @@ public class ColorSensor {
     
     private final double integrationTime = 10;
     
+    
     private I2C sensor;
     
     private ByteBuffer buffy = ByteBuffer.allocate(8);
@@ -47,7 +48,7 @@ public class ColorSensor {
         sensor.write(CMD | 0x0E, 0b1111);
     }    
     
-    private void read() {
+    public void read() {
         buffy.clear();
         sensor.read(CMD | MULTI_BYTE_BIT | RDATA_REGISTER, 8, buffy);
         
@@ -72,9 +73,7 @@ public class ColorSensor {
     }
 
     //tune color vals when claw is installed
-    public boolean isActive() {
-
-        read();
+    public boolean detectPanel(int red, int green, int blue) {
 
         red /= 2;
         green /= 2;
@@ -88,5 +87,6 @@ public class ColorSensor {
         return false;
 
     }
+
 
 }
