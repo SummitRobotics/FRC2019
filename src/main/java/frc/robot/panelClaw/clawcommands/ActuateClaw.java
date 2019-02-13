@@ -1,7 +1,8 @@
-package frc.robot.panelClaw;
+package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.panelClaw.Claw.ClawState;
+import frc.robot.panelclaw.Claw;
+import frc.robot.panelclaw.Claw.ClawState;
 
 public class ActuateClaw extends Command{
 

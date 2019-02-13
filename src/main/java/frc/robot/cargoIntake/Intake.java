@@ -1,11 +1,11 @@
-package frc.robot.cargoIntake;
+package frc.robot.cargointake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotConstants;
+import frc.robot.robotcore.RobotConstants;
 
 public class Intake extends Subsystem {
     public enum IntakeState {
@@ -13,7 +13,7 @@ public class Intake extends Subsystem {
         DOWN(-90);
 
         public final double value;
-        IntakeState(double value){
+        IntakeState(double value) {
             this.value = value;
         }
     }

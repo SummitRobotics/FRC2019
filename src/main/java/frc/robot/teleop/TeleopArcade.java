@@ -1,8 +1,8 @@
 package frc.robot.teleop;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
-import frc.robot.RobotBuilder;
+import frc.robot.robotcore.Robot;
+import frc.robot.robotcore.RobotBuilder;
 
 public class TeleopArcade {
     RobotBuilder robot = RobotBuilder.getInstance();

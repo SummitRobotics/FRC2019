@@ -1,15 +1,15 @@
-package frc.robot.drivetrain;
+package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.drivetrain.Drivetrain.GearState;
+import frc.robot.drivetrain.Drivetrain;
 
 public class Shift extends Command{
     private boolean isDone;
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
-    private GearState gearValue;
+    private Drivetrain.GearState gearValue;
 
-    public Shift(GearState gearValue){
+    public Shift(Drivetrain.GearState gearValue){
         requires(drivetrain);
         setInterruptible(false);
         this.gearValue = gearValue;

@@ -1,6 +1,7 @@
-package frc.robot.panelClaw;
+package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.panelclaw.Claw;
 
 public class DetectPanel extends Command{
     private Claw claw = Claw.getIntance();
