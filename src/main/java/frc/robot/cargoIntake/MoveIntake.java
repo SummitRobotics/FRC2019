@@ -25,7 +25,7 @@ public class MoveIntake extends Command{
     }
     @Override
     protected void execute() {
-        intake.moveIntakeArm(POWER);
+        intake.setIntakeArm(position, POWER);
         error = target - intake.getIntakeArmPosition();
     }
     @Override
