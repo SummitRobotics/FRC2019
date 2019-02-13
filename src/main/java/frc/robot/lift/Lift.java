@@ -30,6 +30,7 @@ public class Lift extends Subsystem{
     private Lift(){
         mastDriver = new CANSparkMax(RobotConstants.Ports.MAST_DRIVER, MotorType.kBrushless);
         encoder = new CANEncoder(mastDriver);
+        //state implementation
         lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);
         highLimit = new DigitalInput(RobotConstants.Ports.HIGH_LIMIT_SWITCH);
     }
@@ -50,6 +51,12 @@ public class Lift extends Subsystem{
         }
     }
 
+    public boolean getLowLimit(){
+        return !lowLimit.get();
+    }
+    public boolean getHighLimit(){
+        return !highLimit.get();
+    }
 
     @Override
     protected void initDefaultCommand() {

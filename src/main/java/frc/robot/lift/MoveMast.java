@@ -23,7 +23,7 @@ public class MoveMast extends Command{
     @Override
     protected void execute() {
         switch(position){
-            case LOW: 
+            case LOW:
                  runToPosition(LiftState.LOW, power);
                 break;
             case MID: 
@@ -37,10 +37,16 @@ public class MoveMast extends Command{
     }
     
     public void runToPosition(LiftState position, double power){
-        double target = RobotConstants.NEO_INCHES_TO_TICKS(position.value);
+        double target = lift.getEncoderPos() + RobotConstants.NEO_INCHES_TO_TICKS(position.value);
         double error =  target - lift.getEncoderPos();
         double direction = Math.copySign(1, error);
-        while(!(error > -THRESHOLD) && (error < THRESHOLD)){
+        while(!(error > -THRESHOLD) && !(error < THRESHOLD)){
+            if((direction == -1) && (lift.getLowLimit())){
+                break;
+            }
+            else if((direction == 1) && (lift.getHighLimit())){
+                break;
+            }
             lift.runLiftManual(power * direction);
             error =  target - lift.getEncoderPos();
         }

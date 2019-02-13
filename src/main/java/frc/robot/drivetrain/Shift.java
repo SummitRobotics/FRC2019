@@ -1,9 +1,10 @@
 package frc.robot.drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.drivetrain.Drivetrain.GearState;
 
-public class Shift extends Command{
+public class Shift extends InstantCommand{
     private boolean isDone;
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
