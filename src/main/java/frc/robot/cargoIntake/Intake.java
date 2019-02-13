@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotConstants;
 
@@ -20,6 +21,8 @@ public class Intake extends Subsystem {
     private TalonSRX arm, rollers;
     private IntakeState intakeState;
 
+    private DigitalInput isUp;
+
     private static Intake instance;
     
     private Intake(){
@@ -27,6 +30,8 @@ public class Intake extends Subsystem {
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
         rollers = new TalonSRX(RobotConstants.Ports.INTAKE_ROLLER);
+
+        isUp = new DigitalInput(RobotConstants.Ports.CARGO_LIMIT_SWITCH);
     }
 
     public static Intake getInstance(){
@@ -40,8 +45,21 @@ public class Intake extends Subsystem {
         
     }
 
+    public boolean getCargoLimit(){
+        return !isUp.get();
+    }
+    public IntakeState getIntakeState(){
+        return intakeState;
+    }
+    public double getIntakeArmPosition(){
+        return arm.getSelectedSensorPosition();
+    }
+
     public void intake(int direction){
         rollers.set(ControlMode.PercentOutput, 1 * direction);
+    }
+    public void moveIntakeArm(double power){
+        arm.set(ControlMode.PercentOutput, power);
     }
 
     public void raiseIntake(IntakeState intakePosition, double power){

@@ -12,7 +12,7 @@ public class Peg extends Subsystem{
 
     private Peg(){
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
-        //TODO - pegServo.setBounds(max, deadbandMax, center, deadbandMin, min);
+        pegServo.setBounds(2.2, 0, 1.5, 0, 0.8);
 
         isPegUp = false;
     }

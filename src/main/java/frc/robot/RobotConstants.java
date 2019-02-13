@@ -35,6 +35,8 @@ public class RobotConstants {
     LOW_LIMIT_SWITCH = 0,
     HIGH_LIMIT_SWITCH = 0,
 
+    CARGO_LIMIT_SWITCH = 0,
+
     DRIVE_SOLENOID_OPEN = 4,
     DRIVE_SOLENOID_CLOSE = 5,
     PTO_SOLENOID_OPEN = 2,

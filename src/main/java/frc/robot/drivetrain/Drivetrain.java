@@ -70,6 +70,7 @@ public class Drivetrain extends Subsystem{
     private Blinkin RGBState;
 
     private PigeonIMU gyro;
+    double[] ypr;
 
     private static Drivetrain instance;
     
@@ -125,7 +126,13 @@ public class Drivetrain extends Subsystem{
     }
 
     public void resetGyro(){
-        
+        gyro.setYaw(0);
+        gyro.setAccumZAngle(0);
+    }
+    public double getGyroYaw(){
+        ypr = new double[3];
+        gyro.getYawPitchRoll(ypr);
+        return ypr[0];
     }
 
     public void shiftGear(GearState gearValue){
