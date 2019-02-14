@@ -1,6 +1,7 @@
-package frc.robot.panelclaw;
+package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.panelclaw.Peg;
 
 public class ActuatePeg extends Command{
 
