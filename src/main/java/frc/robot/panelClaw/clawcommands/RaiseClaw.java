@@ -1,9 +1,8 @@
-package frc.robot.panelClaw;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
+package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.RobotConstants;
+import frc.robot.panelclaw.Claw;
+import frc.robot.robotcore.RobotConstants;
 
 public class RaiseClaw extends Command{
     private Claw claw = Claw.getIntance();

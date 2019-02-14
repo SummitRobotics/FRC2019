@@ -1,16 +1,12 @@
-package frc.robot;
+package frc.robot.robotcore;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.drivetrain.Drivetrain;
-import frc.robot.drivetrain.Shift;
-import frc.robot.drivetrain.Drivetrain.Blinkin;
-import frc.robot.drivetrain.Drivetrain.GearState;
-import frc.robot.panelClaw.ActuateClaw;
-import frc.robot.panelClaw.IntakePanel;
-import frc.robot.panelClaw.Claw.ClawState;
+import frc.robot.drivetrain.*;
+import frc.robot.panelclaw.clawcommands.*;
+import frc.robot.drivetrain.drivetraincommands.*;
 
 public class OI {
 
@@ -118,7 +114,7 @@ public class OI {
 
     public class Alex_Driver extends Driver_Profile{
         public Alex_Driver(){
-            rightBumperCmd.whenPressed(new Shift(GearState.HIGH));
+            rightBumperCmd.whenPressed(new Shift(Drivetrain.GearState.HIGH));
             YButtonCmd.whenPressed(new IntakePanel());
         }
         @Override
@@ -138,7 +134,7 @@ public class OI {
 
     public class Colin_Driver extends Driver_Profile{
         public Colin_Driver(){
-            rightBumperCmd.whileHeld(new Shift(GearState.HIGH));
+            rightBumperCmd.whileHeld(new Shift(Drivetrain.GearState.HIGH));
         }
         @Override
         public double getForwardPower(){
@@ -157,8 +153,8 @@ public class OI {
     
     public class Jake_Driver extends Driver_Profile{
         public Jake_Driver(){
-            rightBumperCmd.whenPressed(new Shift(GearState.HIGH));
-            leftBumperCmd.whenPressed(new Shift(GearState.LOW));
+            rightBumperCmd.whenPressed(new Shift(Drivetrain.GearState.HIGH));
+            leftBumperCmd.whenPressed(new Shift(Drivetrain.GearState.LOW));
         }
         @Override
         public double getForwardPower(){

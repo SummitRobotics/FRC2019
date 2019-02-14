@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.robotcore;
 
 public class RobotConstants {
   public static final double WHEEL_DIAMETER = 4.0;

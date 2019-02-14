@@ -1,16 +1,14 @@
-package frc.robot.panelClaw;
+package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.lift.MoveMast;
-import frc.robot.lift.Lift.LiftState;
-import frc.robot.panelClaw.Claw.ClawState;
+import frc.robot.panelclaw.*;
 
 public class IntakePanel extends CommandGroup{
     public IntakePanel(){
-        addSequential(new ActuateClaw(ClawState.OPEN));
+        addSequential(new ActuateClaw(Claw.ClawState.OPEN));
         addSequential(new RaiseClaw(-1));
         addSequential(new DetectPanel());
-        addSequential(new ActuateClaw(ClawState.CLOSE));
+        addSequential(new ActuateClaw(Claw.ClawState.CLOSE));
         addSequential(new RaiseClaw(1));
     }
 }

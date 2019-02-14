@@ -1,4 +1,4 @@
-package frc.robot.panelClaw;
+package frc.robot.panelclaw;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -7,8 +7,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotConstants;
-import frc.robot.sensors.ColorSensor;
+import frc.robot.robotcore.RobotConstants;
+import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
 
 public class Claw extends Subsystem {

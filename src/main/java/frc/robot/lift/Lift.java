@@ -6,7 +6,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotConstants;
+import frc.robot.robotcore.RobotConstants;
+import frc.robot.lift.liftcommands.*;
 
 public class Lift extends Subsystem{
     public enum LiftState{
