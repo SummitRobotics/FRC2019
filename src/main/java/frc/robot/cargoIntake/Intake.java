@@ -62,7 +62,7 @@ public class Intake extends Subsystem {
         arm.set(ControlMode.PercentOutput, power);
     }
 
-    public void raiseIntake(IntakeState intakePosition, double power){
+    public void setIntakeArm(IntakeState intakePosition, double power){
         if(intakePosition != intakeState){
             if(intakePosition == IntakeState.UP){
                 arm.set(ControlMode.PercentOutput, power);

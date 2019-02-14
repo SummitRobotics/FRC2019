@@ -17,7 +17,7 @@ import frc.robot.teleop.TeleopArcade;
 public class Robot extends TimedRobot {
   public RobotBuilder robot;
   public static TeleopArcade teleop;
-  public OI gamepad = OI.getInstance();
+  public OI gamepad;
 
   public static SendableChooser<OI.Driver_Profile> DriverProfileChooser = new SendableChooser<>();
 
@@ -25,10 +25,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robot = RobotBuilder.getInstance();
     teleop = new TeleopArcade();
+    gamepad = OI.getInstance();
 
     DriverProfileChooser.setDefaultOption("Alex Driver Profile", gamepad.new Alex_Driver());
     DriverProfileChooser.addOption("Colin Driver Profile", gamepad.new Colin_Driver());
     //DriverProfileChooser.addOption("Jake Driver Profile", gamepad.new Jake_Driver());
+    robot.init();
 
   }
 
@@ -47,6 +49,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    robot.drivetrain.resetGyro();
     
   }
 
