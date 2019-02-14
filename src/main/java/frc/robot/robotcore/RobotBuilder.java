@@ -1,8 +1,8 @@
-package frc.robot;
+package frc.robot.robotcore;
 
-import frc.robot.panelClaw.Claw;
+import frc.robot.panelclaw.Claw;
 import frc.robot.drivetrain.Drivetrain;
-import frc.robot.panelClaw.Peg;
+import frc.robot.panelclaw.Peg;
 
 public class RobotBuilder{
     public Drivetrain drivetrain;

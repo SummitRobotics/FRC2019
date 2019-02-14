@@ -1,25 +1,26 @@
-package frc.robot.panelclaw;
+package frc.robot.cargointake.cargocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.cargointake.Intake;
 
-public class ActuatePeg extends Command{
+public class MoveIntake extends Command{
+    private Intake intake = Intake.getInstance();
 
-    private Peg peg = Peg.getInstance();
-    private boolean isComplete = false;
+    public MoveIntake(){
+        requires(intake);
 
-    public ActuatePeg(){
-        requires(peg);
     }
     @Override
     protected void initialize() {
+        super.initialize();
     }
     @Override
     protected void execute() {
-        isComplete = true;
+        
     }
     @Override
     protected boolean isFinished() {
-        return isComplete;
+        return false;
     }
     @Override
     protected void end() {

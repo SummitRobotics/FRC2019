@@ -1,25 +1,26 @@
-package frc.robot.panelclaw;
+package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ActuatePeg extends Command{
+public class Turn extends Command{
 
-    private Peg peg = Peg.getInstance();
-    private boolean isComplete = false;
+    public Turn(double angle, double power){
 
-    public ActuatePeg(){
-        requires(peg);
+    }
+    public Turn(double angle, double radius, double power){
+        
     }
     @Override
     protected void initialize() {
+        super.initialize();
     }
     @Override
     protected void execute() {
-        isComplete = true;
+        super.execute();
     }
     @Override
     protected boolean isFinished() {
-        return isComplete;
+        return false;
     }
     @Override
     protected void end() {

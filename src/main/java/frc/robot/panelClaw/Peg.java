@@ -1,8 +1,8 @@
-package frc.robot.panelClaw;
+package frc.robot.panelclaw;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotConstants;
+import frc.robot.robotcore.RobotConstants;
 
 public class Peg extends Subsystem{
     private Servo pegServo;
