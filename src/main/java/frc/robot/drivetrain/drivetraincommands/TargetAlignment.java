@@ -1,10 +1,11 @@
-package frc.robot.drivetrain;
+package frc.robot.drivetrain.drivetraincommands;
 
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.OI;
-import frc.robot.sensors.Limelight;
+import frc.robot.robotcore.OI;
+import frc.robot.devices.Limelight;
+import frc.robot.drivetrain.Drivetrain;
 
 public class TargetAlignment extends PIDCommand{
     private Drivetrain drivetrain = Drivetrain.getInstance();

@@ -1,4 +1,4 @@
-package frc.robot.panelClaw;
+package frc.robot.panelclaw;
 
 import edu.wpi.first.wpilibj.command.Command;
 
