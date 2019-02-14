@@ -5,10 +5,14 @@ import frc.robot.cargointake.Intake;
 
 public class MoveIntake extends Command{
     private Intake intake = Intake.getInstance();
+    private Intake.IntakeState intakePosition;
+    //TODO - PID
+    private final double POWER = 0.5;
+    private double target, error; 
 
-    public MoveIntake(){
+    public MoveIntake(Intake.IntakeState intakePosition){
         requires(intake);
-
+        this.intakePosition = intakePosition;
     }
     @Override
     protected void initialize() {
@@ -16,7 +20,7 @@ public class MoveIntake extends Command{
     }
     @Override
     protected void execute() {
-        
+        intake.setIntakeArm(intakePosition, POWER);
     }
     @Override
     protected boolean isFinished() {
