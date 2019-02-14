@@ -25,7 +25,7 @@ public class Turn extends Command{
     @Override
     protected void execute() {
         direction = Math.copySign(1, error);
-        drivetrain.robotDrive.tankDrive(-power * direction, power * direction);
+        drivetrain.robotDrive.tankDrive(power * direction, -power * direction);
         error = targetAngle - drivetrain.getGyroYaw();
     }
     @Override

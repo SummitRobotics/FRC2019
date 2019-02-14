@@ -21,4 +21,7 @@ public class RobotBuilder{
         }
         return instance;
     }
+    public void init(){
+        drivetrain.resetGyro();
+    }
 }
