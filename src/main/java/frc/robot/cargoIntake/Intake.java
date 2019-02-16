@@ -18,8 +18,20 @@ public class Intake extends Subsystem {
             this.value = value;
         }
     }
+
+    public enum IntakeSpinState{
+        ON(1),
+        OFF(0),
+        REVERSE(-1);
+
+        public final double value;
+        IntakeSpinState(double value){
+            this.value = value;
+        }
+    }
     private TalonSRX arm, rollers;
     private IntakeState intakeState;
+    private IntakeSpinState intakeSpinState;
 
     private DigitalInput isUp;
 
@@ -64,7 +76,13 @@ public class Intake extends Subsystem {
 
     public void setIntakeArm(IntakeState intakePosition, double power){
         if(intakePosition != intakeState){
-                arm.set(ControlMode.PercentOutput, power);
+            arm.set(ControlMode.PercentOutput, power);
         }
+    }
+    public void setIntakeSpin(IntakeSpinState intakeSpinPosition){
+        if(intakeSpinPosition != intakeSpinState){
+            intake((int)intakeSpinPosition.value);
+        }
+        intakeSpinState = intakeSpinPosition;
     }
 }
