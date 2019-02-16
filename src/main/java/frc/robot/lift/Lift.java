@@ -1,5 +1,9 @@
 package frc.robot.lift;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -21,15 +25,17 @@ public class Lift extends Subsystem{
         }
     }
 
-    private CANSparkMax mastDriver; 
-    private CANEncoder encoder;
+    private TalonSRX mastDriver;
+    private VictorSPX mastFollower;
     private DigitalInput lowLimit, highLimit;
 
     private static Lift instance;
 
     private Lift(){
-        mastDriver = new CANSparkMax(RobotConstants.Ports.MAST_DRIVER, MotorType.kBrushless);
-        encoder = new CANEncoder(mastDriver);
+        mastDriver = new TalonSRX(RobotConstants.Ports.MAST_DRIVER);
+        mastFollower = new VictorSPX(RobotConstants.Ports.MAST_FOLLOWER);
+        mastFollower.follow(mastDriver);
+        mastDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         //state implementation
         lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);
         highLimit = new DigitalInput(RobotConstants.Ports.HIGH_LIMIT_SWITCH);
@@ -42,12 +48,12 @@ public class Lift extends Subsystem{
     }
 
     public double getEncoderPos(){
-        return encoder.getPosition();
+        return mastDriver.getSelectedSensorPosition();
     }
 
     public void runLiftManual(double power){
         if(!lowLimit.get() && !highLimit.get()){
-            mastDriver.set(power);
+            mastDriver.set(ControlMode.PercentOutput, power);
         }
     }
 

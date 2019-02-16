@@ -2,14 +2,14 @@ package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Turn extends Command{
+public class GyroTurn extends Command{
 
-    public Turn(double angle, double power){
+    public GyroTurn(double angle, double power){
 
     }
-    public Turn(double angle, double radius, double power){
+    /*public GyroTurn(double angle, double radius, double power){
         
-    }
+    }*/
     @Override
     protected void initialize() {
         super.initialize();

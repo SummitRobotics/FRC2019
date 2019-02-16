@@ -1,26 +1,24 @@
-package frc.robot.panelclaw.clawcommands;
+package frc.robot.panelclaw.pegcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.panelclaw.Peg;
 
-public class ActuatePeg extends Command{
+public class ActuatePeg extends InstantCommand{
 
     private Peg peg = Peg.getInstance();
-    private boolean isComplete = false;
+    private Peg.PegState pegPosition;
 
-    public ActuatePeg(){
+    public ActuatePeg(Peg.PegState pegPosition){
         requires(peg);
+        this.pegPosition = pegPosition;
     }
     @Override
     protected void initialize() {
     }
     @Override
     protected void execute() {
-        isComplete = true;
-    }
-    @Override
-    protected boolean isFinished() {
-        return isComplete;
+        peg.setPeg(pegPosition);
     }
     @Override
     protected void end() {

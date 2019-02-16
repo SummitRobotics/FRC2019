@@ -31,6 +31,7 @@ public class RobotConstants {
     RIGHT_DRIVE_2 = 20,
 
     MAST_DRIVER = 0,
+    MAST_FOLLOWER = 0,
 
     LOW_LIMIT_SWITCH = 0,
     HIGH_LIMIT_SWITCH = 0,

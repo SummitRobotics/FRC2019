@@ -8,7 +8,7 @@ public class ArcadeDrive extends Command{
     Drivetrain drivetrain = Drivetrain.getInstance();
 
     public ArcadeDrive(){
-
+        requires(drivetrain);
     }
     @Override
     protected void initialize() {

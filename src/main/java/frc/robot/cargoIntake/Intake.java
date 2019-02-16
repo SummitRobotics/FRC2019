@@ -10,8 +10,8 @@ import frc.robot.robotcore.RobotConstants;
 
 public class Intake extends Subsystem {
     public enum IntakeState {
-        UP(90),
-        DOWN(-90);
+        UP(0),
+        DOWN(115);
 
         public final double value;
         IntakeState(double value) {
@@ -64,12 +64,7 @@ public class Intake extends Subsystem {
 
     public void setIntakeArm(IntakeState intakePosition, double power){
         if(intakePosition != intakeState){
-            if(intakePosition == IntakeState.UP){
                 arm.set(ControlMode.PercentOutput, power);
-            }
-            else if(intakePosition == IntakeState.DOWN){
-                arm.set(ControlMode.PercentOutput, -power);
-            }
         }
     }
 }

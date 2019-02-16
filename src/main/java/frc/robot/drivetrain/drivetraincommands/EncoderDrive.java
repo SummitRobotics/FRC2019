@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.drivetrain.Drivetrain;
 
-public class GoFwd extends Command{
+public class EncoderDrive extends Command{
     private double leftTarget, rightTarget;
     private double leftError, rightError;
     private double power, distance;
@@ -12,7 +12,7 @@ public class GoFwd extends Command{
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
-    public GoFwd(double distance, double power){
+    public EncoderDrive(double distance, double power){
         requires(drivetrain);
         this.power = power;
         this.distance = distance;

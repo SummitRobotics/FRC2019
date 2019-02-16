@@ -8,8 +8,12 @@
 package frc.robot.robotcore;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.autonomous.TestAuto;
+import frc.robot.autonomous.Yeet;
+import frc.robot.devices.REVdisplay;
 import frc.robot.teleop.TeleopArcade;
 
 
@@ -19,6 +23,8 @@ public class Robot extends TimedRobot {
   public OI gamepad;
 
   public static SendableChooser<OI.Driver_Profile> DriverProfileChooser = new SendableChooser<>();
+  private Command auto;
+  private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
@@ -29,12 +35,16 @@ public class Robot extends TimedRobot {
     DriverProfileChooser.setDefaultOption("Alex Driver Profile", gamepad.new Alex_Driver());
     DriverProfileChooser.addOption("Colin Driver Profile", gamepad.new Colin_Driver());
     //DriverProfileChooser.addOption("Jake Driver Profile", gamepad.new Jake_Driver());
+
+    autoChooser.setDefaultOption("Jump From HAB", new Yeet());
+    autoChooser.addOption("Test Auto", new TestAuto());
     robot.init();
 
   }
 
   @Override
   public void robotPeriodic() {
+    REVdisplay.getInstance().run();
   }
 
   @Override
@@ -48,8 +58,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    auto = autoChooser.getSelected();
     robot.drivetrain.resetGyro();
     
+    if(auto != null){
+      auto.start();
+    }
   }
 
   @Override
@@ -64,9 +78,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    /*if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }*/
+    if (auto != null) {
+      auto.cancel();
+    }
     teleop.init();
   }
 

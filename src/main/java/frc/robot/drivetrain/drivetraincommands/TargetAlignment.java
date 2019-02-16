@@ -28,7 +28,7 @@ public class TargetAlignment extends PIDCommand{
 
     @Override
     protected void initialize() {
-
+        super.initialize();
     }
     @Override
     protected void execute() {
@@ -58,6 +58,10 @@ public class TargetAlignment extends PIDCommand{
     @Override
     protected boolean isFinished() {
         return (getSetpoint() > -1) && (getSetpoint() < 1);
+    }
+    @Override
+    protected void end() {
+        super.end();
     }
     @Override
     protected double returnPIDInput() {

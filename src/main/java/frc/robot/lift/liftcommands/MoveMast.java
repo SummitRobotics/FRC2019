@@ -38,7 +38,7 @@ public class MoveMast extends Command{
     }
     
     public void runToPosition(LiftState position, double power){
-        double target = lift.getEncoderPos() + RobotConstants.NEO_INCHES_TO_TICKS(position.value);
+        double target = lift.getEncoderPos() + RobotConstants.TALON_INCHES_TO_TICKS(position.value);
         double error =  target - lift.getEncoderPos();
         double direction = Math.copySign(1, error);
         while(!(error > -THRESHOLD) && !(error < THRESHOLD)){

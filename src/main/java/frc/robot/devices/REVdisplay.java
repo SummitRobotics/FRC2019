@@ -10,8 +10,15 @@ public class REVdisplay{
     private boolean buttonStatusA, previousStateA, currentStateA;
     private boolean buttonStatusB, previousStateB, currentStateB;
 
-    public REVdisplay(){
+    private static REVdisplay instance;
+    private REVdisplay(){
         
+    }
+    public static REVdisplay getInstance(){
+        if(instance == null){
+            instance = new REVdisplay();
+        }
+        return instance;
     }
 
     public void init(){

@@ -2,19 +2,28 @@ package frc.robot.panelclaw;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotConstants;
 
 public class Peg extends Subsystem{
+    public enum PegState{
+        UP(1),
+        DOWN(0);
+
+        public final double value;
+        PegState(double value){
+            this.value = value;
+        }
+    }
+
     private Servo pegServo;
-    private boolean isPegUp;
+    private PegState pegState;
 
     private static Peg instance;
 
     private Peg(){
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
         pegServo.setBounds(2.2, 0, 1.5, 0, 0.8);
-
-        isPegUp = false;
     }
     public static Peg getInstance(){
         if(instance == null){
@@ -28,20 +37,21 @@ public class Peg extends Subsystem{
         
     }
 
-    public void raisePeg(){
-        if(!isPegUp){
-            pegServo.set(1);
+    public void setPeg(PegState pegPosition){
+        if(pegPosition != pegState){
+            pegServo.set(pegPosition.value);
         }
-        isPegUp = true;
-    }
-    public void lowerPeg(){
-        if(isPegUp){
-            pegServo.set(0);
-        }
-        isPegUp = false;
+        pegState = pegPosition;
     }
 
-    public boolean getPegState(){
-        return isPegUp;
+    public PegState getPegState(){
+        if(pegState != null){
+            return pegState;
+        }
+        else{
+            SmartDashboard.putString("Error", "Peg State currently at null");
+            setPeg(PegState.DOWN);
+            return pegState;
+        }
     }
 }
