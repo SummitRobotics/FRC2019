@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.robotcore.RobotConstants;
 
 public class Intake extends Subsystem {
+    
     public enum IntakeState {
         UP(90),
         DOWN(-90);

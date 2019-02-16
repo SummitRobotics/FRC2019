@@ -18,7 +18,7 @@ public class Robot extends TimedRobot {
   public static TeleopArcade teleop;
   public OI gamepad;
 
-  public static SendableChooser<OI.Driver_Profile> DriverProfileChooser = new SendableChooser<>();
+  public static SendableChooser<OI.DriverProfiles> DriverProfileChooser = new SendableChooser<>();
 
   @Override
   public void robotInit() {
@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
 
     DriverProfileChooser.setDefaultOption("Alex Driver Profile", gamepad.new Alex_Driver());
     DriverProfileChooser.addOption("Colin Driver Profile", gamepad.new Colin_Driver());
-    //DriverProfileChooser.addOption("Jake Driver Profile", gamepad.new Jake_Driver());
     robot.init();
 
   }

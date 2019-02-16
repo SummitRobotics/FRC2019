@@ -4,9 +4,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.drivetrain.*;
-import frc.robot.panelclaw.clawcommands.*;
+import frc.robot.drivetrain.Drivetrain.GearState;
 import frc.robot.drivetrain.drivetraincommands.*;
+import frc.robot.panelclaw.clawcommands.ActuateClaw;
+import frc.robot.panelclaw.clawcommands.IntakePanel;
+import frc.robot.panelclaw.clawcommands.ToggleClaw;
 
 public class OI {
 
@@ -39,7 +43,8 @@ public class OI {
     private static OI instance;
 
     private OI(){
-
+        leftBumperCmd.whenActive(new Shift(GearState.HIGH));
+        
     }
     public static OI getInstance(){
         if(instance == null){
@@ -100,73 +105,19 @@ public class OI {
         return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
     }
 
-    //Magic abstractation. Do not touch. 
-    public abstract class Driver_Profile{
-        public Driver_Profile(){
+    public class DriverProfiles {
 
-        }
-        public abstract double getForwardPower();
-        public abstract double getRotationalPower();
-        public abstract double getTrimPower();
-    }
+        int[] keybinds;
+        Command[] analogActions = new Command[] {new ToggleShift(), new ToggleClaw(), new };
 
+        public DriverProfiles(int[] keybinds) {
 
+            this.keybinds = keybinds;
+        }
 
-    public class Alex_Driver extends Driver_Profile{
-        public Alex_Driver(){
-            rightBumperCmd.whenPressed(new Shift(Drivetrain.GearState.HIGH));
-            YButtonCmd.whenPressed(new IntakePanel());
-        }
-        @Override
-        public double getForwardPower(){
-            return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
-        }
-        @Override
-        public double getRotationalPower(){
-            return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
-        }
-        @Override
-        public double getTrimPower(){
-            return getRightJoystickY();
-        }
-    }
-
-
-    public class Colin_Driver extends Driver_Profile{
-        public Colin_Driver(){
-            rightBumperCmd.whileHeld(new Shift(Drivetrain.GearState.HIGH));
-        }
-        @Override
-        public double getForwardPower(){
-            return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
-        }
-        @Override
-        public double getRotationalPower(){
-            return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
-        }
-        @Override
-        public double getTrimPower(){
-            return getRightJoystickY();
-        }
-    }
-
-    
-    public class Jake_Driver extends Driver_Profile{
-        public Jake_Driver(){
-            rightBumperCmd.whenPressed(new Shift(Drivetrain.GearState.HIGH));
-            leftBumperCmd.whenPressed(new Shift(Drivetrain.GearState.LOW));
-        }
-        @Override
-        public double getForwardPower(){
-            return makeCurve(getRightTrigger()) - makeCurve(getLeftTrigger());
-        }
-        @Override
-        public double getRotationalPower(){
-            return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
-        }
-        @Override
-        public double getTrimPower(){
-            return getRightJoystickY();
+        public double getForwardPower() {
+            
+            
         }
     }
 }

@@ -24,7 +24,6 @@ public class Claw extends Subsystem {
         ClawState(Value value){
             this.value = value;
         }
-
     }
 
     public enum ClawArmState{
@@ -72,8 +71,21 @@ public class Claw extends Subsystem {
     }
 
     public void setClaw(ClawState clawPosition){
-            claw.set(clawPosition.value);
-            clawState = clawPosition;
+        claw.set(clawPosition.value);
+        clawState = clawPosition;
+    }
+
+    public void toggleClaw() {
+        
+        if (clawState == ClawState.OPEN) {
+
+            clawState = ClawState.CLOSE;
+        } else {
+            
+            clawState = ClawState.OPEN;
+        }
+
+        claw.set(clawState.value);
     }
 
     public void runArm(double power){
@@ -90,7 +102,6 @@ public class Claw extends Subsystem {
     public void resetArmEncoder(){
         clawArm.setSelectedSensorPosition(0);
     }
-
 
     public boolean isPanelPresent(){
         return panelSensor.isActive();

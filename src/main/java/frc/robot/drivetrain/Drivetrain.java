@@ -141,6 +141,18 @@ public class Drivetrain extends Subsystem{
         gearState = gearValue;
     }
 
+    public void toggleGear() {
+        if (gearState == GearState.HIGH) {
+
+            gearState = GearState.LOW;
+        } else {
+
+            gearState = GearState.HIGH;
+        }
+
+        gearShifter.set(gearState.value);
+    }
+
     public void togglePTO(PTOState ptoValue){
         PTOshifter.set(ptoValue.value);
         ptoState = ptoValue;
