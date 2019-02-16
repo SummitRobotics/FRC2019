@@ -1,18 +1,23 @@
 package frc.robot.drivetrain.drivetraincommands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.drivetrain.Drivetrain;
 
-public class EncoderDrive extends Command{
+public class EncoderDrive extends PIDCommand{
     private double leftTarget, rightTarget;
     private double leftError, rightError;
     private double power, distance;
     private final double THRESHOLD = 25;
+    private static final double
+    P = 1,
+    I = 0, 
+    D = 0;
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
     public EncoderDrive(double distance, double power){
+        super(P, I, D);
         requires(drivetrain);
         this.power = power;
         this.distance = distance;
