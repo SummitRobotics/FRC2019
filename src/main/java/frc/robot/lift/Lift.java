@@ -26,15 +26,15 @@ public class Lift extends Subsystem{
     }
 
     private TalonSRX mastDriver;
-    private VictorSPX mastFollower;
+    //private VictorSPX mastFollower;
     private DigitalInput lowLimit, highLimit;
 
     private static Lift instance;
 
     private Lift(){
         mastDriver = new TalonSRX(RobotConstants.Ports.MAST_DRIVER);
-        mastFollower = new VictorSPX(RobotConstants.Ports.MAST_FOLLOWER);
-        mastFollower.follow(mastDriver);
+        //mastFollower = new VictorSPX(RobotConstants.Ports.MAST_FOLLOWER);
+        //mastFollower.follow(mastDriver);
         mastDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         //state implementation
         lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);

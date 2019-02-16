@@ -9,7 +9,6 @@ public class ActuateClaw extends InstantCommand{
 
     private Claw claw = Claw.getIntance();
     private ClawState clawPosition;
-    private boolean isComplete = false;
 
     public ActuateClaw(ClawState clawPosition){
         requires(claw);

@@ -1,6 +1,8 @@
 package frc.robot.panelclaw;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotConstants;
@@ -16,14 +18,29 @@ public class Peg extends Subsystem{
         }
     }
 
+    public enum PanelOuttakeState{
+        OUT(Value.kForward),
+        IN(Value.kReverse);
+
+        public final Value value;
+        PanelOuttakeState(Value value){
+            this.value = value;
+        }
+    }
+
     private Servo pegServo;
     private PegState pegState;
+
+    private DoubleSolenoid panelOuttake;
+    private PanelOuttakeState panelState;
 
     private static Peg instance;
 
     private Peg(){
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
         pegServo.setBounds(2.2, 0, 1.5, 0, 0.8);
+
+        panelOuttake = new DoubleSolenoid(RobotConstants.Ports.PANEL_SOLENOID_OPEN, RobotConstants.Ports.PANEL_SOLENOID_CLOSE);
     }
     public static Peg getInstance(){
         if(instance == null){
@@ -54,4 +71,12 @@ public class Peg extends Subsystem{
             return pegState;
         }
     }
+
+    public void setPanel(PanelOuttakeState panelValue){
+        if(panelValue != panelState){
+            panelOuttake.set(panelValue.value);
+        }
+        panelState = panelValue;
+    }
+
 }

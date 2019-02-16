@@ -4,9 +4,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.drivetrain.*;
-import frc.robot.panelclaw.clawcommands.*;
-import frc.robot.drivetrain.drivetraincommands.*;
+import frc.robot.drivetrain.Drivetrain;
+import frc.robot.drivetrain.drivetraincommands.Shift;
 
 public class OI {
 
@@ -39,7 +38,7 @@ public class OI {
     private static OI instance;
 
     private OI(){
-
+        rightBumperCmd.whileHeld(new Shift(Drivetrain.GearState.HIGH));
     }
     public static OI getInstance(){
         if(instance == null){
@@ -100,7 +99,7 @@ public class OI {
         return Math.copySign(makeCurve(Math.abs(getLeftJoystickX())), getLeftJoystickX());
     }
 
-    //Magic abstractation. Do not touch. 
+    /*//Magic abstractation. Do not touch. 
     public abstract class Driver_Profile{
         public Driver_Profile(){
 
@@ -168,6 +167,6 @@ public class OI {
         public double getTrimPower(){
             return getRightJoystickY();
         }
-    }
+    }*/
 }
     

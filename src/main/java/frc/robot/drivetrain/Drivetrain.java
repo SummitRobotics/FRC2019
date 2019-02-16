@@ -56,7 +56,7 @@ public class Drivetrain extends Subsystem{
             this.value = value;
         }
     }
-    private CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
+    public CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
     private SpeedControllerGroup leftDrive, rightDrive;
     public DifferentialDrive robotDrive;
     private CANEncoder leftEncoder, rightEncoder;
@@ -76,18 +76,18 @@ public class Drivetrain extends Subsystem{
     private static Drivetrain instance;
     
     private Drivetrain(){
-        leftDrive0 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_MAIN, MotorType.kBrushless);
-        leftDrive1 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
-        leftDrive1.follow(leftDrive0);
-        leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_2, MotorType.kBrushless);
-        leftDrive2.follow(leftDrive0);
+        leftDrive0 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_0, MotorType.kBrushless);
+        leftDrive1 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_MAIN, MotorType.kBrushless);
+        //leftDrive1.follow(leftDrive0);
+        leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
+        //leftDrive2.follow(leftDrive0);
         leftEncoder = new CANEncoder(leftDrive0);
 
-        rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
-        rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
-        rightDrive1.follow(rightDrive0);
-        rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_2, MotorType.kBrushless);
-        rightDrive2.follow(rightDrive0);
+        rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
+        rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
+        //rightDrive1.follow(rightDrive0);
+        rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
+        //rightDrive2.follow(rightDrive0);
         rightEncoder = new CANEncoder(rightDrive0);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);

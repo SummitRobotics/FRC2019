@@ -48,10 +48,10 @@ public class Claw extends Subsystem {
     private ClawArmState clawArmState;
 
     private Claw() {
-        clawArm = new TalonSRX(RobotConstants.Ports.CLAW_ARM);
+        clawArm = new TalonSRX(RobotConstants.Ports.CLAW_MOVEMENT);
         clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-        claw = new DoubleSolenoid(0, 1);
+        claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
         limit = new DigitalInput(RobotConstants.Ports.CLAW_LIMIT_SWITCH);
