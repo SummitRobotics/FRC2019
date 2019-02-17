@@ -72,6 +72,21 @@ public class Claw extends Subsystem {
             claw.set(clawPosition.value);
             clawState = clawPosition;
     }
+    public ClawState toggleClaw(){
+        ClawState clawPos;
+        if(clawState != null){
+            if(clawState == ClawState.CLOSE){
+                clawPos = ClawState.OPEN;
+                return clawPos;
+            }
+            else if(clawState == ClawState.OPEN){
+                clawPos = ClawState.CLOSE;
+                return clawPos;
+            }
+        }
+        clawPos = ClawState.OPEN;
+        return clawPos;
+    }
 
     public void runArm(double power){
         clawArm.set(ControlMode.PercentOutput, power);
@@ -81,6 +96,9 @@ public class Claw extends Subsystem {
     }
     public double getClawArmState(){
         return clawArmState.value;
+    }
+    public boolean getClawLimit(){
+        return !limit.get();
     }
 
     public void resetArmEncoder(){

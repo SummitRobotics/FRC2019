@@ -21,6 +21,7 @@ public class RobotConstants {
   public class Ports{
 
     public static final int CONTROLLER_PORT = 0;
+    public static final int DASHBOARD_PORT = 1;
 
     public static final int
     LEFT_DRIVE_0 = 20,
@@ -34,13 +35,16 @@ public class RobotConstants {
     //MAST_FOLLOWER = 0,
 
     LOW_LIMIT_SWITCH = 5,
-    HIGH_LIMIT_SWITCH = 99,
+    //HIGH_LIMIT_SWITCH = 99,
 
-    CARGO_LIMIT_SWITCH = 0,
+    CARGO_LIMIT_SWITCH = 1,
     CLAW_LIMIT_SWITCH = 6,
 
-    DRIVE_SOLENOID_OPEN = 0,
-    DRIVE_SOLENOID_CLOSE = 1,
+    CARGO_BREAK_1 = 0,
+    CARGO_BREAK_2 = 2,
+
+    DRIVE_SOLENOID_OPEN = 1,
+    DRIVE_SOLENOID_CLOSE = 0,
     PTO_SOLENOID_OPEN = 2,
     PTO_SOLENOID_CLOSE = 3, 
     CLAW_SOLENOID_OPEN = 4, 
@@ -49,7 +53,7 @@ public class RobotConstants {
     PANEL_SOLENOID_CLOSE = 7,
 
     CLAW_MOVEMENT = 50,
-    INTAKE_ARM = 40,
+    INTAKE_MOVEMENT = 40,
     INTAKE_ROLLER = 41,
     UNUSED = 61,
 
@@ -57,6 +61,8 @@ public class RobotConstants {
 
     BLINKIN_LED = 0,
 
-    GYRO = 10;
+    GYRO = 10,
+
+    PRESSURE_READER = 0;
   }
 }

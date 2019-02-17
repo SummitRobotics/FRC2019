@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.RobotConstants;
 
 public class Peg extends Subsystem{
@@ -51,7 +52,7 @@ public class Peg extends Subsystem{
 
     @Override
     protected void initDefaultCommand() {
-        
+        setDefaultCommand(new ActuatePeg(PegState.DOWN));
     }
 
     public void setPeg(PegState pegPosition){
@@ -70,6 +71,22 @@ public class Peg extends Subsystem{
             setPeg(PegState.DOWN);
             return pegState;
         }
+    }
+
+    public PegState togglePeg(){
+        PegState pegPos;
+        if(pegState != null){
+            if(pegState == PegState.UP){
+                pegPos = PegState.DOWN;
+                return pegPos;
+            }
+            else if(pegState == PegState.DOWN){
+                pegPos = PegState.UP;
+                return pegPos;
+            }
+        }
+        pegPos = pegState.DOWN;
+        return pegPos;
     }
 
     public void setPanel(PanelOuttakeState panelValue){

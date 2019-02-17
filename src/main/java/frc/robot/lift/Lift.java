@@ -38,7 +38,7 @@ public class Lift extends Subsystem{
         mastDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         //state implementation
         lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);
-        highLimit = new DigitalInput(RobotConstants.Ports.HIGH_LIMIT_SWITCH);
+        //highLimit = new DigitalInput(RobotConstants.Ports.HIGH_LIMIT_SWITCH);
     }
     public static Lift getInstance(){
         if(instance == null){

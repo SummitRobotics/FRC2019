@@ -6,13 +6,19 @@ import frc.robot.cargointake.Intake;
 public class SpinIntake extends Command{
     private Intake intake = Intake.getInstance();
     //TODO - PID
-    private final double POWER = 0.5;
-    private double timeout;
+    private double timeout, direction;
+    private boolean flag = true;
 
-    public SpinIntake(double timeout){
+    public SpinIntake(double timeout, double direction){
         requires(intake);
         this.timeout = timeout;
         setTimeout(timeout);
+        direction = Math.copySign(1, direction);
+    }
+    public SpinIntake(double direction){
+        requires(intake);
+        flag = false;
+        direction = Math.copySign(1, direction);
     }
     @Override
     protected void initialize() {
@@ -20,14 +26,20 @@ public class SpinIntake extends Command{
     }
     @Override
     protected void execute() {
-        intake.intake(1);
+        intake.intake(1 * (int)direction);
     }
     @Override
     protected boolean isFinished() {
-        return timeSinceInitialized() > timeout;
+        if(flag){
+            return timeSinceInitialized() > timeout;
+        }
+        else{
+            return flag;
+        }
     }
     @Override
     protected void end() {
         super.end();
+        intake.intake(0);
     }
 }

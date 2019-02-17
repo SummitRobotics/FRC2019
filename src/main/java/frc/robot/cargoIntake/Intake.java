@@ -34,16 +34,19 @@ public class Intake extends Subsystem {
     private IntakeSpinState intakeSpinState;
 
     private DigitalInput isUp;
+    private DigitalInput break1, break2;
 
     private static Intake instance;
     
     private Intake(){
-        arm = new TalonSRX(RobotConstants.Ports.INTAKE_ARM);
+        arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
         rollers = new TalonSRX(RobotConstants.Ports.INTAKE_ROLLER);
 
         isUp = new DigitalInput(RobotConstants.Ports.CARGO_LIMIT_SWITCH);
+        break1 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_1);
+        break2 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_2);
     }
 
     public static Intake getInstance(){
@@ -60,10 +63,16 @@ public class Intake extends Subsystem {
     public boolean getCargoLimit(){
         return !isUp.get();
     }
+    public boolean getBreak1(){
+        return break1.get();
+    }
+    public boolean getBreak2(){
+        return break2.get();
+    }
     public IntakeState getIntakeState(){
         return intakeState;
     }
-    public double getIntakeArmPosition(){
+    public double getIntakeArmEncoder(){
         return arm.getSelectedSensorPosition();
     }
 

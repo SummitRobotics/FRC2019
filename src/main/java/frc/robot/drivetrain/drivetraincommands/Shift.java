@@ -1,10 +1,9 @@
 package frc.robot.drivetrain.drivetraincommands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.drivetrain.Drivetrain;
 
-public class Shift extends Command{
-    private boolean isDone;
+public class Shift extends InstantCommand{
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
     private Drivetrain.GearState gearValue;
@@ -22,10 +21,6 @@ public class Shift extends Command{
     @Override
     protected void execute() {
         drivetrain.shiftGear(gearValue);
-    }
-    @Override
-    protected boolean isFinished() {
-        return false;
     }
     @Override
     protected void end() {

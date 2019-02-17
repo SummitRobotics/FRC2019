@@ -1,5 +1,6 @@
 package frc.robot.lift.liftcommands;
 
+import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.robotcore.OI;
 import frc.robot.Robot;
@@ -7,7 +8,6 @@ import frc.robot.lift.Lift;
 
 public class TrimMast extends Command{
     private Lift lift = Lift.getInstance();
-
     public TrimMast (){
         requires(lift);
     }

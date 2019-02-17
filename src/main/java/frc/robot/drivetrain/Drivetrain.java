@@ -5,6 +5,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.drivetraincommands.ArcadeDrive;
+import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.robotcore.RobotConstants;
 
 public class Drivetrain extends Subsystem{
@@ -56,7 +58,7 @@ public class Drivetrain extends Subsystem{
             this.value = value;
         }
     }
-    public CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
+    private CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
     private SpeedControllerGroup leftDrive, rightDrive;
     public DifferentialDrive robotDrive;
     private CANEncoder leftEncoder, rightEncoder;
@@ -73,21 +75,23 @@ public class Drivetrain extends Subsystem{
     private PigeonIMU gyro;
     double[] ypr;
 
+    private Compressor compressor;
+
     private static Drivetrain instance;
     
     private Drivetrain(){
         leftDrive0 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_0, MotorType.kBrushless);
         leftDrive1 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_MAIN, MotorType.kBrushless);
-        //leftDrive1.follow(leftDrive0);
+        leftDrive1.follow(leftDrive0);
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
-        //leftDrive2.follow(leftDrive0);
+        leftDrive2.follow(leftDrive0);
         leftEncoder = new CANEncoder(leftDrive0);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
-        //rightDrive1.follow(rightDrive0);
+        rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
-        //rightDrive2.follow(rightDrive0);
+        rightDrive2.follow(rightDrive0);
         rightEncoder = new CANEncoder(rightDrive0);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
@@ -100,6 +104,10 @@ public class Drivetrain extends Subsystem{
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
         gearShifter = new DoubleSolenoid(RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
+        //gearState = GearState.LOW;
+
+        compressor = new Compressor(0);
+        compressor.setClosedLoopControl(true);
     }
 
     public static Drivetrain getInstance(){
@@ -137,13 +145,29 @@ public class Drivetrain extends Subsystem{
     }
 
     public void shiftGear(GearState gearValue){
-        gearShifter.set(gearValue.value);
         gearState = gearValue;
+        gearShifter.set(gearValue.value);
     }
 
-    public void togglePTO(PTOState ptoValue){
+    public void setPTO(PTOState ptoValue){
         PTOshifter.set(ptoValue.value);
         ptoState = ptoValue;
+    }
+
+    public GearState toggleGear(){
+        GearState gearPos;
+        if(gearState.value != null){
+            if(gearState == GearState.HIGH){
+                gearPos = GearState.LOW;
+                return gearPos;
+            }
+            else if(gearState == GearState.LOW){
+                gearPos = GearState.HIGH;
+                return gearPos;
+            }
+        }
+        gearPos = GearState.LOW;
+        return gearPos;
     }
     public void setLEDColor(Blinkin blinkinValue){
         blinkin.set(blinkinValue.value);
