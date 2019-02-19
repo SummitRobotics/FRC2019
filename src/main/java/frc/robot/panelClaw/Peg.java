@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.RobotConstants;
 
 public class Peg extends Subsystem{
@@ -19,12 +18,12 @@ public class Peg extends Subsystem{
         }
     }
 
-    public enum PanelOuttakeState{
+    public enum ChairState{
         OUT(Value.kForward),
         IN(Value.kReverse);
 
         public final Value value;
-        PanelOuttakeState(Value value){
+        ChairState(Value value){
             this.value = value;
         }
     }
@@ -32,8 +31,8 @@ public class Peg extends Subsystem{
     private Servo pegServo;
     private PegState pegState;
 
-    private DoubleSolenoid panelOuttake;
-    private PanelOuttakeState panelState;
+    private DoubleSolenoid chairOuttake;
+    private ChairState chairState;
 
     private static Peg instance;
 
@@ -41,7 +40,7 @@ public class Peg extends Subsystem{
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
         pegServo.setBounds(2.2, 0, 1.5, 0, 0.8);
 
-        panelOuttake = new DoubleSolenoid(RobotConstants.Ports.PANEL_SOLENOID_OPEN, RobotConstants.Ports.PANEL_SOLENOID_CLOSE);
+        chairOuttake = new DoubleSolenoid(RobotConstants.Ports.PANEL_SOLENOID_OPEN, RobotConstants.Ports.PANEL_SOLENOID_CLOSE);
     }
     public static Peg getInstance(){
         if(instance == null){
@@ -52,16 +51,14 @@ public class Peg extends Subsystem{
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new ActuatePeg(PegState.DOWN));
+        
     }
 
+    /* --- METHODS FOR PEG SERVO --- */
     public void setPeg(PegState pegPosition){
-        if(pegPosition != pegState){
-            pegServo.set(pegPosition.value);
-        }
+        pegServo.set(pegPosition.value);
         pegState = pegPosition;
     }
-
     public PegState getPegState(){
         if(pegState != null){
             return pegState;
@@ -73,27 +70,62 @@ public class Peg extends Subsystem{
         }
     }
 
+    public boolean isPegUp(){
+        if(pegState == PegState.DOWN){
+            return false;
+        }
+        else if(pegState == PegState.UP){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public PegState togglePeg(){
-        PegState pegPos;
-        if(pegState != null){
-            if(pegState == PegState.UP){
+        PegState pegPos = pegState;
+            if(isPegUp()){
                 pegPos = PegState.DOWN;
                 return pegPos;
             }
-            else if(pegState == PegState.DOWN){
+            if(!isPegUp()){
                 pegPos = PegState.UP;
                 return pegPos;
             }
-        }
-        pegPos = pegState.DOWN;
         return pegPos;
     }
 
-    public void setPanel(PanelOuttakeState panelValue){
-        if(panelValue != panelState){
-            panelOuttake.set(panelValue.value);
+
+    /* ----- METHODS FOR CHAIR (CARGO SHOOTER) ----- */
+    public void setChair(ChairState chairPos){
+        if(chairPos != chairState){
+            chairOuttake.set(chairPos.value);
         }
-        panelState = panelValue;
+        chairState = chairPos;
+    }
+
+    public boolean isChairOut(){
+        if(chairState == ChairState.IN){
+            return false;
+        }
+        else if(chairState == ChairState.OUT){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public ChairState toggleChair(){
+        ChairState chairPos = chairState;
+        if(isChairOut()){
+            chairPos = ChairState.IN;
+            return chairPos;
+        }
+        if(!isChairOut()){
+            chairPos = ChairState.OUT;
+            return chairPos;
+        }
+        return chairPos;
     }
 
 }

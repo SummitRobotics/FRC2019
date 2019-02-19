@@ -3,10 +3,7 @@ package frc.robot.lift;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+//import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -66,6 +63,6 @@ public class Lift extends Subsystem{
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new TrimMast());
+        setDefaultCommand(new MoveMastManual());
     }
 }

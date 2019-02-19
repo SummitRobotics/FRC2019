@@ -4,18 +4,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.cargointake.cargocommands.LoadCargoFromGround;
-import frc.robot.cargointake.cargocommands.LoadFromCargoStation;
-import frc.robot.cargointake.cargocommands.SpinIntake;
-import frc.robot.drivetrain.Drivetrain;
+import frc.robot.cargointake.cargocommands.ActuateIntake;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
-import frc.robot.lift.liftcommands.TrimMast;
-import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
+import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
+import frc.robot.robotcore.universalcommands.IntakePanel;
+import frc.robot.robotcore.universalcommands.LoadCargoFromGround;
+import frc.robot.robotcore.universalcommands.LoadFromCargoStation;
 
 public class OI {
 
@@ -70,11 +68,27 @@ public class OI {
         }
     };
 
-    Button MastCommand = new Button(){
+    Button RightJoystickCmd = new Button(){
     
         @Override
         public boolean get() {
             return deadzone(getRightJoystickY()) != 0;
+        }
+    };
+
+    Button DpadYCmd = new Button(){
+    
+        @Override
+        public boolean get() {
+            return isDpadLeft() || isDpadRight();
+        }
+    };
+
+    Button DpadXCmd = new Button(){
+    
+        @Override
+        public boolean get() {
+            return isDpadUp() || isDpadDown();
         }
     };
 
@@ -150,21 +164,21 @@ public class OI {
         }
     };
 
-    private final double DEADZONE = 0.15;
+    private final double DEADZONE = 0.10;
     private static OI instance;
 
     private OI(){
-        leftBumperCmd.whenActive(new Shift(Drivetrain.getInstance().toggleGear()));
-        YButtonCmd.whenPressed(new ActuatePeg(Peg.getInstance().togglePeg()));
-        AButtonCmd.whileHeld(new SpinIntake(1));
-        BButtonCmd.whileHeld(new SpinIntake(-1));
-        XButtonCmd.whenPressed(new ActuateClaw(Claw.getIntance().toggleClaw()));
-        MastCommand.whenActive(new TrimMast());
+        leftBumperCmd.whenActive(new Shift().new ToggleShift());
+        YButtonCmd.whenActive(new ActuatePeg().new TogglePeg());
+        AButtonCmd.whenActive(new ActuateIntake().new ToggleIntake());
+        BButtonCmd.whenActive(new ActuateChair().new ToggleChair());
+        XButtonCmd.whenActive(new ActuateClaw().new ToggleClaw());
         MastHigh.whenPressed(new MoveMast(LiftState.HIGH, 0.5));
         MastMid.whenPressed(new MoveMast(LiftState.MID, 0.5));
         MastLow.whenPressed(new MoveMast(LiftState.LOW, 0.5));
         CargoLoadStation.whenPressed(new LoadFromCargoStation());
         CargoGround.whenPressed(new LoadCargoFromGround());
+        PanelGround.whenPressed(new IntakePanel());
 
     }
     public static OI getInstance(){
@@ -216,6 +230,18 @@ public class OI {
     }
     public boolean isRightBumper(){
         return controller.getBumper(Hand.kRight);
+    }
+    public boolean isDpadLeft(){
+        return controller.getPOV() == 270;
+    }
+    public boolean isDpadRight(){
+        return controller.getPOV() == 90;
+    }
+    public boolean isDpadUp(){
+        return controller.getPOV() == 0;
+    }
+    public boolean isDpadDown(){
+        return controller.getPOV() == 180;
     }
 
     public double getLeftTrigger() {

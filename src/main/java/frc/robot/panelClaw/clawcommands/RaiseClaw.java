@@ -5,7 +5,7 @@ import frc.robot.panelclaw.Claw;
 import frc.robot.robotcore.RobotConstants;
 
 public class RaiseClaw extends Command{
-    private Claw claw = Claw.getIntance();
+    private Claw claw = Claw.getInstance();
     private Claw.ClawArmState position;
 
     private double direction, error, target; 
@@ -25,20 +25,20 @@ public class RaiseClaw extends Command{
     @Override
     protected void execute() {
         direction = Math.copySign(1, error);
-        if((direction != 1) && (!claw.isAtLimit())){
+        if((direction != 1) && (!claw.getClawLimit())){
             claw.runArm(POWER * direction);
             error = target - claw.getArmEncoder();
         }
     }
     @Override
     protected boolean isFinished() {
-        return ((error > -THRESHOLD) && (error < THRESHOLD)) || ((direction != 1) && (!claw.isAtLimit()));
+        return ((error > -THRESHOLD) && (error < THRESHOLD)) || ((direction != 1) && (!claw.getClawLimit()));
     }
     @Override
     protected void end() {
         super.end();
         claw.runArm(0);
-        if((claw.isAtLimit()) && (claw.getClawArmState() == 0)){
+        if((claw.getClawLimit()) && (claw.getClawArmState() == Claw.ClawArmState.UP)){
             claw.resetArmEncoder();
         }
     }

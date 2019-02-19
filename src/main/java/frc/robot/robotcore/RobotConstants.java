@@ -5,6 +5,10 @@ public class RobotConstants {
   public static final double TALON_TICKS_PER_ROT = 4096;
   public static final double NEO_TICKS_PER_REV = 42;
 
+  //TODO - new angles and heights
+  public static final double CAMERA_HEIGHT = 21.5;
+  public static final double CAMERA_ANGLE = 21.86;
+
   public static double TALON_INCHES_TO_TICKS(double inch){
     return (inch / (WHEEL_DIAMETER * Math.PI) * TALON_TICKS_PER_ROT);
   }
@@ -43,14 +47,14 @@ public class RobotConstants {
     CARGO_BREAK_1 = 0,
     CARGO_BREAK_2 = 2,
 
-    DRIVE_SOLENOID_OPEN = 1,
-    DRIVE_SOLENOID_CLOSE = 0,
+    DRIVE_SOLENOID_OPEN = /*1*/ 6,
+    DRIVE_SOLENOID_CLOSE = /*0*/ 7,
     PTO_SOLENOID_OPEN = 2,
     PTO_SOLENOID_CLOSE = 3, 
-    CLAW_SOLENOID_OPEN = 4, 
-    CLAW_SOLENOID_CLOSE = 5,
-    PANEL_SOLENOID_OPEN = 6,
-    PANEL_SOLENOID_CLOSE = 7,
+    CLAW_SOLENOID_OPEN = /*7*/ 1, 
+    CLAW_SOLENOID_CLOSE = /*6*/ 0,
+    PANEL_SOLENOID_OPEN = 4,
+    PANEL_SOLENOID_CLOSE = 5,
 
     CLAW_MOVEMENT = 50,
     INTAKE_MOVEMENT = 40,

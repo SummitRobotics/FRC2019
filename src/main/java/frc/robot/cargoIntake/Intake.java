@@ -3,15 +3,18 @@ package frc.robot.cargointake;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.cargointake.cargocommands.MoveCargoWrist;
 import frc.robot.robotcore.RobotConstants;
 
 public class Intake extends Subsystem {
     public enum IntakeState {
         UP(0),
-        DOWN(115);
+        INTAKE_LOWER(-95),
+        DOWN(-115);
 
         public final double value;
         IntakeState(double value) {
@@ -21,6 +24,7 @@ public class Intake extends Subsystem {
 
     public enum IntakeSpinState{
         ON(1),
+        SLOW(0.5),
         OFF(0),
         REVERSE(-1);
 
@@ -29,7 +33,18 @@ public class Intake extends Subsystem {
             this.value = value;
         }
     }
-    private TalonSRX arm, rollers;
+
+    public enum CargoPosition{
+        STAGE_1(0),
+        STAGE_2(1);
+
+        public final int value;
+        CargoPosition(int value){
+            this.value = value;
+        }
+    }
+    private TalonSRX arm;
+    private VictorSPX rollers;
     private IntakeState intakeState;
     private IntakeSpinState intakeSpinState;
 
@@ -42,7 +57,7 @@ public class Intake extends Subsystem {
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-        rollers = new TalonSRX(RobotConstants.Ports.INTAKE_ROLLER);
+        rollers = new VictorSPX(RobotConstants.Ports.INTAKE_ROLLER);
 
         isUp = new DigitalInput(RobotConstants.Ports.CARGO_LIMIT_SWITCH);
         break1 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_1);
@@ -57,16 +72,16 @@ public class Intake extends Subsystem {
     }
     @Override
     protected void initDefaultCommand() {
-        
+        setDefaultCommand(new MoveCargoWrist());
     }
 
     public boolean getCargoLimit(){
         return !isUp.get();
     }
-    public boolean getBreak1(){
+    public boolean isBallDetected(){
         return break1.get();
     }
-    public boolean getBreak2(){
+    public boolean isBallPresent(){
         return break2.get();
     }
     public IntakeState getIntakeState(){
@@ -75,9 +90,14 @@ public class Intake extends Subsystem {
     public double getIntakeArmEncoder(){
         return arm.getSelectedSensorPosition();
     }
+    public void resetArmEncoder(){
+        arm.setSelectedSensorPosition(0);
+    }
 
-    public void intake(int direction){
-        rollers.set(ControlMode.PercentOutput, 1 * direction);
+    public void intake(int power){
+        while(true){
+            rollers.set(ControlMode.PercentOutput, power);
+        }
     }
     public void moveIntakeArm(double power){
         arm.set(ControlMode.PercentOutput, power);
@@ -89,9 +109,31 @@ public class Intake extends Subsystem {
         }
     }
     public void setIntakeSpin(IntakeSpinState intakeSpinPosition){
-        if(intakeSpinPosition != intakeSpinState){
-            intake((int)intakeSpinPosition.value);
-        }
+        intake((int)intakeSpinPosition.value);
         intakeSpinState = intakeSpinPosition;
+    }
+    public IntakeSpinState toggleIntakeSpin(){
+        IntakeSpinState intakeSpin = intakeSpinState;
+        if(isSpin()){
+            intakeSpin = IntakeSpinState.OFF;
+            return intakeSpin;
+        }
+        if(!isSpin()){
+            intakeSpin = IntakeSpinState.ON;
+            return intakeSpin;
+        }
+        return intakeSpin;
+
+    }
+    public boolean isSpin(){
+        if(intakeSpinState == IntakeSpinState.OFF){
+            return false;
+        }
+        else if(intakeSpinState == IntakeSpinState.ON){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
