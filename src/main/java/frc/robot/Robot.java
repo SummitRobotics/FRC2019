@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     robot.run();
+    robot.dashboard();
   }
 
   @Override

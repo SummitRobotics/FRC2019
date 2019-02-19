@@ -21,6 +21,7 @@ public class RaiseClaw extends Command{
     protected void initialize() {
         target = RobotConstants.TALON_TICKS_PER_ROT * (position.value / 360);
         error = target - claw.getArmEncoder();
+        direction = Math.copySign(1, error);
     }
     @Override
     protected void execute() {
@@ -28,6 +29,7 @@ public class RaiseClaw extends Command{
         if((direction != 1) && (!claw.getClawLimit())){
             claw.runArm(POWER * direction);
             error = target - claw.getArmEncoder();
+            direction = Math.copySign(1, error);
         }
     }
     @Override

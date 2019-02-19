@@ -26,6 +26,7 @@ public class MoveIntake extends Command{
     protected void execute() {
         intake.setIntakeArm(intakePosition, POWER * direction);
         error = target - intake.getIntakeArmEncoder();
+        direction = Math.copySign(1, error);
     }
     @Override
     protected boolean isFinished() {

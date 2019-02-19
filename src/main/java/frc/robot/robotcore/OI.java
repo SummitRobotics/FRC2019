@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
+import frc.robot.cargointake.Intake.IntakeState;
 import frc.robot.cargointake.cargocommands.ActuateIntake;
+import frc.robot.cargointake.cargocommands.MoveIntake;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
@@ -169,6 +171,7 @@ public class OI {
 
     private OI(){
         leftBumperCmd.whenActive(new Shift().new ToggleShift());
+        rightBumperCmd.whenActive(new MoveIntake(IntakeState.UP));
         YButtonCmd.whenActive(new ActuatePeg().new TogglePeg());
         AButtonCmd.whenActive(new ActuateIntake().new ToggleIntake());
         BButtonCmd.whenActive(new ActuateChair().new ToggleChair());
