@@ -49,7 +49,7 @@ public class Lift extends Subsystem{
     }
 
     public void runLiftManual(double power){
-        if(!lowLimit.get() && !highLimit.get()){
+        if(!lowLimit.get()){
             mastDriver.set(ControlMode.PercentOutput, power);
         }
     }

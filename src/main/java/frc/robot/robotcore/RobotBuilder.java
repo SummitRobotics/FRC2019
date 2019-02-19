@@ -29,7 +29,7 @@ public class RobotBuilder{
         lift = Lift.getInstance();
         lemonlight = Limelight.getInstance();
         display = REVdisplay.getInstance();
-        pressureSensor = new PressureSensor();
+        pressureSensor = PressureSensor.getInstance();
     }
     public static RobotBuilder getInstance() {
         if (instance == null) {
@@ -55,6 +55,12 @@ public class RobotBuilder{
     public void dashboard(){
         SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
         SmartDashboard.putNumber("Intake Arm Encoder",intake.getIntakeArmEncoder());
+        SmartDashboard.putBoolean("Break 1", intake.isBallDetected());
+        SmartDashboard.putBoolean("Break 2", intake.isBallPresent());
+        SmartDashboard.putBoolean("Claw Limit", claw.getClawLimit());
+        SmartDashboard.putBoolean("Intake Limit", intake.getCargoLimit());
+        SmartDashboard.putBoolean("Mast Limit", lift.getLowLimit());
+        SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());
         SmartDashboard.putString("Claw State", claw.getClawState().toString());
     }
 }

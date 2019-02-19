@@ -79,10 +79,10 @@ public class Intake extends Subsystem {
         return !isUp.get();
     }
     public boolean isBallDetected(){
-        return break1.get();
+        return !break1.get();
     }
     public boolean isBallPresent(){
-        return break2.get();
+        return !break2.get();
     }
     public IntakeState getIntakeState(){
         return intakeState;

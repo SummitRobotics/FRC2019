@@ -6,7 +6,7 @@ public class REVdisplay{
     private REVDigitBoardDriver revBoard = new REVDigitBoardDriver();
     private double battVolt;
     private final String teamNum = "5468";
-    private double amp;
+    private double psi;
     private boolean buttonStatusA, previousStateA, currentStateA;
     private boolean buttonStatusB, previousStateB, currentStateB;
 
@@ -31,13 +31,13 @@ public class REVdisplay{
 
     public void run(){
         battVolt = RobotController.getBatteryVoltage();
-        amp = RobotController.getInputCurrent();
+        psi = PressureSensor.getInstance().getPressure();
 
         if(!toggleA()){
             revBoard.display(teamNum);
         }
         else if(!toggleB()){
-            revBoard.display(amp);
+            revBoard.display(psi);
         }
         else{
             revBoard.display(battVolt);

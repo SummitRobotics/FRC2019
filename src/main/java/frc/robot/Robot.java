@@ -87,11 +87,14 @@ public class Robot extends TimedRobot {
     }
     //teleop.init();
     robot.init();
+    test = new TestAllTheThings();
+    test.init();
   }
 
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    //test.run();
     //teleop.run();
   }
 

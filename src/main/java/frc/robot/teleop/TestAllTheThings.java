@@ -1,5 +1,6 @@
 package frc.robot.teleop;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.Claw.ClawState;
 import frc.robot.panelclaw.Peg.PegState;
@@ -17,7 +18,7 @@ public class TestAllTheThings{
     }
 
     public void run(){
-        double xSpeed = gamepad.getForwardPower();
+        /*double xSpeed = gamepad.getForwardPower();
         double zRotation = gamepad.getRotationalPower();
         robot.drivetrain.robotDrive.arcadeDrive(xSpeed, zRotation);
         robot.claw.runArm(gamepad.getRightJoystickX() * 0.45);
@@ -31,6 +32,12 @@ public class TestAllTheThings{
         }
         if(gamepad.isButtonX()){
             robot.peg.setPeg(PegState.DOWN);
-        }
+        }*/
+        SmartDashboard.putBoolean("Break 1", robot.intake.isBallDetected());
+        SmartDashboard.putBoolean("Break 2", robot.intake.isBallPresent());
+        SmartDashboard.putBoolean("Claw Limit", robot.claw.getClawLimit());
+        SmartDashboard.putBoolean("Intake Limit", robot.intake.getCargoLimit());
+        SmartDashboard.putBoolean("Mast Limit", robot.lift.getLowLimit());
+        SmartDashboard.putBoolean("Panel Detector", robot.claw.isPanelPresent());
     }
 }
