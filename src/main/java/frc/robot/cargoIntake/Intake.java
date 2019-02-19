@@ -81,6 +81,7 @@ public class Intake extends Subsystem {
         arm.config_kI(0, RobotConstants.Arm_PID.ARM_I);
         arm.config_kD(0, RobotConstants.Arm_PID.ARM_D);
 
+
         setArmEncoder(getAbsoluteResetPosition());
     }
 
@@ -132,15 +133,15 @@ public class Intake extends Subsystem {
     public void intake(int power){
             rollers.set(ControlMode.PercentOutput, power);
     }
+    
     public void moveIntakeArm(double power){
         arm.set(ControlMode.PercentOutput, power);
     }
 
-    public void setIntakeArm(IntakeState intakePosition, double power){
-        if(intakePosition != intakeState){
+    public boolean setIntakeArm(IntakeState intakePosition){
             double target = intakePosition.value * RobotConstants.TALON_TICKS_PER_ROT;
-            arm.set(ControlMode.Position, target);
-        }
+            arm.set(ControlMode.Position, target); 
+            return arm.getClosedLoopError() == 0;
     }
     public void setIntakeSpin(IntakeSpinState intakeSpinPosition){
         intake((int)intakeSpinPosition.value);

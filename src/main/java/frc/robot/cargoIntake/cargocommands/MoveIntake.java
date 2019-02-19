@@ -9,7 +9,7 @@ public class MoveIntake extends Command{
     private Intake intake = Intake.getInstance();
     private Intake.IntakeState intakePosition;
     //TODO - PID
-    private final double THRESHOLD = 10;
+    boolean isDone;
 
     public MoveIntake(Intake.IntakeState intakePosition){
         requires(intake);
@@ -18,15 +18,14 @@ public class MoveIntake extends Command{
     @Override
     protected void initialize() {
         super.initialize();
-        double target = RobotConstants.TALON_TICKS_PER_ROT * (intakePosition.value / 360);
     }
     @Override
     protected void execute() {
-        super.execute();
+        isDone = intake.setIntakeArm(intakePosition);
     }
     @Override
     protected boolean isFinished() {
-        return (intake.getCargoLimit() || getPosition) || ((getPosition() > -THRESHOLD) && (getPosition() < THRESHOLD));
+        return isDone;
     }
     @Override
     protected void end() {
