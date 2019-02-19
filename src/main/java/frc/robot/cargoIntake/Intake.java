@@ -53,9 +53,11 @@ public class Intake extends Subsystem {
 
     private static Intake instance;
     
+    /* ---- INITIALIZATION METHODS ----- */
     private Intake(){
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         configArmPID();
+        configMotionProfile();
 
         rollers = new VictorSPX(RobotConstants.Ports.INTAKE_ROLLER);
 
@@ -63,28 +65,39 @@ public class Intake extends Subsystem {
         break1 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_1);
         break2 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_2);
     }
+    public static Intake getInstance(){
+        if(instance == null){
+            instance = new Intake();
+        }
+        return instance;
+    }
 
-    public void configArmPID(){
+    private void configArmPID(){
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        arm.setSensorPhase(RobotConstants.Arm_PID.isPhaseInverted);
-        arm.setInverted(RobotConstants.Arm_PID.isInverted);
+        arm.setSensorPhase(RobotConstants.Cargo_PID.isPhaseInverted);
+        arm.setInverted(RobotConstants.Cargo_PID.isInverted);
 
-        arm.configNominalOutputForward(RobotConstants.Arm_PID.ARM_NOMINAL_FORWARD);
-        arm.configNominalOutputReverse(RobotConstants.Arm_PID.ARM_NOMINAL_REVERSE);
-        arm.configPeakOutputForward(RobotConstants.Arm_PID.ARM_PEAK_FORWARD);
-        arm.configPeakOutputReverse(RobotConstants.Arm_PID.ARM_PEAK_REVERSE);
+        arm.configNominalOutputForward(RobotConstants.Cargo_PID.ARM_NOMINAL_FORWARD);
+        arm.configNominalOutputReverse(RobotConstants.Cargo_PID.ARM_NOMINAL_REVERSE);
+        arm.configPeakOutputForward(RobotConstants.Cargo_PID.ARM_PEAK_FORWARD);
+        arm.configPeakOutputReverse(RobotConstants.Cargo_PID.ARM_PEAK_REVERSE);
 
-        arm.configAllowableClosedloopError(0, (int)RobotConstants.Arm_PID.CLOSED_LOOP_ERROR);
+        arm.configPeakCurrentLimit((int)RobotConstants.Cargo_PID.ARM_PEAK_CURRENT);
+        arm.configContinuousCurrentLimit((int)RobotConstants.Cargo_PID.ARM_CONST_CURRENT);
 
-        arm.config_kF(0, RobotConstants.Arm_PID.ARM_F);
-        arm.config_kP(0, RobotConstants.Arm_PID.ARM_P);
-        arm.config_kI(0, RobotConstants.Arm_PID.ARM_I);
-        arm.config_kD(0, RobotConstants.Arm_PID.ARM_D);
+        arm.configAllowableClosedloopError(0, (int)RobotConstants.Cargo_PID.CLOSED_LOOP_ERROR);
 
+        arm.config_kF(0, RobotConstants.Cargo_PID.ARM_F);
+        arm.config_kP(0, RobotConstants.Cargo_PID.ARM_P);
+        arm.config_kI(0, RobotConstants.Cargo_PID.ARM_I);
+        arm.config_kD(0, RobotConstants.Cargo_PID.ARM_D);
 
         setArmEncoder(getAbsoluteResetPosition());
     }
 
+    private void configMotionProfile(){
+        
+    }
     public int getAbsoluteResetPosition(){
         int absolutePosition = arm.getSensorCollection().getPulseWidthPosition();
 
@@ -92,16 +105,10 @@ public class Intake extends Subsystem {
         if(arm.getInverted()){
             absolutePosition *= -1;
         }
-        if(RobotConstants.Arm_PID.isPhaseInverted){
+        if(RobotConstants.Cargo_PID.isPhaseInverted){
             absolutePosition *= 1;
         }
         return absolutePosition;
-    }
-    public static Intake getInstance(){
-        if(instance == null){
-            instance = new Intake();
-        }
-        return instance;
     }
     @Override
     protected void initDefaultCommand() {

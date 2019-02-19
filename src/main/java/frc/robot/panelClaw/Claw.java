@@ -13,6 +13,7 @@ import frc.robot.robotcore.IterativeSubsystem;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
+import frc.robot.panelclaw.clawcommands.MoveClawWrist;
 
 public class Claw extends Subsystem implements IterativeSubsystem{
 
@@ -29,8 +30,8 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     public enum ClawArmState{
         //values in degrees
-        UP(0),
-        DOWN(90);
+        UP(0 / 360),
+        DOWN(90 / 360);
 
         public final double value;
         ClawArmState(double value){
@@ -51,7 +52,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     private Claw() {
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_MOVEMENT);
-        clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        configArmPID();
 
         claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
@@ -64,10 +65,47 @@ public class Claw extends Subsystem implements IterativeSubsystem{
         }
         return instance;
     }
+    
+
+    private void configArmPID(){
+        clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+        clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        clawArm.setSensorPhase(RobotConstants.Claw_PID.isPhaseInverted);
+        clawArm.setInverted(RobotConstants.Claw_PID.isInverted);
+
+        clawArm.configNominalOutputForward(RobotConstants.Claw_PID.ARM_NOMINAL_FORWARD);
+        clawArm.configNominalOutputReverse(RobotConstants.Claw_PID.ARM_NOMINAL_REVERSE);
+        clawArm.configPeakOutputForward(RobotConstants.Claw_PID.ARM_PEAK_FORWARD);
+        clawArm.configPeakOutputReverse(RobotConstants.Claw_PID.ARM_PEAK_REVERSE);
+
+        clawArm.configPeakCurrentLimit((int)RobotConstants.Claw_PID.ARM_PEAK_CURRENT);
+        clawArm.configContinuousCurrentLimit((int)RobotConstants.Claw_PID.ARM_CONST_CURRENT);
+
+        clawArm.configAllowableClosedloopError(0, (int)RobotConstants.Claw_PID.CLOSED_LOOP_ERROR);
+
+        clawArm.config_kF(0, RobotConstants.Claw_PID.ARM_F);
+        clawArm.config_kP(0, RobotConstants.Claw_PID.ARM_P);
+        clawArm.config_kI(0, RobotConstants.Claw_PID.ARM_I);
+        clawArm.config_kD(0, RobotConstants.Claw_PID.ARM_D);
+    }
+
+    public int getAbsoluteResetPosition(){
+        int absolutePosition = clawArm.getSensorCollection().getPulseWidthPosition();
+
+        absolutePosition &= 0xFFF;
+        if(RobotConstants.Claw_PID.isInverted){
+            absolutePosition *= -1;
+        }
+        if(RobotConstants.Claw_PID.isPhaseInverted){
+            absolutePosition *= 1;
+        }
+        return absolutePosition;
+    }
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new frc.robot.panelclaw.clawcommands.MoveClawWrist());
+        setDefaultCommand(new MoveClawWrist());
     }
 
 
@@ -119,9 +157,13 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public boolean isPanelPresent(){
         return panelSensor.isActive();
     }
-
     public void runArm(double power){
         clawArm.set(ControlMode.PercentOutput, power);
+    }
+    public boolean setArm(ClawArmState clawArmPos){
+        double target = clawArmPos.value * RobotConstants.TALON_TICKS_PER_ROT;
+        clawArm.set(ControlMode.Position, target);
+        return clawArm.getClosedLoopError() == 0;
     }
     public void resetArmEncoder(){
         clawArm.setSelectedSensorPosition(0);

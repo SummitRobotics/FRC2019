@@ -40,7 +40,8 @@ public class RobotBuilder{
     public void init(){
         drivetrain.resetGyro();
         drivetrain.shiftGear(Drivetrain.GearState.HIGH);
-        intake.resetArmEncoder();
+        //todo - pwm absolute shit
+        intake.setArmEncoder(0);
         intake.setIntakeSpin(Intake.IntakeSpinState.OFF);
         peg.setPeg(Peg.PegState.UP);
         peg.setChair(Peg.ChairState.IN);
