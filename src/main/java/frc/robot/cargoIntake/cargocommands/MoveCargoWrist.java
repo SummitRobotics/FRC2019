@@ -3,7 +3,6 @@ package frc.robot.cargointake.cargocommands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.cargointake.Intake;
-import frc.robot.robotcore.OI;
 
 public class MoveCargoWrist extends Command{
     private Intake intake = Intake.getInstance();

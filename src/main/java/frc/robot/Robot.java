@@ -39,10 +39,6 @@ public class Robot extends TimedRobot {
     robot.init();
     teleop = new TeleopArcade();
 
-    //DriverProfileChooser.setDefaultOption("Alex Driver Profile", gamepad.new Alex_Driver());
-    //DriverProfileChooser.addOption("Colin Driver Profile", gamepad.new Colin_Driver());
-    //DriverProfileChooser.addOption("Jake Driver Profile", gamepad.new Jake_Driver());
-
     autoChooser.setDefaultOption("Jump From HAB", new Yeet());
     autoChooser.addOption("Test Auto", new TestAuto());
     //THIS MUST OCCUR AFTER ROBOT INIT

@@ -87,6 +87,9 @@ public class Intake extends Subsystem {
     public IntakeState getIntakeState(){
         return intakeState;
     }
+    public IntakeSpinState getIntakeSpinState(){
+        return intakeSpinState;
+    }
     public double getIntakeArmEncoder(){
         return arm.getSelectedSensorPosition();
     }
@@ -95,9 +98,7 @@ public class Intake extends Subsystem {
     }
 
     public void intake(int power){
-        while(true){
             rollers.set(ControlMode.PercentOutput, power);
-        }
     }
     public void moveIntakeArm(double power){
         arm.set(ControlMode.PercentOutput, power);

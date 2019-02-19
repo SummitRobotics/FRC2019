@@ -1,6 +1,5 @@
 package frc.robot.teleop;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.Claw.ClawState;
 import frc.robot.panelclaw.Peg.PegState;

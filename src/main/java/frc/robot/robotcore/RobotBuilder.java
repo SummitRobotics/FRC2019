@@ -41,7 +41,7 @@ public class RobotBuilder{
         drivetrain.resetGyro();
         drivetrain.shiftGear(Drivetrain.GearState.HIGH);
         intake.resetArmEncoder();
-        //intake.setIntakeSpin(Intake.IntakeSpinState.OFF);
+        intake.setIntakeSpin(Intake.IntakeSpinState.OFF);
         peg.setPeg(Peg.PegState.UP);
         peg.setChair(Peg.ChairState.IN);
         lemonlight.disableLights();
@@ -50,6 +50,7 @@ public class RobotBuilder{
     
     public void run(){
         claw.run();
+        display.run();
     }
     public void dashboard(){
         SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
