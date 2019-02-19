@@ -38,7 +38,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
         }
     }
 
-    private DoubleSolenoid claw;
+    public DoubleSolenoid claw;
 
     private TalonSRX clawArm;
 
@@ -67,7 +67,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     @Override
     protected void initDefaultCommand() {
-        
+        setDefaultCommand(new frc.robot.panelclaw.clawcommands.MoveClawWrist());
     }
 
 
@@ -75,6 +75,17 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public void setClaw(ClawState clawPosition){
             claw.set(clawPosition.value);
             clawState = clawPosition;
+    }
+    public boolean isClawOpen(){
+        if(clawState == ClawState.CLOSE){
+            return false;
+        }
+        if(clawState == ClawState.OPEN){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public ClawState toggleClaw(){
         ClawState clawPos = clawState;
@@ -114,18 +125,6 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     }
     public void resetArmEncoder(){
         clawArm.setSelectedSensorPosition(0);
-    }
-
-    public boolean isClawOpen(){
-        if(clawState == ClawState.CLOSE){
-            return false;
-        }
-        if(clawState == ClawState.OPEN){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 
     /* ----- RUN METHODS ----- */

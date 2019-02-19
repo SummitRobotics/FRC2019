@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.cargointake.cargocommands.MoveCargoWrist;
 import frc.robot.robotcore.RobotConstants;
 
 public class Intake extends Subsystem {
@@ -71,7 +72,7 @@ public class Intake extends Subsystem {
     }
     @Override
     protected void initDefaultCommand() {
-        
+        setDefaultCommand(new MoveCargoWrist());
     }
 
     public boolean getCargoLimit(){

@@ -1,14 +1,11 @@
-package frc.robot.panelclaw.teleopcommands;
+package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.panelclaw.Claw;
-import frc.robot.robotcore.OI;
 
 public class MoveClawWrist extends Command{
     private Claw claw = Claw.getInstance();
-    //private OI gamepad = OI.getInstance();
-
     private final double POWER = 0.45;
 
     public MoveClawWrist(){

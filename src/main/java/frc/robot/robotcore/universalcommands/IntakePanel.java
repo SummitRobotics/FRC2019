@@ -14,12 +14,12 @@ public class IntakePanel extends CommandGroup{
         requires(claw);
         requires(peg);
         
-        addSequential(new ActuatePeg(Peg.PegState.DOWN));
-        addSequential(new ActuateClaw(Claw.ClawState.OPEN));
+        addSequential(new ActuatePeg().new SetPeg(Peg.PegState.DOWN));
+        addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.OPEN));
         addSequential(new RaiseClaw(Claw.ClawArmState.DOWN));
         addSequential(new DetectPanel());
-        addSequential(new ActuateClaw(Claw.ClawState.CLOSE));
+        addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.CLOSE));
         addSequential(new RaiseClaw(Claw.ClawArmState.UP));
-        addSequential(new ActuatePeg(Peg.PegState.UP));
+        addSequential(new ActuatePeg().new SetPeg(Peg.PegState.UP));
     }
 }

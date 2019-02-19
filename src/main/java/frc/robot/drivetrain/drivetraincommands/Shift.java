@@ -3,40 +3,36 @@ package frc.robot.drivetrain.drivetraincommands;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.drivetrain.Drivetrain;
 
-public class Shift extends InstantCommand{
-
+public class Shift{
     private Drivetrain drivetrain = Drivetrain.getInstance();
-    private Drivetrain.GearState gearValue;
-    private boolean toggle = false;
 
-    public Shift(Drivetrain.GearState gearValue){
-        requires(drivetrain);
-        setInterruptible(false);
-        this.gearValue = gearValue;
-    }
     public Shift(){
-        requires(drivetrain);
-        toggle = true;
+
     }
 
-    @Override
-    protected void initialize() {
-        super.initialize();
-    }
-    @Override
-    protected void execute() {
-        if(toggle){
-            this.gearValue = drivetrain.toggleGear();
+    public class SetShift extends InstantCommand{
+        private Drivetrain.GearState gearPos;
+        
+        public SetShift(Drivetrain.GearState gearPos){
+            requires(drivetrain);
+            this.gearPos = gearPos;
         }
-        drivetrain.shiftGear(gearValue);
+        @Override
+        protected void initialize() {
+            super.initialize();
+        }
+        @Override
+        protected void execute() {
+            drivetrain.shiftGear(gearPos);
+        }
+        @Override
+        protected void end() {
+            super.end();
+        }
     }
-    @Override
-    protected void end() {
-        super.end();
-    }
-
     public class ToggleShift extends InstantCommand{
-        private Drivetrain.GearState gearValue;
+        private Drivetrain.GearState gearPos;
+
         public ToggleShift(){
             requires(drivetrain);
         }
@@ -46,8 +42,8 @@ public class Shift extends InstantCommand{
         }
         @Override
         protected void execute() {
-            this.gearValue = drivetrain.toggleGear();
-            drivetrain.shiftGear(gearValue);
+            gearPos = drivetrain.toggleGear();
+            drivetrain.shiftGear(gearPos);
         }
         @Override
         protected void end() {

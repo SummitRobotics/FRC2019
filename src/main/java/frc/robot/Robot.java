@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robot = RobotBuilder.getInstance();
-    //robot.init();
+    robot.init();
     teleop = new TeleopArcade();
 
     //DriverProfileChooser.setDefaultOption("Alex Driver Profile", gamepad.new Alex_Driver());
@@ -52,7 +52,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     robot.run();
-    robot.dashboard();
   }
 
   @Override

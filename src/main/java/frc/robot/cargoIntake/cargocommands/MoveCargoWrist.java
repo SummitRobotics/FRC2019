@@ -1,4 +1,4 @@
-package frc.robot.cargointake.teleopcommands;
+package frc.robot.cargointake.cargocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -22,7 +22,7 @@ public class MoveCargoWrist extends Command{
         if(Robot.gamepad.isDpadUp()){
             intake.moveIntakeArm(POWER);
         }
-        else if(Robot.gamepad.isDpadUp()){
+        else if(Robot.gamepad.isDpadDown()){
             intake.moveIntakeArm(-POWER);
         }
         else{
