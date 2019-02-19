@@ -2,7 +2,6 @@ package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.robotcore.OI;
-import frc.robot.Robot;
 import frc.robot.drivetrain.Drivetrain;
 
 public class ArcadeDrive extends Command{

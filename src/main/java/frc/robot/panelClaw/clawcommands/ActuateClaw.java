@@ -6,21 +6,16 @@ import frc.robot.panelclaw.Claw.ClawState;
 
 public class ActuateClaw extends InstantCommand{
 
-    private Claw claw = Claw.getIntance();
+    private Claw claw = Claw.getInstance();
     private ClawState clawPosition;
-    private boolean flag = false;
 
     public ActuateClaw(ClawState clawPosition){
         requires(claw);
         this.clawPosition = clawPosition;
     }
-    public ActuateClaw(){
-        requires(claw);
-        this.clawPosition = ClawState.OPEN;
-        flag = true;
-    }
     @Override
     protected void initialize() {
+
     }
     @Override
     protected void execute() {
@@ -29,8 +24,5 @@ public class ActuateClaw extends InstantCommand{
     @Override
     protected void end() {
         super.end();
-        if(flag){
-            claw.setClaw(ClawState.CLOSE);
-        }
     }
 }

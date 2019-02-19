@@ -8,14 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Watchdog;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autonomous.TestAuto;
 import frc.robot.autonomous.Yeet;
-import frc.robot.devices.REVdisplay;
 import frc.robot.robotcore.OI;
 import frc.robot.robotcore.RobotBuilder;
 import frc.robot.teleop.TeleopArcade;
@@ -25,7 +22,7 @@ import frc.robot.teleop.TestAllTheThings;
 public class Robot extends TimedRobot {
   public RobotBuilder robot;
   public static TeleopArcade teleop;
-  public OI gamepad;
+  public static OI gamepad;
   private TestAllTheThings test;
 
   //public static SendableChooser<OI.Driver_Profile> DriverProfileChooser = new SendableChooser<>();
@@ -39,7 +36,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robot = RobotBuilder.getInstance();
-    robot.init();
+    //robot.init();
     teleop = new TeleopArcade();
 
     //DriverProfileChooser.setDefaultOption("Alex Driver Profile", gamepad.new Alex_Driver());
@@ -50,12 +47,12 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Test Auto", new TestAuto());
     //THIS MUST OCCUR AFTER ROBOT INIT
     gamepad = OI.getInstance();
-
   }
 
   @Override
   public void robotPeriodic() {
     robot.run();
+    robot.dashboard();
   }
 
   @Override
@@ -70,7 +67,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     auto = autoChooser.getSelected();
-    robot.drivetrain.resetGyro();
+    robot.init();
     
     if(auto != null){
       auto.start();
@@ -93,6 +90,7 @@ public class Robot extends TimedRobot {
       auto.cancel();
     }
     //teleop.init();
+    robot.init();
   }
 
   @Override

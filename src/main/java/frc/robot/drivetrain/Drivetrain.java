@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.drivetraincommands.ArcadeDrive;
-import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.robotcore.RobotConstants;
 
 public class Drivetrain extends Subsystem{
@@ -104,10 +103,11 @@ public class Drivetrain extends Subsystem{
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
         gearShifter = new DoubleSolenoid(RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
-        //gearState = GearState.LOW;
 
         compressor = new Compressor(0);
         compressor.setClosedLoopControl(true);
+
+        PTOshifter = new DoubleSolenoid(RobotConstants.Ports.PTO_SOLENOID_OPEN, RobotConstants.Ports.PTO_SOLENOID_CLOSE);
     }
 
     public static Drivetrain getInstance(){
@@ -117,7 +117,6 @@ public class Drivetrain extends Subsystem{
         return instance;
     }
 
-    //TODO - better sequencing
     @Override
     protected void initDefaultCommand() {
        setDefaultCommand(new ArcadeDrive());
@@ -155,19 +154,16 @@ public class Drivetrain extends Subsystem{
     }
 
     public GearState toggleGear(){
-        GearState gearPos;
-        if(gearState.value != null){
+        GearState gearPos = gearState;
             if(gearState == GearState.HIGH){
                 gearPos = GearState.LOW;
                 return gearPos;
             }
-            else if(gearState == GearState.LOW){
+            if(gearState == GearState.LOW){
                 gearPos = GearState.HIGH;
                 return gearPos;
             }
-        }
-        gearPos = GearState.LOW;
-        return gearPos;
+            return gearPos;
     }
     public void setLEDColor(Blinkin blinkinValue){
         blinkin.set(blinkinValue.value);

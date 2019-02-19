@@ -1,12 +1,13 @@
-package frc.robot.panelclaw.clawcommands;
+package frc.robot.panelclaw.teleopcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.panelclaw.Claw;
 
-public class DetectPanel extends Command{
+public class ToggleClaw extends Command{
     private Claw claw = Claw.getInstance();
+    private Claw.ClawState clawPos;
 
-    public DetectPanel(){
+    public ToggleClaw(){
         requires(claw);
     }
 
@@ -16,11 +17,12 @@ public class DetectPanel extends Command{
     }
     @Override
     protected void execute() {
-        super.execute();
+        clawPos = claw.toggleClaw();
+        claw.setClaw(clawPos);
     }
     @Override
     protected boolean isFinished() {
-        return claw.isPanelPresent();
+        return false;
     }
     @Override
     protected void end() {

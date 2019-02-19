@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.robotcore.RobotConstants;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -11,8 +12,18 @@ public class Limelight implements PIDSource{
     private NetworkTable table;
     private NetworkTableEntry tx, ty, ta, ts;
 
-    private final double CAMERA_HEIGHT = 21.5;
-    private final double CAMERA_ANGLE = 21.86;
+    private final double CAMERA_HEIGHT = RobotConstants.CAMERA_HEIGHT;
+    private final double CAMERA_ANGLE = RobotConstants.CAMERA_ANGLE;
+
+    public enum TargetHeight{
+        ROCKET(1),
+        CARGO_SHIP(2);
+
+        public final double value;
+        TargetHeight(double value){
+            this.value = value;
+        }
+    }
 
     private PIDSourceType pidSource = PIDSourceType.kDisplacement;
 
@@ -71,11 +82,11 @@ public class Limelight implements PIDSource{
             table.getEntry("pipeline").setNumber(pipeline);
         }
     }
-    public double getDistance(double targetHeight){
-        double deltaHeight = targetHeight - CAMERA_HEIGHT;
+    public double getDistance(TargetHeight targetHeight){
+        double deltaHeight = targetHeight.value - CAMERA_HEIGHT;
         SmartDashboard.putNumber("deltaheight", deltaHeight);
         SmartDashboard.putNumber("ANGLE", CAMERA_ANGLE + getY());
         SmartDashboard.putNumber("Tangent", Math.tan(Math.toRadians(CAMERA_ANGLE + getY())));
-        return (targetHeight - CAMERA_HEIGHT) / Math.tan(Math.toRadians(CAMERA_ANGLE + getY()));
+        return (targetHeight.value - CAMERA_HEIGHT) / Math.tan(Math.toRadians(CAMERA_ANGLE + getY()));
     }
 }

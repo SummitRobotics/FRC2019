@@ -2,23 +2,22 @@ package frc.robot.cargointake.cargocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.cargointake.Intake;
+import frc.robot.cargointake.Intake.IntakeSpinState;
 
 public class SpinIntake extends Command{
     private Intake intake = Intake.getInstance();
-    //TODO - PID
-    private double timeout, direction;
-    private boolean flag = true;
+    private IntakeSpinState intakeSpin;
+    private boolean timeoutFlag = false;
 
-    public SpinIntake(double timeout, double direction){
+    public SpinIntake(IntakeSpinState intakeSpin, double timeout){
         requires(intake);
-        this.timeout = timeout;
         setTimeout(timeout);
-        direction = Math.copySign(1, direction);
+        this.timeoutFlag = true;
+        this.intakeSpin = intakeSpin;
     }
-    public SpinIntake(double direction){
+    public SpinIntake(IntakeSpinState intakeSpin){
         requires(intake);
-        flag = false;
-        direction = Math.copySign(1, direction);
+        this.intakeSpin = intakeSpin;
     }
     @Override
     protected void initialize() {
@@ -26,20 +25,19 @@ public class SpinIntake extends Command{
     }
     @Override
     protected void execute() {
-        intake.intake(1 * (int)direction);
+        intake.setIntakeSpin(intakeSpin);
     }
     @Override
     protected boolean isFinished() {
-        if(flag){
-            return timeSinceInitialized() > timeout;
+        if(timeoutFlag){
+            return isTimedOut();
         }
         else{
-            return flag;
+            return false;
         }
     }
     @Override
     protected void end() {
         super.end();
-        intake.intake(0);
     }
 }

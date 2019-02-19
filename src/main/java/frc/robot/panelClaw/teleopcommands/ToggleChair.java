@@ -1,16 +1,14 @@
-package frc.robot.panelclaw.pegcommands;
+package frc.robot.panelclaw.teleopcommands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.panelclaw.Peg;
 
-public class ActuatePeg extends InstantCommand{
-
+public class ToggleChair extends InstantCommand{
     private Peg peg = Peg.getInstance();
-    private Peg.PegState pegPosition;
-
-    public ActuatePeg(Peg.PegState pegPosition){
+    private Peg.ChairState panelPosition;
+    
+    public ToggleChair(){
         requires(peg);
-        this.pegPosition = pegPosition;
     }
     @Override
     protected void initialize() {
@@ -18,7 +16,8 @@ public class ActuatePeg extends InstantCommand{
     }
     @Override
     protected void execute() {
-        peg.setPeg(pegPosition);
+        this.panelPosition = peg.toggleChair();
+        peg.setChair(panelPosition);
     }
     @Override
     protected void end() {
