@@ -47,12 +47,12 @@ public class RobotConstants {
     CARGO_BREAK_1 = 0,
     CARGO_BREAK_2 = 2,
 
-    DRIVE_SOLENOID_OPEN = /*1*/ 6,
-    DRIVE_SOLENOID_CLOSE = /*0*/ 7,
+    DRIVE_SOLENOID_OPEN = 1,
+    DRIVE_SOLENOID_CLOSE = 0,
     PTO_SOLENOID_OPEN = 2,
     PTO_SOLENOID_CLOSE = 3, 
-    CLAW_SOLENOID_OPEN = /*7*/ 1, 
-    CLAW_SOLENOID_CLOSE = /*6*/ 0,
+    CLAW_SOLENOID_OPEN = 7,
+    CLAW_SOLENOID_CLOSE = 6,
     PANEL_SOLENOID_OPEN = 4,
     PANEL_SOLENOID_CLOSE = 5,
 
@@ -68,5 +68,22 @@ public class RobotConstants {
     GYRO = 10,
 
     PRESSURE_READER = 0;
+  }
+  public class Arm_PID{
+    public static final double
+    ARM_P = 1,
+    ARM_I = 0,
+    ARM_D = 0,
+    ARM_F = 0,
+    ARM_NOMINAL_FORWARD = 0,
+    ARM_NOMINAL_REVERSE = 0,
+    ARM_PEAK_FORWARD = 0.35,
+    ARM_PEAK_REVERSE = 0.35,
+    ARM_CONST_CURRENT = 40,
+    ARM_PEAK_CURRENT = 40,
+    //in ticks
+    CLOSED_LOOP_ERROR = 25;
+    public static final boolean isInverted = false;
+    public static final boolean isPhaseInverted = false;
   }
 }

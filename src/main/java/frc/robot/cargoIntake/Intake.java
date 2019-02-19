@@ -12,9 +12,9 @@ import frc.robot.robotcore.RobotConstants;
 
 public class Intake extends Subsystem {
     public enum IntakeState {
-        UP(0),
-        INTAKE_LOWER(-95),
-        DOWN(-115);
+        UP(0 / 360),
+        INTAKE_LOWER(-95 / 360),
+        DOWN(-115 / 360);
 
         public final double value;
         IntakeState(double value) {
@@ -55,7 +55,7 @@ public class Intake extends Subsystem {
     
     private Intake(){
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
-        arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        configArmPID();
 
         rollers = new VictorSPX(RobotConstants.Ports.INTAKE_ROLLER);
 
@@ -64,6 +64,38 @@ public class Intake extends Subsystem {
         break2 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_2);
     }
 
+    public void configArmPID(){
+        arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        arm.setSensorPhase(RobotConstants.Arm_PID.isPhaseInverted);
+        arm.setInverted(RobotConstants.Arm_PID.isInverted);
+
+        arm.configNominalOutputForward(RobotConstants.Arm_PID.ARM_NOMINAL_FORWARD);
+        arm.configNominalOutputReverse(RobotConstants.Arm_PID.ARM_NOMINAL_REVERSE);
+        arm.configPeakOutputForward(RobotConstants.Arm_PID.ARM_PEAK_FORWARD);
+        arm.configPeakOutputReverse(RobotConstants.Arm_PID.ARM_PEAK_REVERSE);
+
+        arm.configAllowableClosedloopError(0, (int)RobotConstants.Arm_PID.CLOSED_LOOP_ERROR);
+
+        arm.config_kF(0, RobotConstants.Arm_PID.ARM_F);
+        arm.config_kP(0, RobotConstants.Arm_PID.ARM_P);
+        arm.config_kI(0, RobotConstants.Arm_PID.ARM_I);
+        arm.config_kD(0, RobotConstants.Arm_PID.ARM_D);
+
+        setArmEncoder(getAbsoluteResetPosition());
+    }
+
+    public int getAbsoluteResetPosition(){
+        int absolutePosition = arm.getSensorCollection().getPulseWidthPosition();
+
+        absolutePosition &= 0xFFF;
+        if(arm.getInverted()){
+            absolutePosition *= -1;
+        }
+        if(RobotConstants.Arm_PID.isPhaseInverted){
+            absolutePosition *= 1;
+        }
+        return absolutePosition;
+    }
     public static Intake getInstance(){
         if(instance == null){
             instance = new Intake();
@@ -93,8 +125,8 @@ public class Intake extends Subsystem {
     public double getIntakeArmEncoder(){
         return arm.getSelectedSensorPosition();
     }
-    public void resetArmEncoder(){
-        arm.setSelectedSensorPosition(0);
+    public void setArmEncoder(int position){
+        arm.setSelectedSensorPosition(position);
     }
 
     public void intake(int power){
@@ -106,7 +138,8 @@ public class Intake extends Subsystem {
 
     public void setIntakeArm(IntakeState intakePosition, double power){
         if(intakePosition != intakeState){
-            arm.set(ControlMode.PercentOutput, power);
+            double target = intakePosition.value * RobotConstants.TALON_TICKS_PER_ROT;
+            arm.set(ControlMode.Position, target);
         }
     }
     public void setIntakeSpin(IntakeSpinState intakeSpinPosition){

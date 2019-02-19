@@ -1,22 +1,17 @@
 package frc.robot.cargointake.cargocommands;
 
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.cargointake.Intake;
 import frc.robot.robotcore.RobotConstants;
 
-public class MoveIntake extends PIDCommand{
+public class MoveIntake extends Command{
     private Intake intake = Intake.getInstance();
     private Intake.IntakeState intakePosition;
     //TODO - PID
     private final double THRESHOLD = 10;
-    private static final double 
-    P = 1,
-    I = 0,
-    D = 0;
 
     public MoveIntake(Intake.IntakeState intakePosition){
-        super(P, I, D);
         requires(intake);
         this.intakePosition = intakePosition;
     }
@@ -24,11 +19,10 @@ public class MoveIntake extends PIDCommand{
     protected void initialize() {
         super.initialize();
         double target = RobotConstants.TALON_TICKS_PER_ROT * (intakePosition.value / 360);
-        setSetpoint(target);
     }
     @Override
-    protected void usePIDOutput(double output) {
-        intake.setIntakeArm(intakePosition, output);
+    protected void execute() {
+        super.execute();
     }
     @Override
     protected boolean isFinished() {
@@ -37,9 +31,5 @@ public class MoveIntake extends PIDCommand{
     @Override
     protected void end() {
         super.end();
-    }
-    @Override
-    protected double returnPIDInput() {
-        return intake.getIntakeArmPosition();
     }
 }
