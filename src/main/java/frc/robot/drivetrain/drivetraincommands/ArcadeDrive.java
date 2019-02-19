@@ -1,11 +1,12 @@
 package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.robotcore.Robot;
+import frc.robot.robotcore.OI;
 import frc.robot.drivetrain.Drivetrain;
 
 public class ArcadeDrive extends Command{
     Drivetrain drivetrain = Drivetrain.getInstance();
+    OI gamepad = OI.getInstance();
 
     public ArcadeDrive(){
         requires(drivetrain);
@@ -16,7 +17,7 @@ public class ArcadeDrive extends Command{
     }
     @Override
     protected void execute() {
-        drivetrain.robotDrive.arcadeDrive(Robot.DriverProfileChooser.getSelected().getForwardPower(), Robot.DriverProfileChooser.getSelected().getRotationalPower());
+        drivetrain.robotDrive.arcadeDrive(gamepad.getForwardPower(), gamepad.getRotationalPower());
     }
     @Override
     protected boolean isFinished() {

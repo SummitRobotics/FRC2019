@@ -19,17 +19,18 @@ public class MoveIntake extends Command{
     @Override
     protected void initialize() {
         double target = RobotConstants.TALON_TICKS_PER_ROT * (intakePosition.value / 360);
-        error = target - intake.getIntakeArmPosition();
+        error = target - intake.getIntakeArmEncoder();
         direction = Math.copySign(1, error);
     }
     @Override
     protected void execute() {
         intake.setIntakeArm(intakePosition, POWER * direction);
-        error = target - intake.getIntakeArmPosition();
+        error = target - intake.getIntakeArmEncoder();
+        direction = Math.copySign(1, error);
     }
     @Override
     protected boolean isFinished() {
-        return (intake.getCargoLimit() || direction == -1) || ((error > -THRESHOLD) && (error < THRESHOLD));
+        return (intake.getCargoLimit() && direction == -1) || ((error > -THRESHOLD) && (error < THRESHOLD));
     }
     @Override
     protected void end() {

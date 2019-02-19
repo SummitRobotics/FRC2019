@@ -1,13 +1,12 @@
 package frc.robot.lift.liftcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.robotcore.Robot;
+import frc.robot.robotcore.OI;
 import frc.robot.lift.Lift;
 
-public class TrimMast extends Command{
+public class MoveMastManual extends Command{
     private Lift lift = Lift.getInstance();
-
-    public TrimMast (){
+    public MoveMastManual(){
         requires(lift);
     }
     @Override
@@ -16,7 +15,7 @@ public class TrimMast extends Command{
     }
     @Override
     protected void execute() {
-        lift.runLiftManual(Robot.DriverProfileChooser.getSelected().getTrimPower());
+        lift.runLiftManual(OI.getInstance().getLeftJoystickY());
     }
     @Override
     protected boolean isFinished() {

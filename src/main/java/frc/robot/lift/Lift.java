@@ -3,10 +3,7 @@ package frc.robot.lift;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+//import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,19 +23,19 @@ public class Lift extends Subsystem{
     }
 
     private TalonSRX mastDriver;
-    private VictorSPX mastFollower;
+    //private VictorSPX mastFollower;
     private DigitalInput lowLimit, highLimit;
 
     private static Lift instance;
 
     private Lift(){
         mastDriver = new TalonSRX(RobotConstants.Ports.MAST_DRIVER);
-        mastFollower = new VictorSPX(RobotConstants.Ports.MAST_FOLLOWER);
-        mastFollower.follow(mastDriver);
+        //mastFollower = new VictorSPX(RobotConstants.Ports.MAST_FOLLOWER);
+        //mastFollower.follow(mastDriver);
         mastDriver.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         //state implementation
         lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);
-        highLimit = new DigitalInput(RobotConstants.Ports.HIGH_LIMIT_SWITCH);
+        //highLimit = new DigitalInput(RobotConstants.Ports.HIGH_LIMIT_SWITCH);
     }
     public static Lift getInstance(){
         if(instance == null){
@@ -66,6 +63,6 @@ public class Lift extends Subsystem{
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new TrimMast());
+        setDefaultCommand(new MoveMastManual());
     }
 }

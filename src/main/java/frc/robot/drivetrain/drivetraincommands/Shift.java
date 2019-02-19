@@ -1,34 +1,53 @@
 package frc.robot.drivetrain.drivetraincommands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.drivetrain.Drivetrain;
 
-public class Shift extends Command{
-    private boolean isDone;
-
+public class Shift{
     private Drivetrain drivetrain = Drivetrain.getInstance();
-    private Drivetrain.GearState gearValue;
 
-    public Shift(Drivetrain.GearState gearValue){
-        requires(drivetrain);
-        setInterruptible(false);
-        this.gearValue = gearValue;
+    public Shift(){
+
     }
 
-    @Override
-    protected void initialize() {
-        super.initialize();
+    public class SetShift extends InstantCommand{
+        private Drivetrain.GearState gearPos;
+        
+        public SetShift(Drivetrain.GearState gearPos){
+            requires(drivetrain);
+            this.gearPos = gearPos;
+        }
+        @Override
+        protected void initialize() {
+            super.initialize();
+        }
+        @Override
+        protected void execute() {
+            drivetrain.shiftGear(gearPos);
+        }
+        @Override
+        protected void end() {
+            super.end();
+        }
     }
-    @Override
-    protected void execute() {
-        drivetrain.shiftGear(gearValue);
-    }
-    @Override
-    protected boolean isFinished() {
-        return false;
-    }
-    @Override
-    protected void end() {
-        super.end();
+    public class ToggleShift extends InstantCommand{
+        private Drivetrain.GearState gearPos;
+
+        public ToggleShift(){
+            requires(drivetrain);
+        }
+        @Override
+        protected void initialize() {
+            super.initialize();
+        }
+        @Override
+        protected void execute() {
+            gearPos = drivetrain.toggleGear();
+            drivetrain.shiftGear(gearPos);
+        }
+        @Override
+        protected void end() {
+            super.end();
+        }
     }
 }
