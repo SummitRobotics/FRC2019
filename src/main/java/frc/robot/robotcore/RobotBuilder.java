@@ -62,5 +62,10 @@ public class RobotBuilder{
         SmartDashboard.putBoolean("Mast Limit", lift.getLowLimit());
         SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());
         SmartDashboard.putString("Claw State", claw.getClawState().toString());
+
+        claw.panelSensor.read();
+        SmartDashboard.putNumber("Red", claw.panelSensor.red);
+        SmartDashboard.putNumber("Green", claw.panelSensor.green);
+        SmartDashboard.putNumber("Blue", claw.panelSensor.blue);
     }
 }

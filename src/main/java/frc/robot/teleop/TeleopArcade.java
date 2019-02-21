@@ -22,7 +22,7 @@ public class TeleopArcade {
 
         Bprevstate = Bcurrstate;
         Bcurrstate = gamepad.isButtonB();
-        if(Bcurrstate && !Bprevstate){
+        if(Bcurrstate && !Bprevstate) {
             String clawState = robot.claw.toggleClaw().toString();
             SmartDashboard.putString("Claw State", clawState);
         }
