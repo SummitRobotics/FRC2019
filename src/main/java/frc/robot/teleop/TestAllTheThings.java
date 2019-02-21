@@ -3,7 +3,6 @@ package frc.robot.teleop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.Claw.ClawState;
-import frc.robot.panelclaw.Peg.PegState;
 import frc.robot.robotcore.OI;
 import frc.robot.robotcore.RobotBuilder;
 
@@ -13,11 +12,12 @@ public class TestAllTheThings{
 
     public void init(){
         robot.claw.setClaw(ClawState.OPEN);
-        robot.peg.setChair(Peg.ChairState.IN);
+        robot.peg.setChair(Peg.PneumaticState.IN);
         robot.intake.intake(0);
     }
 
     public void run(){
+        robot.lift.runLiftManual(-OI.getInstance().getRightJoystickY());
         /*double xSpeed = gamepad.getForwardPower();
         double zRotation = gamepad.getRotationalPower();
         robot.drivetrain.robotDrive.arcadeDrive(xSpeed, zRotation);

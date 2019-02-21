@@ -2,20 +2,21 @@ package frc.robot.panelclaw.pegcommands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.panelclaw.Peg;
+import frc.robot.panelclaw.Peg.PneumaticState;
 
-public class ActuateChair{
+public class BopIt{
     private Peg peg = Peg.getInstance();
 
-    public ActuateChair(){
-        
+    public BopIt(){
+
     }
 
-public class SetChair extends InstantCommand{
-    private Peg.PneumaticState chairPos;
+    public class SetBop extends InstantCommand{
+        private Peg.PneumaticState bopPos;
 
-        public SetChair(Peg.PneumaticState chairPos){
+        public SetBop(Peg.PneumaticState bopPos){
             requires(peg);
-            this.chairPos = chairPos;
+            this.bopPos = bopPos;
         }
         @Override
         protected void initialize() {
@@ -23,17 +24,17 @@ public class SetChair extends InstantCommand{
         }
         @Override
         protected void execute() {
-            peg.setChair(chairPos);
+            peg.setBop(bopPos);
         }
         @Override
         protected void end() {
             super.end();
         }
     }
-    public class ToggleChair extends InstantCommand{
-        private Peg.PneumaticState panelPosition;
+    public class ToggleBop extends InstantCommand{
+        private Peg.PneumaticState bopPos;
         
-        public ToggleChair(){
+        public ToggleBop(){
             requires(peg);
         }
         @Override
@@ -42,8 +43,8 @@ public class SetChair extends InstantCommand{
         }
         @Override
         protected void execute() {
-            this.panelPosition = peg.toggleChair();
-            peg.setChair(panelPosition);
+            this.bopPos = peg.toggleBop();
+            peg.setBop(bopPos);
         }
         @Override
         protected void end() {

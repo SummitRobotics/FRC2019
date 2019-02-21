@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.Intake;
 import frc.robot.cargointake.Intake.IntakeSpinState;
+import frc.robot.robotcore.OI;
 
 public class ActuateIntake{
     private Intake intake = Intake.getInstance();
@@ -55,6 +56,7 @@ public class ActuateIntake{
     
         public ToggleIntake(){
             requires(intake);
+            setInterruptible(true);
         }
     
         @Override
@@ -66,8 +68,48 @@ public class ActuateIntake{
             intake.setIntakeSpin(intakeSpin);
         }
         @Override
+        protected void interrupted() {
+            super.interrupted();
+        }
+        @Override
         protected void end() {
             super.end();
+        }
+    }
+    public class IntakeBall extends Command{
+        private Intake.IntakeSpinState intakeSpin;
+
+        public IntakeBall(){
+            requires(intake);
+        }
+        @Override
+        protected void initialize() {
+            super.initialize();
+        }
+        @Override
+        protected void execute() {
+            intakeSpin = Intake.IntakeSpinState.ON;
+            intake.setIntakeSpin(intakeSpin);
+
+            double POWER = 0.20;
+            if(OI.getInstance().isDpadUp()){
+                intake.moveIntakeArm(POWER * 1.10);
+            }
+            else if(OI.getInstance().isDpadDown()){
+                intake.moveIntakeArm(-POWER);
+            }
+            else{
+                intake.moveIntakeArm(0);
+            }
+        }
+        
+        @Override
+        protected boolean isFinished() {
+            return intake.isBallPresent();
+        }
+        @Override
+        protected void end() {
+            intake.setIntakeSpin(Intake.IntakeSpinState.OFF);
         }
     }
 }

@@ -45,9 +45,9 @@ public class MoveMast extends Command{
             if((direction == -1) && (lift.getLowLimit())){
                 break;
             }
-            else if((direction == 1) && (lift.getHighLimit())){
+            /*else if((direction == 1) && (lift.getHighLimit())){
                 break;
-            }
+            }*/
             lift.runLiftManual(power * direction);
             error =  target - lift.getEncoderPos();
         }
