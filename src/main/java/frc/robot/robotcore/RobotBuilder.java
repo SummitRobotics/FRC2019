@@ -43,7 +43,8 @@ public class RobotBuilder{
         intake.resetArmEncoder();
         intake.setIntakeSpin(Intake.IntakeSpinState.OFF);
         peg.setPeg(Peg.PegState.UP);
-        peg.setChair(Peg.ChairState.IN);
+        peg.setChair(Peg.PneumaticState.IN);
+        peg.setBop(Peg.PneumaticState.IN);
         lemonlight.disableLights();
         claw.setClaw(Claw.ClawState.OPEN);
     }

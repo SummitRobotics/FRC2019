@@ -6,8 +6,7 @@ import frc.robot.cargointake.Intake;
 
 public class MoveCargoWrist extends Command{
     private Intake intake = Intake.getInstance();
-    //private OI gamepad = OI.getInstance();
-    private final double POWER = 0.3;
+    private final double POWER = 0.15;
 
     public MoveCargoWrist(){
         requires(intake);
@@ -19,7 +18,7 @@ public class MoveCargoWrist extends Command{
     @Override
     protected void execute() {
         if(Robot.gamepad.isDpadUp()){
-            intake.moveIntakeArm(POWER);
+            intake.moveIntakeArm(POWER * 1.10);
         }
         else if(Robot.gamepad.isDpadDown()){
             intake.moveIntakeArm(-POWER);
@@ -30,7 +29,7 @@ public class MoveCargoWrist extends Command{
     }
     @Override
     protected boolean isFinished() {
-        return false;
+       return intake.getCargoLimit() && Robot.gamepad.isDpadUp();
     }
     @Override
     protected void end() {

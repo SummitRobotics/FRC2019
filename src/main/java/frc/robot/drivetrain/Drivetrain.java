@@ -107,7 +107,7 @@ public class Drivetrain extends Subsystem{
         compressor = new Compressor(0);
         compressor.setClosedLoopControl(true);
 
-        PTOshifter = new DoubleSolenoid(RobotConstants.Ports.PTO_SOLENOID_OPEN, RobotConstants.Ports.PTO_SOLENOID_CLOSE);
+        //PTOshifter = new DoubleSolenoid(RobotConstants.Ports.PTO_SOLENOID_OPEN, RobotConstants.Ports.PTO_SOLENOID_CLOSE);
     }
 
     public static Drivetrain getInstance(){
@@ -148,10 +148,10 @@ public class Drivetrain extends Subsystem{
         gearShifter.set(gearValue.value);
     }
 
-    public void setPTO(PTOState ptoValue){
+    /*public void setPTO(PTOState ptoValue){
         PTOshifter.set(ptoValue.value);
         ptoState = ptoValue;
-    }
+    }*/
 
     public GearState toggleGear(){
         GearState gearPos = gearState;

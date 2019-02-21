@@ -135,6 +135,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public void checkForLimit(){
         if(getClawLimit()){
             resetArmEncoder();
+            
         }
     }
 

@@ -2,6 +2,7 @@ package frc.robot.cargointake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -56,8 +57,10 @@ public class Intake extends Subsystem {
     private Intake(){
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         arm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        
 
         rollers = new VictorSPX(RobotConstants.Ports.INTAKE_ROLLER);
+        rollers.setInverted(true);
 
         isUp = new DigitalInput(RobotConstants.Ports.CARGO_LIMIT_SWITCH);
         break1 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_1);
@@ -79,7 +82,7 @@ public class Intake extends Subsystem {
         return !isUp.get();
     }
     public boolean isBallDetected(){
-        return !break1.get();
+        return break1.get();
     }
     public boolean isBallPresent(){
         return !break2.get();
