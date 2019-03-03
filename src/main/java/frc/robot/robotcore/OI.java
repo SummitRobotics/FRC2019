@@ -4,9 +4,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.cargointake.Intake.IntakeState;
-import frc.robot.cargointake.cargocommands.ActuateIntake;
-import frc.robot.cargointake.cargocommands.MoveIntake;
+import frc.robot.cargointake.CargoIntake;
+import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
+import frc.robot.cargointake.cargocommands.EnableRollers;
+import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
@@ -14,7 +15,6 @@ import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.universalcommands.IntakePanel;
-import frc.robot.robotcore.universalcommands.LoadCargoFromGround;
 import frc.robot.robotcore.universalcommands.LoadFromCargoStation;
 
 public class OI {
@@ -171,9 +171,9 @@ public class OI {
 
     private OI(){
         leftBumperCmd.whenActive(new Shift().new ToggleShift());
-        rightBumperCmd.whenActive(new MoveIntake(IntakeState.UP));
+        rightBumperCmd.whenActive(new SetCargoArm(CargoIntake.IntakeArmState.UP));
         YButtonCmd.whenActive(new ActuatePeg().new TogglePeg());
-        AButtonCmd.whenActive(new ActuateIntake().new ToggleIntake());
+        AButtonCmd.whenActive(new EnableRollers().new ToggleRollers());
         BButtonCmd.whenActive(new ActuateChair().new ToggleChair());
         XButtonCmd.whenActive(new ActuateClaw().new ToggleClaw());
         MastHigh.whenPressed(new MoveMast(LiftState.HIGH, 0.5));

@@ -2,7 +2,7 @@ package frc.robot.robotcore;
 
 import frc.robot.panelclaw.Claw;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.cargointake.Intake;
+import frc.robot.cargointake.CargoIntake;
 import frc.robot.devices.Limelight;
 import frc.robot.devices.PressureSensor;
 import frc.robot.devices.REVdisplay;
@@ -15,7 +15,7 @@ public class RobotBuilder{
     public Claw claw;
     public Peg peg;
     public Lift lift;
-    public Intake intake;
+    public CargoIntake cargoIntake;
     public Limelight lemonlight;
     public REVdisplay display;
     public PressureSensor pressureSensor;
@@ -25,7 +25,7 @@ public class RobotBuilder{
         drivetrain = Drivetrain.getInstance();
         claw = Claw.getInstance();
         peg = Peg.getInstance();
-        intake = Intake.getInstance();
+        cargoIntake = CargoIntake.getInstance();
         lift = Lift.getInstance();
         lemonlight = Limelight.getInstance();
         display = REVdisplay.getInstance();
@@ -41,8 +41,8 @@ public class RobotBuilder{
         drivetrain.resetGyro();
         drivetrain.shiftGear(Drivetrain.GearState.HIGH);
         //todo - pwm absolute shit
-        intake.setArmEncoder(0);
-        intake.setIntakeSpin(Intake.IntakeSpinState.OFF);
+        cargoIntake.setArmEncoder(0);
+        cargoIntake.setRollers(CargoIntake.RollerState.OFF);
         peg.setPeg(Peg.PegState.UP);
         peg.setChair(Peg.ChairState.IN);
         lemonlight.disableLights();
@@ -55,11 +55,11 @@ public class RobotBuilder{
     }
     public void dashboard(){
         SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
-        SmartDashboard.putNumber("Intake Arm Encoder",intake.getIntakeArmEncoder());
-        SmartDashboard.putBoolean("Break 1", intake.isBallDetected());
-        SmartDashboard.putBoolean("Break 2", intake.isBallPresent());
+        SmartDashboard.putNumber("Intake Arm Encoder",cargoIntake.getIntakeArmEncoder());
+        SmartDashboard.putBoolean("Break 1", cargoIntake.isBallDetected());
+        SmartDashboard.putBoolean("Break 2", cargoIntake.isBallConsumed());
         SmartDashboard.putBoolean("Claw Limit", claw.getClawLimit());
-        SmartDashboard.putBoolean("Intake Limit", intake.getCargoLimit());
+        SmartDashboard.putBoolean("Intake Limit", cargoIntake.getCargoLimit());
         SmartDashboard.putBoolean("Mast Limit", lift.getLowLimit());
         SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());
         SmartDashboard.putString("Claw State", claw.getClawState().toString());
