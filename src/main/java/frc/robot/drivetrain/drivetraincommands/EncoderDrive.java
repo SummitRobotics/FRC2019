@@ -6,6 +6,7 @@ import frc.robot.robotcore.RobotConstants;
 
 public class EncoderDrive extends Command{
     private double distance, target;
+    private boolean isDone;
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
@@ -18,11 +19,11 @@ public class EncoderDrive extends Command{
     }
     @Override
     protected void execute() {
-        drivetrain.toPosition(target);
+        isDone = drivetrain.toPosition(target);
     }
     @Override
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
     @Override
     protected void end() {

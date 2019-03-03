@@ -71,7 +71,7 @@ public class Drivetrain extends Subsystem{
         leftDrive2.follow(leftDrive0);
         leftEncoder = new CANEncoder(leftDrive0);
         leftPID = new CANPIDController(leftDrive1);
-        DrivetrainConfig.configMotorController(leftPID);
+        DrivetrainConfig.configMotorController(leftDrive1);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
@@ -80,7 +80,7 @@ public class Drivetrain extends Subsystem{
         rightDrive2.follow(rightDrive0);
         rightEncoder = new CANEncoder(rightDrive0);
         rightPID = new CANPIDController(rightDrive1);
-        DrivetrainConfig.configMotorController(rightPID);
+        DrivetrainConfig.configMotorController(rightDrive1);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
@@ -151,17 +151,21 @@ public class Drivetrain extends Subsystem{
     }
 
     public void leftClosedLoop(double input){
+        //In RPM
         double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
         leftPID.setReference(setpoint, ControlType.kSmartVelocity);
     }
     public void rightClosedLoop(double input){
+        //In RPM
         double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
         rightPID.setReference(setpoint, ControlType.kSmartVelocity);
     }
     
-    public void toPosition(double setpoint){
+    public boolean toPosition(double setpoint){
+        //SETPOINTS MUST BE IN ROTATIONS
         leftPID.setReference(setpoint, ControlType.kSmartMotion);
         rightPID.setReference(setpoint, ControlType.kSmartMotion);
+        return (setpoint - RobotConstants.NEO_TICKS_TO_INCHES(leftEncoder.getPosition()) == 0) || (setpoint - RobotConstants.NEO_TICKS_TO_INCHES(leftEncoder.getPosition()) == 0);
     }
 
 
