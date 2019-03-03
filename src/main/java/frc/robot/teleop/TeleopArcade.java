@@ -33,7 +33,7 @@ public class TeleopArcade {
         SmartDashboard.putNumber("Left Encoder", robot.drivetrain.getLeftEncoderPos());
         SmartDashboard.putNumber("Right Encoder", robot.drivetrain.getRightEncoderPos());
         SmartDashboard.putNumber("Fwd Power", xSpeed);
-        SmartDashboard.putNumber("Gyro Angle", robot.drivetrain.getGyroYaw());
+        SmartDashboard.putNumber("Gyro Angle", robot.drivetrain.getYaw());
     
     }
 

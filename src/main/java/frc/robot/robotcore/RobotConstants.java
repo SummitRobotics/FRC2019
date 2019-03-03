@@ -5,6 +5,8 @@ public class RobotConstants {
   public static final double TALON_TICKS_PER_ROT = 4096;
   public static final double NEO_TICKS_PER_REV = 42;
 
+  public static final double MAX_DRIVETRAIN_RPM = 5700;
+  
   //TODO - new angles and heights
   public static final double CAMERA_HEIGHT = 21.5;
   public static final double CAMERA_ANGLE = 21.86;
@@ -22,6 +24,7 @@ public class RobotConstants {
   public static double NEO_TICKS_TO_INCHES(double tick){
     return (tick / NEO_TICKS_PER_REV * (WHEEL_DIAMETER * Math.PI));
   }
+  
   public class Ports{
 
     public static final int CONTROLLER_PORT = 0;
