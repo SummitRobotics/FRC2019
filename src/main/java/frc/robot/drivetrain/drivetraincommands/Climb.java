@@ -3,10 +3,9 @@ package frc.robot.drivetrain.drivetraincommands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.drivetrain.Drivetrain;
-import frc.robot.drivetrain.Drivetrain.PTOState;
 
-public class Climb extends Command{
-    private Drivetrain drivetrain = Drivetrain.getInstance();
+public class Climb /*extends Command*/{
+    /*private Drivetrain drivetrain = Drivetrain.getInstance();
 
     public Climb(){
         requires(drivetrain);
@@ -38,6 +37,6 @@ public class Climb extends Command{
     @Override
     protected void end() {
         super.end();
-    }
+    }*/
     
 }
