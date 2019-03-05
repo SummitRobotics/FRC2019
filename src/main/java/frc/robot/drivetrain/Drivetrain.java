@@ -135,11 +135,10 @@ public class Drivetrain extends Subsystem{
     }
 
     //Feedback Config
-    public void resetDrivetrainEncoders(){
-        leftEncoder.setPosition(0);
-        rightEncoder.setPosition(0);
+    public void setDrivetrainEncoders(double value){
+        leftEncoder.setPosition(value);
+        rightEncoder.setPosition(value);
     }
-
     public void resetGyro(){
         gyro.setYaw(0);
         gyro.setAccumZAngle(0);
