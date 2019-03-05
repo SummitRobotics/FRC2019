@@ -11,11 +11,12 @@ public class TestAllTheThings{
 
     public void init(){
         robot.claw.setClaw(ClawState.OPEN);
-        robot.peg.setChair(Peg.ChairState.IN);
-        robot.cargoIntake.intake(0);
+        robot.peg.setChair(Peg.PneumaticState.IN);
+        robot.intake.intake(0);
     }
 
     public void run(){
+        robot.lift.runLiftManual(-OI.getInstance().getRightJoystickY());
         /*double xSpeed = gamepad.getForwardPower();
         double zRotation = gamepad.getRotationalPower();
         robot.drivetrain.robotDrive.arcadeDrive(xSpeed, zRotation);

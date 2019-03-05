@@ -15,7 +15,11 @@ public class MoveMastManual extends Command{
     }
     @Override
     protected void execute() {
-        lift.runLiftManual(OI.getInstance().getLeftJoystickY());
+        double input = OI.getInstance().deadzone(OI.getInstance().getLeftJoystickY());
+        lift.runLiftManual(input);
+        /*if(input < 0 && lift.getLowLimit()){
+            lift.runLiftManual(0);
+        }*/
     }
     @Override
     protected boolean isFinished() {

@@ -87,8 +87,8 @@ public class Robot extends TimedRobot {
     }
     //teleop.init();
     robot.init();
-    test = new TestAllTheThings();
-    test.init();
+    /*test = new TestAllTheThings();
+    test.init();*/
   }
 
   @Override

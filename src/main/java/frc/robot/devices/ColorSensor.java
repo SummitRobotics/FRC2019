@@ -47,7 +47,7 @@ public class ColorSensor {
         sensor.write(CMD | 0x0E, 0b1111);
     }    
     
-    private void read() {
+    public void read() {
         buffy.clear();
         sensor.read(CMD | MULTI_BYTE_BIT | RDATA_REGISTER, 8, buffy);
         
@@ -76,17 +76,11 @@ public class ColorSensor {
 
         read();
 
-        red /= 2;
-        green /= 2;
-        
-        int average = (red+green+blue)/3;
-
-        if (average-20 < red && red < average+20 && average-20 < green && green < average+20 && average-20 < blue && blue < average+20 && red > 90 && green > 90 && blue > 90) {
+        if ((red > 18) && (green > 18) && (blue > 10)) {
             return true;
         }
 
         return false;
 
     }
-
 }

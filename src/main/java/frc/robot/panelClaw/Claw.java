@@ -43,7 +43,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     private TalonSRX clawArm;
 
-    private ColorSensor panelSensor;
+    public ColorSensor panelSensor;
     private DigitalInput limit;
 
     private static Claw instance;
@@ -177,6 +177,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public void checkForLimit(){
         if(getClawLimit()){
             resetArmEncoder();
+            
         }
     }
 

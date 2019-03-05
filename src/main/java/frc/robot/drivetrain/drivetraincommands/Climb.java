@@ -18,7 +18,7 @@ public class Climb /*extends Command*/{
             cancel();
         }
         else{
-            drivetrain.setPTO(PTOState.ENGAGED);
+            //drivetrain.setPTO(PTOState.ENGAGED);
         }
     }
     @Override

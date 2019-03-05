@@ -18,12 +18,12 @@ public class Peg extends Subsystem{
         }
     }
 
-    public enum ChairState{
+    public enum PneumaticState{
         OUT(Value.kForward),
         IN(Value.kReverse);
 
         public final Value value;
-        ChairState(Value value){
+        PneumaticState(Value value){
             this.value = value;
         }
     }
@@ -32,7 +32,10 @@ public class Peg extends Subsystem{
     private PegState pegState;
 
     private DoubleSolenoid chairOuttake;
-    private ChairState chairState;
+    private PneumaticState chairState;
+
+    private DoubleSolenoid bopCargo;
+    private PneumaticState bopState;
 
     private static Peg instance;
 
@@ -41,6 +44,7 @@ public class Peg extends Subsystem{
         pegServo.setBounds(2.2, 0, 1.5, 0, 0.8);
 
         chairOuttake = new DoubleSolenoid(RobotConstants.Ports.PANEL_SOLENOID_OPEN, RobotConstants.Ports.PANEL_SOLENOID_CLOSE);
+        bopCargo = new DoubleSolenoid(RobotConstants.Ports.PTO_SOLENOID_CLOSE, RobotConstants.Ports.PTO_SOLENOID_OPEN);
     }
     public static Peg getInstance(){
         if(instance == null){
@@ -97,7 +101,7 @@ public class Peg extends Subsystem{
 
 
     /* ----- METHODS FOR CHAIR (CARGO SHOOTER) ----- */
-    public void setChair(ChairState chairPos){
+    public void setChair(PneumaticState chairPos){
         if(chairPos != chairState){
             chairOuttake.set(chairPos.value);
         }
@@ -105,27 +109,57 @@ public class Peg extends Subsystem{
     }
 
     public boolean isChairOut(){
-        if(chairState == ChairState.IN){
+        if(chairState == PneumaticState.IN){
             return false;
         }
-        else if(chairState == ChairState.OUT){
+        else if(chairState == PneumaticState.OUT){
             return true;
         }
         else{
             return false;
         }
     }
-    public ChairState toggleChair(){
-        ChairState chairPos = chairState;
+    public PneumaticState toggleChair(){
+        PneumaticState chairPos = chairState;
         if(isChairOut()){
-            chairPos = ChairState.IN;
+            chairPos = PneumaticState.IN;
             return chairPos;
         }
         if(!isChairOut()){
-            chairPos = ChairState.OUT;
+            chairPos = PneumaticState.OUT;
             return chairPos;
         }
         return chairPos;
+    }
+
+    /* ----- BOP COMMANDS ----- */
+    public void setBop(PneumaticState bopPos){
+        bopCargo.set(bopPos.value);
+        bopState = bopPos;
+    }
+
+    public boolean isBopOut(){
+        if(bopState == PneumaticState.IN){
+            return false;
+        }
+        else if(bopState == PneumaticState.OUT){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public PneumaticState toggleBop(){
+        PneumaticState bopPos = bopState;
+        if(isBopOut()){
+            bopPos = PneumaticState.IN;
+            return bopPos;
+        }
+        if(!isBopOut()){
+            bopPos = PneumaticState.OUT;
+            return bopPos;
+        }
+        return bopPos;
     }
 
 }
