@@ -4,7 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class GyroTurn extends Command{
 
-    public GyroTurn(double angle, double power){
+    private double angle;
+
+    public GyroTurn(double angle){
+        this.angle = angle;
 
     }
     /*public GyroTurn(double angle, double radius, double power){

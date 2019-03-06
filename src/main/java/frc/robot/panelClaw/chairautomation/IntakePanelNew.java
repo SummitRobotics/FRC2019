@@ -1,10 +1,11 @@
-package frc.robot.robotcore.universalcommands;
+package frc.robot.panelclaw.chairautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.Peg.PegState;
 import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
+import frc.robot.robotcore.universalcommands.Wait;
 
 public class IntakePanelNew extends CommandGroup{
 

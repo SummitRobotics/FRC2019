@@ -4,10 +4,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
-import frc.robot.cargointake.cargocommands.EnableRollers;
-import frc.robot.cargointake.cargocommands.SetCargoArm;
+import frc.robot.cargointake.cargoautomation.LoadFromCargoStation;
+import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
@@ -22,6 +21,7 @@ import frc.robot.robotcore.universalcommands.IntakePanel;
 import frc.robot.robotcore.universalcommands.IntakePanelNew;
 import frc.robot.robotcore.universalcommands.LoadFromCargoStation;
 import frc.robot.robotcore.universalcommands.PunchCargo;
+
 
 public class OI {
 

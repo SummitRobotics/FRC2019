@@ -1,4 +1,4 @@
-package frc.robot.robotcore.universalcommands;
+package frc.robot.panelclaw.chairautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.panelclaw.*;

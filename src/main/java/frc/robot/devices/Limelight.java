@@ -1,47 +1,38 @@
-package frc.robot.devices; 
+package frc.robot.devices;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.robotcore.RobotConstants;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class Limelight implements PIDSource{
     private NetworkTable table;
-    private NetworkTableEntry tx, ty, ta, ts;
+    private NetworkTableEntry tx, ty, ta, ts, tv;
 
-    private final double CAMERA_HEIGHT = RobotConstants.CAMERA_HEIGHT;
-    private final double CAMERA_ANGLE = RobotConstants.CAMERA_ANGLE;
-
-    public enum TargetHeight{
-        ROCKET(1),
-        CARGO_SHIP(2);
-
-        public final double value;
-        TargetHeight(double value){
-            this.value = value;
-        }
-    }
+    private final double CAMERA_HEIGHT = 21.5;
+    private final double CAMERA_ANGLE = 21.86;
 
     private PIDSourceType pidSource = PIDSourceType.kDisplacement;
 
     private static Limelight instance;
+
     private Limelight(){
         table = NetworkTableInstance.getDefault().getTable("limelight");
         tx = table.getEntry("tx");
         ty = table.getEntry("ty");
         ta = table.getEntry("ta");
         ts = table.getEntry("ts");
-        
+        tv = table.getEntry("tv");
     }
+
     public static Limelight getInstance(){
         if(instance == null){
             instance = new Limelight();
         }
-        return instance;
-    } 
+        return instance; 
+    }
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {
         pidSource = this.pidSource;
@@ -64,6 +55,9 @@ public class Limelight implements PIDSource{
     public double getSkew(){
         return ts.getDouble(0.0);
     }
+    public double getTarget(){
+        return tv.getDouble(0.0);
+    }
     
     @Override
     public double pidGet() {
@@ -82,11 +76,11 @@ public class Limelight implements PIDSource{
             table.getEntry("pipeline").setNumber(pipeline);
         }
     }
-    public double getDistance(TargetHeight targetHeight){
-        double deltaHeight = targetHeight.value - CAMERA_HEIGHT;
+    public double getDistance(double targetHeight){
+        double deltaHeight = targetHeight - CAMERA_HEIGHT;
         SmartDashboard.putNumber("deltaheight", deltaHeight);
         SmartDashboard.putNumber("ANGLE", CAMERA_ANGLE + getY());
         SmartDashboard.putNumber("Tangent", Math.tan(Math.toRadians(CAMERA_ANGLE + getY())));
-        return (targetHeight.value - CAMERA_HEIGHT) / Math.tan(Math.toRadians(CAMERA_ANGLE + getY()));
+        return (targetHeight - CAMERA_HEIGHT) / Math.tan(Math.toRadians(CAMERA_ANGLE + getY()));
     }
 }
