@@ -5,6 +5,8 @@ public class RobotConstants {
   public static final double TALON_TICKS_PER_ROT = 4096;
   public static final double NEO_TICKS_PER_REV = 42;
 
+  public static final double MAX_DRIVETRAIN_RPM = 5700;
+  
   //TODO - new angles and heights
   public static final double CAMERA_HEIGHT = 21.5;
   public static final double CAMERA_ANGLE = 21.86;
@@ -22,6 +24,7 @@ public class RobotConstants {
   public static double NEO_TICKS_TO_INCHES(double tick){
     return (tick / NEO_TICKS_PER_REV * (WHEEL_DIAMETER * Math.PI));
   }
+  
   public class Ports{
 
     public static final int CONTROLLER_PORT = 0;
@@ -68,5 +71,40 @@ public class RobotConstants {
     GYRO = 10,
 
     PRESSURE_READER = 0;
+  }
+  public class Cargo_PID{
+    public static final double
+    ARM_P = 1,
+    ARM_I = 0,
+    ARM_D = 0,
+    ARM_F = 0,
+    ARM_NOMINAL_FORWARD = 0,
+    ARM_NOMINAL_REVERSE = 0,
+    ARM_PEAK_FORWARD = 0.40,
+    ARM_PEAK_REVERSE = 0.40,
+    ARM_CONST_CURRENT = 30,
+    ARM_PEAK_CURRENT = 30,
+    //in ticks
+    CLOSED_LOOP_ERROR = 25;
+    public static final boolean isInverted = false;
+    public static final boolean isPhaseInverted = false;
+  }
+  public class Claw_PID{
+    public static final double
+    ARM_P = 1,
+    ARM_I = 0,
+    ARM_D = 0,
+    ARM_F = 0,
+    ARM_NOMINAL_FORWARD = 0,
+    ARM_NOMINAL_REVERSE = 0,
+    ARM_PEAK_FORWARD = 0.35,
+    ARM_PEAK_REVERSE = 0.35,
+    ARM_CONST_CURRENT = 30,
+    ARM_PEAK_CURRENT = 30,
+    CLOSED_LOOP_ERROR = 25;
+    
+    public static final boolean 
+    isInverted = false,
+    isPhaseInverted = false;
   }
 }

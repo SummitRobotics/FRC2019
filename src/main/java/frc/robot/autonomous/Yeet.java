@@ -5,6 +5,6 @@ import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 
 public class Yeet extends CommandGroup{
     public Yeet(){
-        addSequential(new PowerDrive(1, 8));
+        addSequential(new PowerDrive(1, 4.5));
     }
 }

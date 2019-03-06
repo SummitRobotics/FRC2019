@@ -13,6 +13,7 @@ import frc.robot.robotcore.IterativeSubsystem;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
+import frc.robot.panelclaw.clawcommands.MoveClawWrist;
 
 public class Claw extends Subsystem implements IterativeSubsystem{
 
@@ -30,7 +31,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public enum ClawArmState{
         //values in degrees
         UP(0),
-        DOWN(90);
+        DOWN(50);
 
         public final double value;
         ClawArmState(double value){
@@ -51,12 +52,14 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     private Claw() {
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_MOVEMENT);
-        clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        ClawArmConfig.configTalon(clawArm);
+        clawArmState = ClawArmState.UP;
 
         claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
         limit = new DigitalInput(RobotConstants.Ports.CLAW_LIMIT_SWITCH);
+
     }
     public static Claw getInstance(){
         if(instance == null){
@@ -67,7 +70,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new frc.robot.panelclaw.clawcommands.MoveClawWrist());
+        setDefaultCommand(new MoveClawWrist());
     }
 
 
@@ -119,24 +122,37 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public boolean isPanelPresent(){
         return panelSensor.isActive();
     }
-
     public void runArm(double power){
         clawArm.set(ControlMode.PercentOutput, power);
     }
-    public void resetArmEncoder(){
-        clawArm.setSelectedSensorPosition(0);
+    /*public boolean setArm(ClawArmState clawArmPos){
+        double target = clawArmPos.value * RobotConstants.TALON_TICKS_PER_ROT;
+        SmartDashboard.putNumber("Target", target);
+        clawArm.set(ControlMode.Position, target);
+        clawArmState = clawArmPos;
+        return clawArm.getClosedLoopError() == 0;
+    }*/
+
+    public boolean setArm(double angle){
+        double target = (angle/360) * 4096;
+        SmartDashboard.putNumber("Target", target);
+        clawArm.set(ControlMode.Position, target);
+        return clawArm.getClosedLoopError() == 0;
+    }
+
+    public void setArmEncoder(int position){
+        clawArm.setSelectedSensorPosition(position);
     }
 
     /* ----- RUN METHODS ----- */
     @Override
     public void run(){
-        checkForLimit();
+        //checkForLimit();
     }
     public void checkForLimit(){
-        if(getClawLimit()){
-            resetArmEncoder();
-            
+        if(getClawLimit() && clawArm.getMotorOutputPercent() > 0){
+            clawArm.set(ControlMode.PercentOutput, 0);
+            setArmEncoder(0);            
         }
     }
-
 }
