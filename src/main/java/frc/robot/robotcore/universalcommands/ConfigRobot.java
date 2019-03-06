@@ -21,7 +21,7 @@ public class ConfigRobot extends Command{
     @Override
     protected void execute() {
         robot.cargoIntake.setRollers(CargoIntake.RollerState.OFF);
-        robot.cargoIntake.setIntakeArm(CargoIntake.IntakeArmState.UP.value);
+        robot.cargoIntake.setIntakeArm(CargoIntake.IntakeArmState.UP);
         robot.drivetrain.shiftGear(Drivetrain.GearState.HIGH);
         robot.peg.setPeg(Peg.PegState.UP);
         robot.peg.setChair(Peg.PneumaticState.IN);

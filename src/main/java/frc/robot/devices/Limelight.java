@@ -58,7 +58,6 @@ public class Limelight implements PIDSource{
     public double getTarget(){
         return tv.getDouble(0.0);
     }
-    
     @Override
     public double pidGet() {
         return getX();
@@ -69,6 +68,10 @@ public class Limelight implements PIDSource{
     }
     public void enableLights(){
         table.getEntry("ledMode").setNumber(0);
+    }
+
+    public boolean isTarget(){
+        return getTarget() != 0;
     }
 
     public void setPipeline(double pipeline){

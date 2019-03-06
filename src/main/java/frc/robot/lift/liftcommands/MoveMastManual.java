@@ -6,6 +6,7 @@ import frc.robot.lift.Lift;
 
 public class MoveMastManual extends Command{
     private Lift lift = Lift.getInstance();
+    
     public MoveMastManual(){
         requires(lift);
     }
