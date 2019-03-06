@@ -56,14 +56,17 @@ public class RobotBuilder{
     }
     public void dashboard(){
         SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
-        SmartDashboard.putNumber("Intake Arm Encoder",cargoIntake.getIntakeArmEncoder());
+        /*SmartDashboard.putNumber("Intake Arm Encoder",cargoIntake.getIntakeArmEncoder());
         SmartDashboard.putBoolean("Break 1", cargoIntake.isBallDetected());
         SmartDashboard.putBoolean("Break 2", cargoIntake.isBallConsumed());
         SmartDashboard.putBoolean("Claw Limit", claw.getClawLimit());
         SmartDashboard.putBoolean("Intake Limit", cargoIntake.getCargoLimit());
         SmartDashboard.putBoolean("Mast Limit", lift.getLowLimit());
-        SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());
+        SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());*/
         SmartDashboard.putString("Claw State", claw.getClawState().toString());
+        SmartDashboard.putNumber("Claw Arm Encoder", claw.getArmEncoder());
+
+        SmartDashboard.putString("Claw Arm State", claw.getClawArmState().toString());
 
         claw.panelSensor.read();
         SmartDashboard.putNumber("Red", claw.panelSensor.red);

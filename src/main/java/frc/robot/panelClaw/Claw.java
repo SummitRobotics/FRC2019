@@ -30,8 +30,8 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     public enum ClawArmState{
         //values in degrees
-        UP(0 / 360),
-        DOWN(90 / 360);
+        UP(0),
+        DOWN(50);
 
         public final double value;
         ClawArmState(double value){
@@ -52,55 +52,20 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     private Claw() {
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_MOVEMENT);
-        configArmPID();
+        ClawArmConfig.configTalon(clawArm);
+        clawArmState = ClawArmState.UP;
 
         claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
         limit = new DigitalInput(RobotConstants.Ports.CLAW_LIMIT_SWITCH);
+
     }
     public static Claw getInstance(){
         if(instance == null){
             instance = new Claw();
         }
         return instance;
-    }
-    
-
-    private void configArmPID(){
-        clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-
-        clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        clawArm.setSensorPhase(RobotConstants.Claw_PID.isPhaseInverted);
-        clawArm.setInverted(RobotConstants.Claw_PID.isInverted);
-
-        clawArm.configNominalOutputForward(RobotConstants.Claw_PID.ARM_NOMINAL_FORWARD);
-        clawArm.configNominalOutputReverse(RobotConstants.Claw_PID.ARM_NOMINAL_REVERSE);
-        clawArm.configPeakOutputForward(RobotConstants.Claw_PID.ARM_PEAK_FORWARD);
-        clawArm.configPeakOutputReverse(RobotConstants.Claw_PID.ARM_PEAK_REVERSE);
-
-        clawArm.configPeakCurrentLimit((int)RobotConstants.Claw_PID.ARM_PEAK_CURRENT);
-        clawArm.configContinuousCurrentLimit((int)RobotConstants.Claw_PID.ARM_CONST_CURRENT);
-
-        clawArm.configAllowableClosedloopError(0, (int)RobotConstants.Claw_PID.CLOSED_LOOP_ERROR);
-
-        clawArm.config_kF(0, RobotConstants.Claw_PID.ARM_F);
-        clawArm.config_kP(0, RobotConstants.Claw_PID.ARM_P);
-        clawArm.config_kI(0, RobotConstants.Claw_PID.ARM_I);
-        clawArm.config_kD(0, RobotConstants.Claw_PID.ARM_D);
-    }
-
-    public int getAbsoluteResetPosition(){
-        int absolutePosition = clawArm.getSensorCollection().getPulseWidthPosition();
-
-        absolutePosition &= 0xFFF;
-        if(RobotConstants.Claw_PID.isInverted){
-            absolutePosition *= -1;
-        }
-        if(RobotConstants.Claw_PID.isPhaseInverted){
-            absolutePosition *= 1;
-        }
-        return absolutePosition;
     }
 
     @Override
@@ -160,25 +125,34 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public void runArm(double power){
         clawArm.set(ControlMode.PercentOutput, power);
     }
-    public boolean setArm(ClawArmState clawArmPos){
+    /*public boolean setArm(ClawArmState clawArmPos){
         double target = clawArmPos.value * RobotConstants.TALON_TICKS_PER_ROT;
+        SmartDashboard.putNumber("Target", target);
+        clawArm.set(ControlMode.Position, target);
+        clawArmState = clawArmPos;
+        return clawArm.getClosedLoopError() == 0;
+    }*/
+
+    public boolean setArm(double angle){
+        double target = (angle/360) * 4096;
+        SmartDashboard.putNumber("Target", target);
         clawArm.set(ControlMode.Position, target);
         return clawArm.getClosedLoopError() == 0;
     }
-    public void resetArmEncoder(){
-        clawArm.setSelectedSensorPosition(0);
+
+    public void setArmEncoder(int position){
+        clawArm.setSelectedSensorPosition(position);
     }
 
     /* ----- RUN METHODS ----- */
     @Override
     public void run(){
-        checkForLimit();
+        //checkForLimit();
     }
     public void checkForLimit(){
-        if(getClawLimit()){
-            resetArmEncoder();
-            
+        if(getClawLimit() && clawArm.getMotorOutputPercent() > 0){
+            clawArm.set(ControlMode.PercentOutput, 0);
+            setArmEncoder(0);            
         }
     }
-
 }

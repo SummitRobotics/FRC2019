@@ -1,9 +1,9 @@
-package frc.robot.cargointake;
+package frc.robot.panelclaw;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class CargoArmConfig{
+public class ClawArmConfig{
 
     public static final double
     P = 1,
@@ -11,18 +11,18 @@ public class CargoArmConfig{
     D = 0,
     FEEDFWD = 0,
     OUTPUT_NOMINAL_FORWARD = 0,
-    OUTPUT_NOMINAL_REVERSE = 0,
+    OUTPUT_NOMINAL_REVERSE = -0,
     OUTPUT_PEAK_FORWARD = 0.40,
     OUTPUT_PEAK_REVERSE = -0.40,
     CONST_CURRENT = 30,
     PEAK_CURRENT = 30,
     //in ticks
     CLOSED_LOOP_ERROR = 25;
-    public static final boolean isInverted = false;
-    public static final boolean isPhaseInverted = false;
+    public static final boolean isInverted = true;
+    public static final boolean isPhaseInverted = true;
 
 
-    public CargoArmConfig(){
+    public ClawArmConfig(){
 
     }
 

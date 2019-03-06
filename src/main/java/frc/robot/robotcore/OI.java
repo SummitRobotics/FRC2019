@@ -11,12 +11,15 @@ import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
+import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
+import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.panelclaw.pegcommands.BopIt;
 import frc.robot.robotcore.universalcommands.IntakeCargo;
 import frc.robot.robotcore.universalcommands.IntakePanel;
+import frc.robot.robotcore.universalcommands.IntakePanelNew;
 import frc.robot.robotcore.universalcommands.LoadFromCargoStation;
 import frc.robot.robotcore.universalcommands.PunchCargo;
 
@@ -174,19 +177,21 @@ public class OI {
 
     private OI(){
         leftBumperCmd.whenActive(new Shift().new ToggleShift());
-        rightBumperCmd.whenActive(new PunchCargo());
+        //rightBumperCmd.whenActive(new PunchCargo());
         YButtonCmd.whenActive(new ActuatePeg().new TogglePeg());
         //AButtonCmd.whenActive(new ActuateIntake().new ToggleIntake());
         AButtonCmd.whenActive(new IntakeCargo());
         //BButtonCmd.whenActive(new ActuateChair().new ToggleChair());
-        BButtonCmd.whenActive(new IntakePanelNew());
-        XButtonCmd.whenActive(new ActuateClaw().new ToggleClaw());
-        MastHigh.whenPressed(new MoveMast(LiftState.HIGH, 0.5));
-        MastMid.whenPressed(new MoveMast(LiftState.MID, 0.5));
-        MastLow.whenPressed(new MoveMast(LiftState.LOW, 0.5));
+        //BButtonCmd.whenActive(new IntakePanelNew());
+        //XButtonCmd.whenActive(new ActuateClaw().new ToggleClaw());
+        XButtonCmd.whenActive(new SetCargoArm(CargoIntake.IntakeArmState.UP));
+        BButtonCmd.whenActive(new SetCargoArm(CargoIntake.IntakeArmState.DOWN));
+        /*MastHigh.whenPressed(new MoveMast(LiftState.HIGH));
+        MastMid.whenPressed(new MoveMast(LiftState.MID));
+        MastLow.whenPressed(new MoveMast(LiftState.LOW));
         CargoLoadStation.whenPressed(new LoadFromCargoStation());
         CargoGround.whenPressed(new LoadCargoFromGround());
-        PanelGround.whenPressed(new IntakePanel());
+        PanelGround.whenPressed(new IntakePanel());*/
 
     }
     public static OI getInstance(){

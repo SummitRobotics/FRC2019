@@ -8,6 +8,8 @@ import frc.robot.panelclaw.Claw.ClawState;
 public class ActuateClaw{
     private Claw claw = Claw.getInstance();
 
+    boolean isDone;
+
     public ActuateClaw(){
 
     }

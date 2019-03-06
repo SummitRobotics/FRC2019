@@ -37,7 +37,7 @@ public class MoveClawWrist extends Command{
     @Override
     protected void end() {
         super.end();
-        claw.runArm(0);
+        //claw.runArm(0);
         /*Peg.getInstance().setPeg(Peg.PegState.UP);
         claw.setClaw(Claw.ClawState.OPEN);*/
     }

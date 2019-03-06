@@ -1,9 +1,9 @@
-package frc.robot.cargointake;
+package frc.robot.lift;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class CargoArmConfig{
+public class LiftConfig{
 
     public static final double
     P = 1,
@@ -12,8 +12,8 @@ public class CargoArmConfig{
     FEEDFWD = 0,
     OUTPUT_NOMINAL_FORWARD = 0,
     OUTPUT_NOMINAL_REVERSE = 0,
-    OUTPUT_PEAK_FORWARD = 0.40,
-    OUTPUT_PEAK_REVERSE = -0.40,
+    OUTPUT_PEAK_FORWARD = 0.60,
+    OUTPUT_PEAK_REVERSE = -0.60,
     CONST_CURRENT = 30,
     PEAK_CURRENT = 30,
     //in ticks
@@ -22,7 +22,7 @@ public class CargoArmConfig{
     public static final boolean isPhaseInverted = false;
 
 
-    public CargoArmConfig(){
+    public LiftConfig(){
 
     }
 

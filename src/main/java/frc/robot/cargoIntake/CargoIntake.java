@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.cargocommands.TrimCargoArm;
 import frc.robot.robotcore.RobotConstants;
 
@@ -13,9 +14,9 @@ public class CargoIntake extends Subsystem {
 
     //List of states intake arm can "servo" to. Values given in angle / 360
     public enum IntakeArmState {
-        UP(0 / 360),
-        INTAKE_LOWER(-95 / 360),
-        DOWN(-115 / 360);
+        UP(0),
+        INTAKE_LOWER(-95),
+        DOWN(-115);
 
         public final double value;
         IntakeArmState(double value) {
@@ -66,6 +67,7 @@ public class CargoIntake extends Subsystem {
     private CargoIntake(){
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         CargoArmConfig.configTalon(arm);
+        arm.setSelectedSensorPosition(0);
 
         rollers = new VictorSPX(RobotConstants.Ports.INTAKE_ROLLER);
 
@@ -159,9 +161,10 @@ public class CargoIntake extends Subsystem {
     }
 
     //Servos the intake arm to a given position
-    public boolean setIntakeArm(IntakeArmState intakePosition){
-            double target = intakePosition.value * RobotConstants.TALON_TICKS_PER_ROT;
+    public boolean setIntakeArm(double intakePosition){
+            double target = (intakePosition/360) * 4096;
             arm.set(ControlMode.Position, target); 
+            SmartDashboard.putNumber("Target", target);
             return arm.getClosedLoopError() == 0;
     }
 
