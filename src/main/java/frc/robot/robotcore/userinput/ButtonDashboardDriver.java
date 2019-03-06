@@ -1,8 +1,9 @@
-package frc.robot.robotcore;
+package frc.robot.robotcore.userinput;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.robotcore.RobotConstants;
 
-public class ButtonDashboard extends GenericHID{
+public class ButtonDashboardDriver extends GenericHID{
     public enum ButtonLayout{
         HIGH_MAST(1),
         MID_MAST(2),
@@ -20,7 +21,7 @@ public class ButtonDashboard extends GenericHID{
         }
     }
     
-    public ButtonDashboard(){
+    public ButtonDashboardDriver(){
         super(RobotConstants.Ports.DASHBOARD_PORT);
     }
 

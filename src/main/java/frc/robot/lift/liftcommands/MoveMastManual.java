@@ -1,12 +1,13 @@
 package frc.robot.lift.liftcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.robotcore.OI;
+import frc.robot.robotcore.userinput.OI;
 import frc.robot.lift.Lift;
 
 public class MoveMastManual extends Command{
     private Lift lift = Lift.getInstance();
-    
+    private OI gamepad = OI.getInstance();
+
     public MoveMastManual(){
         requires(lift);
     }
@@ -16,11 +17,7 @@ public class MoveMastManual extends Command{
     }
     @Override
     protected void execute() {
-        double input = OI.getInstance().deadzone(OI.getInstance().getLeftJoystickY());
-        lift.runLiftManual(input);
-        /*if(input < 0 && lift.getLowLimit()){
-            lift.runLiftManual(0);
-        }*/
+        lift.runLiftManual(gamepad.mastDrive());
     }
     @Override
     protected boolean isFinished() {

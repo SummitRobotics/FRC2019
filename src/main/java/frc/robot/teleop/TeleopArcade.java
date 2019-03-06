@@ -1,8 +1,8 @@
 package frc.robot.teleop;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.robotcore.OI;
 import frc.robot.robotcore.RobotBuilder;
+import frc.robot.robotcore.userinput.OI;
 
 public class TeleopArcade {
     RobotBuilder robot = RobotBuilder.getInstance();
@@ -17,15 +17,8 @@ public class TeleopArcade {
 
     public void run(){
 
-        xSpeed = gamepad.getForwardPower();
-        zRotation = gamepad.getRotationalPower();
-
-        Bprevstate = Bcurrstate;
-        Bcurrstate = gamepad.isButtonB();
-        if(Bcurrstate && !Bprevstate) {
-            String clawState = robot.claw.toggleClaw().toString();
-            SmartDashboard.putString("Claw State", clawState);
-        }
+        xSpeed = gamepad.fwdDrive();
+        zRotation = gamepad.turnDrive();
 
         //Potentially implement curvatureDrive in the future?
         robot.drivetrain.robotDrive.arcadeDrive(xSpeed, -zRotation);

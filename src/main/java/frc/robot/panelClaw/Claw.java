@@ -9,13 +9,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.robotcore.IterativeSubsystem;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
 import frc.robot.panelclaw.clawcommands.MoveClawWrist;
 
-public class Claw extends Subsystem implements IterativeSubsystem{
+public class Claw extends Subsystem{
 
     public enum ClawState{
         OPEN(Value.kForward),
@@ -142,17 +141,5 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     public void setArmEncoder(int position){
         clawArm.setSelectedSensorPosition(position);
-    }
-
-    /* ----- RUN METHODS ----- */
-    @Override
-    public void run(){
-        //checkForLimit();
-    }
-    public void checkForLimit(){
-        if(getClawLimit() && clawArm.getMotorOutputPercent() > 0){
-            clawArm.set(ControlMode.PercentOutput, 0);
-            setArmEncoder(0);            
-        }
     }
 }

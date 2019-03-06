@@ -7,10 +7,10 @@ import frc.robot.panelclaw.clawcommands.DetectPanel;
 import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 
-public class IntakePanel extends CommandGroup{
+public class FloorIntakePanel extends CommandGroup{
     private Peg peg = Peg.getInstance();
     private Claw claw = Claw.getInstance();
-    public IntakePanel(){
+    public FloorIntakePanel(){
         requires(claw);
         requires(peg);
         

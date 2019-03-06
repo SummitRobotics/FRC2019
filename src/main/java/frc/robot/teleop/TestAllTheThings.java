@@ -2,7 +2,7 @@ package frc.robot.teleop;
 
 import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.Claw.ClawState;
-import frc.robot.robotcore.OI;
+import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
 
 public class TestAllTheThings{
@@ -16,7 +16,7 @@ public class TestAllTheThings{
     }
 
     public void run(){
-        robot.lift.runLiftManual(-OI.getInstance().getRightJoystickY());
+        //robot.lift.runLiftManual(-OI.getInstance().getRightJoystickY());
         //robot.claw.runArm(-OI.getInstance().getLeftJoystickX());
         /*double xSpeed = gamepad.getForwardPower();
         double zRotation = gamepad.getRotationalPower();

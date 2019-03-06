@@ -27,8 +27,10 @@ public class RobotConstants {
   
   public class Ports{
 
-    public static final int CONTROLLER_PORT = 0;
-    public static final int DASHBOARD_PORT = 1;
+    public static final int 
+    DRIVER_1_PORT = 0,
+    DRIVER_2_PORT = 0,
+    DASHBOARD_PORT = 1;
 
     public static final int
     LEFT_DRIVE_0 = 20,

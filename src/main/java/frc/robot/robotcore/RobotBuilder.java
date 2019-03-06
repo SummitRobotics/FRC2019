@@ -51,7 +51,6 @@ public class RobotBuilder{
     }
     
     public void run(){
-        claw.run();
         display.run();
     }
     public void dashboard(){

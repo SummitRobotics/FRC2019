@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.autonomous.TestAuto;
 import frc.robot.autonomous.Yeet;
-import frc.robot.robotcore.OI;
+import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
 import frc.robot.teleop.TeleopArcade;
 import frc.robot.teleop.TestAllTheThings;

@@ -2,7 +2,7 @@ package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.drivetrain.Drivetrain;
-import frc.robot.robotcore.OI;
+import frc.robot.robotcore.userinput.OI;
 
 public class CloseLoopArcadeDrive extends Command{
     
@@ -18,7 +18,7 @@ public class CloseLoopArcadeDrive extends Command{
     }
     @Override
     protected void execute() {
-        double[] inputs = getOutputs(gamepad.getForwardPower(), gamepad.getRotationalPower());
+        double[] inputs = getOutputs(gamepad.fwdDrive(), gamepad.turnDrive());
         drivetrain.leftClosedLoop(inputs[0]);
         drivetrain.rightClosedLoop(inputs[1]);
     }
