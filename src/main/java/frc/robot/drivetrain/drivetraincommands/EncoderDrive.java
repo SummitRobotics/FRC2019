@@ -1,6 +1,7 @@
 package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.robotcore.RobotConstants;
 
@@ -15,18 +16,21 @@ public class EncoderDrive extends Command{
     }
     @Override
     protected void initialize() {
-        target = RobotConstants.NEO_INCHES_TO_TICKS(distance);
+
     }
     @Override
     protected void execute() {
-        isDone = drivetrain.toPosition(target);
+        SmartDashboard.putBoolean("Yes", true);
+        isDone = drivetrain.toPosition(distance);
     }
     @Override
     protected boolean isFinished() {
         return isDone;
+        
     }
     @Override
     protected void end() {
-
+        SmartDashboard.putBoolean("Yes", true);
+        drivetrain.stopRobot();
     }
 }

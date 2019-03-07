@@ -1,8 +1,8 @@
 package frc.robot.drivetrain.drivetraincommands.vision;
 
-
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.robotcore.OI;
 import frc.robot.devices.Limelight;
 import frc.robot.drivetrain.Drivetrain;
 
@@ -39,12 +39,12 @@ public class TargetAlignment extends PIDCommand {
     @Override
     protected void usePIDOutput(double output) {
         double steeringAdjust = 0;
-        leftFwd = power;
-        rightFwd = power;
+        leftFwd = -power;
+        rightFwd = -power;
 
         SmartDashboard.putNumber("Target", lemonlight.getTarget());
 
-        if(lemonlight.getTarget() != 1){
+        if(lemonlight.getTarget() == 0){
             drivetrain.robotDrive.tankDrive(0, 0);
             end();
         }
@@ -60,13 +60,12 @@ public class TargetAlignment extends PIDCommand {
             rightFwd -= steeringAdjust;
             drivetrain.robotDrive.tankDrive(leftFwd, rightFwd);
         }
-        
         SmartDashboard.putNumber("Output", steeringAdjust);
         SmartDashboard.putBoolean("Yeah Done", isFinished());
     }
     @Override
     protected boolean isFinished() {
-        return false;
+        return lemonlight.getTarget() == 0;
     }
     @Override
     protected void end() {
