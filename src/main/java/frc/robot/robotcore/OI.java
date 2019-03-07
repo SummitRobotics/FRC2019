@@ -9,6 +9,8 @@ import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.drivetrain.drivetraincommands.Shift;
+import frc.robot.drivetrain.drivetraincommands.vision.NewTargetAlignment;
+import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
 import frc.robot.panelclaw.Claw;
@@ -178,7 +180,7 @@ public class OI {
     private OI(){
         leftBumperCmd.whenActive(new Shift().new ToggleShift());
         //rightBumperCmd.whenActive(new PunchCargo());
-        YButtonCmd.whenActive(new ActuatePeg().new TogglePeg());
+        /*YButtonCmd.whenActive(new ActuatePeg().new TogglePeg());
         //AButtonCmd.whenActive(new ActuateIntake().new ToggleIntake());
         AButtonCmd.whenActive(new IntakeCargo());
         //BButtonCmd.whenActive(new ActuateChair().new ToggleChair());
@@ -192,6 +194,9 @@ public class OI {
         CargoLoadStation.whenPressed(new LoadFromCargoStation());
         CargoGround.whenPressed(new LoadCargoFromGround());
         PanelGround.whenPressed(new IntakePanel());*/
+
+        AButtonCmd.whileHeld(new NewTargetAlignment());
+        BButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());
 
     }
     public static OI getInstance(){

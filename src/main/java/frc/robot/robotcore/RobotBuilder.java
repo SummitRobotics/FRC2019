@@ -46,7 +46,7 @@ public class RobotBuilder{
         peg.setPeg(Peg.PegState.UP);
         peg.setChair(Peg.PneumaticState.IN);
         peg.setBop(Peg.PneumaticState.IN);
-        lemonlight.disableLights();
+        lemonlight.enableLights();
         claw.setClaw(Claw.ClawState.OPEN);
     }
     
@@ -67,6 +67,7 @@ public class RobotBuilder{
         SmartDashboard.putNumber("Claw Arm Encoder", claw.getArmEncoder());
 
         SmartDashboard.putString("Claw Arm State", claw.getClawArmState().toString());
+        SmartDashboard.putNumber("Target", lemonlight.getTarget());
 
         claw.panelSensor.read();
         SmartDashboard.putNumber("Red", claw.panelSensor.red);
