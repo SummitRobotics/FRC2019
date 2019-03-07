@@ -1,6 +1,7 @@
 package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.userinput.OI;
 import frc.robot.drivetrain.Drivetrain;
 
@@ -17,7 +18,8 @@ public class ArcadeDrive extends Command{
     }
     @Override
     protected void execute() {
-        drivetrain.robotDrive.arcadeDrive(gamepad.fwdDrive(), gamepad.turnDrive());
+        SmartDashboard.putNumber("Driving", 1);
+        drivetrain.robotDrive.arcadeDrive(gamepad.driver1.getForwardPower(), gamepad.driver1.getRotationalPower());
     }
     @Override
     protected boolean isFinished() {
@@ -25,6 +27,7 @@ public class ArcadeDrive extends Command{
     }
     @Override
     protected void end() {
+        SmartDashboard.putNumber("Driving", 0);
         super.end();
     }
 }

@@ -9,6 +9,7 @@ import frc.robot.cargointake.cargoautomation.LoadFromCargoStation;
 import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Climb;
 import frc.robot.drivetrain.drivetraincommands.Shift;
+import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
@@ -23,7 +24,7 @@ import frc.robot.panelclaw.pegcommands.BopIt;
 public class OI {
 
     ButtonDashboard dashboard = new ButtonDashboard();
-    DriverController driver1 = new DriverController(DriverController.Driver.DRIVER_1);
+    public DriverController driver1 = new DriverController(DriverController.Driver.DRIVER_1);
 
     private final double DEADZONE = 0.10;
     private static OI instance;
@@ -55,6 +56,7 @@ public class OI {
         dashboard.PanelLoad.whenPressed(new IntakePanelNew());
         //dashboard.climb.whenPressed(new Climb());
 
+        driver1.AButtonCmd.whileHeld(new TargetAlignment(0.5));
     }
 
     

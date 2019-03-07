@@ -1,4 +1,4 @@
-package frc.robot.drivetrain.drivetraincommands;
+/*package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import frc.robot.drivetrain.Drivetrain;
@@ -23,7 +23,7 @@ public class GyroTurn extends PIDCommand{
     }
     /*public GyroTurn(double angle, double radius, double power){
         
-    }*/
+    }
     @Override
     protected void initialize() {
         target = angle + drivetrain.getYaw();
@@ -50,4 +50,4 @@ public class GyroTurn extends PIDCommand{
         drivetrain.robotDrive.tankDrive(0,0);
     }
 
-}
+}*/
