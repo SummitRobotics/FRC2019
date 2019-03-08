@@ -31,6 +31,7 @@ public class TargetAlignment extends PIDCommand {
     @Override
     protected void initialize() {
         super.initialize();
+        lemonlight.enableLights();
     }
     @Override
     protected void execute() {

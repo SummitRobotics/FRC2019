@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autonomous.LeftCargoShip;
 import frc.robot.autonomous.RightCargoShip;
 import frc.robot.autonomous.RocketLeft;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robot = RobotBuilder.getInstance();
     robot.init();
+    robot.matchInit();
     teleop = new TeleopArcade();
 
     autoChooser.setDefaultOption("Jump From HAB", new Yeet());
@@ -47,6 +49,8 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
     autoChooser.addOption("Left Rocket", new RocketLeft());
     autoChooser.addOption("Right Rocket", new RocketRight());
+    SmartDashboard.putData("Select Auto", autoChooser);
+
     //THIS MUST OCCUR AFTER ROBOT INIT
     gamepad = OI.getInstance();
   }

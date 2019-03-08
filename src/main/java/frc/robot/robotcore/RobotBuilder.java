@@ -2,6 +2,8 @@ package frc.robot.robotcore;
 
 import frc.robot.panelclaw.Claw;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.devices.Limelight;
@@ -58,10 +60,10 @@ public class RobotBuilder{
     }
     
     public void run(){
-        display.run();
+        //display.run();
     }
     public void dashboard(){
-        SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
+        /*SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
         SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
         /*SmartDashboard.putNumber("Intake Arm Encoder",cargoIntake.getIntakeArmEncoder());
         SmartDashboard.putBoolean("Break 1", cargoIntake.isBallDetected());
@@ -69,8 +71,8 @@ public class RobotBuilder{
         SmartDashboard.putBoolean("Claw Limit", claw.getClawLimit());
         SmartDashboard.putBoolean("Intake Limit", cargoIntake.getCargoLimit());
         SmartDashboard.putBoolean("Mast Limit", lift.getLowLimit());*/
-        SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());
-        SmartDashboard.putString("Claw State", claw.getClawState().toString());
+        //SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());
+        //SmartDashboard.putString("Claw State", claw.getClawState().toString());
         /*SmartDashboard.putNumber("Claw Arm Encoder", claw.getArmEncoder());
 
         SmartDashboard.putString("Claw Arm State", claw.getClawArmState().toString());
@@ -79,6 +81,9 @@ public class RobotBuilder{
         /*claw.panelSensor.read();
         SmartDashboard.putNumber("Red", claw.panelSensor.red);
         SmartDashboard.putNumber("Green", claw.panelSensor.green);
-        SmartDashboard.putNumber("Blue", claw.panelSensor.blue);*/
+        SmartDashboard.putNumber("Blue", claw.panelSensor.blue);
+
+        Shuffleboard.getTab("Main").add("Current PSI", pressureSensor.getPressure());
+        Shuffleboard.getTab("Main").add("Voltage", RobotController.getBatteryVoltage());*/
     }
 }

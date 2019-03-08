@@ -20,7 +20,7 @@ public class EncoderDrive extends Command{
     }
     @Override
     protected void execute() {
-        SmartDashboard.putBoolean("Yes", true);
+        SmartDashboard.putBoolean("Encoder Command Finished ", true);
         isDone = drivetrain.toPosition(target);
     }
     @Override

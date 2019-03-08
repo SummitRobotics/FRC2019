@@ -5,15 +5,15 @@ import frc.robot.robotcore.RobotConstants;
 
 public class ButtonDashboardDriver extends GenericHID{
     public enum ButtonLayout{
-        HIGH_MAST(1),
+        HIGH_MAST(3),
         MID_MAST(2),
-        LOW_MAST(3),
-        CARGO_LOAD(4),
-        CARGO_GROUND(5),
-        PANEL_LOAD(6),
-        PANEL_GROUND(7),
-        CLIMB(8),
-        CANCEL(9);
+        LOW_MAST(1),
+        CARGO_LOAD(5),
+        CARGO_GROUND(4),
+        PANEL_LOAD(7),
+        PANEL_GROUND(6),
+        CLIMB(9),
+        CANCEL(8);
 
         public final int value;
         ButtonLayout(int value){

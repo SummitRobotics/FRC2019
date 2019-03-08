@@ -20,6 +20,7 @@ import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.panelclaw.pegcommands.BopIt;
+import frc.robot.robotcore.universalcommands.lifteject;
 
 
 public class OI {
@@ -31,22 +32,6 @@ public class OI {
     private static OI instance;
 
     private OI(){
-        /*leftBumperCmd.whenActive(new Shift().new ToggleShift());
-        //rightBumperCmd.whenActive(new PunchCargo());
-        YButtonCmd.whenActive(new ActuatePeg().new TogglePeg());
-        //AButtonCmd.whenActive(new ActuateIntake().new ToggleIntake());
-        AButtonCmd.whenActive(new IntakeCargo());
-        //BButtonCmd.whenActive(new ActuateChair().new ToggleChair());
-        //BButtonCmd.whenActive(new IntakePanelNew());
-        //XButtonCmd.whenActive(new ActuateClaw().new ToggleClaw());
-        XButtonCmd.whenActive(new SetCargoArm(CargoIntake.IntakeArmState.UP));
-        BButtonCmd.whenActive(new SetCargoArm(CargoIntake.IntakeArmState.DOWN));
-        MastHigh.whenPressed(new MoveMast(LiftState.HIGH));
-        MastMid.whenPressed(new MoveMast(LiftState.MID));
-        MastLow.whenPressed(new MoveMast(LiftState.LOW));
-        CargoLoadStation.whenPressed(new LoadFromCargoStation());
-        CargoGround.whenPressed(new LoadCargoFromGround());
-        PanelGround.whenPressed(new IntakePanel());*/
 
         dashboard.CargoGround.whenPressed(new LoadCargoFromGround());
         //dashboard.CargoLoadStation.whenPressed(new LoadFromCargoStation());
@@ -58,12 +43,15 @@ public class OI {
         //dashboard.climb.whenPressed(new Climb());
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
-        driver1.BButtonCmd.whileHeld(new EjectPanel());
-        
-        driver1.XButtonCmd.whileHeld(new ActuatePeg().new TogglePeg());
+        driver1.BButtonCmd.whenPressed(new EjectPanel());
+        driver1.XButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());
         driver1.YButtonCmd.whenPressed(new PunchCargo());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
         driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
+
+        /*driver1.AButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());
+        driver1.BButtonCmd.whenPressed(new BopIt().new ToggleBop());
+        driver1.XButtonCmd.whenPressed(new ActuateChair().new ToggleChair());*/
         
         
     }

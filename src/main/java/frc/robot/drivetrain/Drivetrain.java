@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.drivetrain.drivetraincommands.ArcadeDrive;
+import frc.robot.drivetrain.drivetraincommands.CloseLoopArcadeDrive;
 import frc.robot.robotcore.RobotConstants;
 
 public class Drivetrain extends Subsystem{

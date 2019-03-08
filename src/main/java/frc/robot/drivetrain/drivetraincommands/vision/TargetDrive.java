@@ -37,6 +37,7 @@ public class TargetDrive extends Command {
     @Override
     protected void initialize() {
         super.initialize();
+        lemonlight.enableLights();
     }
     @Override
     protected void execute() {
