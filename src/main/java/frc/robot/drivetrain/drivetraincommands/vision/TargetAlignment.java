@@ -18,13 +18,14 @@ public class TargetAlignment extends PIDCommand {
     //private final double kP = 0.0265;
     private double min_command = 0.0;
     private double leftFwd, rightFwd, power;
+    private static final double POWER = 0.5;
 
 
-    public TargetAlignment(double power){
+    public TargetAlignment(){
         super("TargetAlignment", P, I, D, Drivetrain.getInstance());    
         setSetpoint(0);
         getPIDController().setPercentTolerance(5);
-        this.power = power;
+        this.power = POWER;
     }
 
     @Override

@@ -29,10 +29,6 @@ public class ConfigRobot extends InstantCommand{
     }
 
     @Override
-    protected boolean isFinished() {
-        return false;
-    }
-    @Override
     protected void end() {
         super.end();
     }

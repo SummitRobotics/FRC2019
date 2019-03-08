@@ -6,6 +6,7 @@ import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.clawcommands.DetectPanel;
 import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
+import frc.robot.robotcore.universalcommands.Wait;
 
 public class FloorIntakePanel extends CommandGroup{
     private Peg peg = Peg.getInstance();
@@ -19,7 +20,9 @@ public class FloorIntakePanel extends CommandGroup{
         addSequential(new RaiseClaw(Claw.ClawArmState.DOWN));
         addSequential(new DetectPanel());
         addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.CLOSE));
+        addSequential(new Wait(1.0));
         addSequential(new RaiseClaw(Claw.ClawArmState.UP));
         addSequential(new ActuatePeg().new SetPeg(Peg.PegState.UP));
+        addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.OPEN));
     }
 }

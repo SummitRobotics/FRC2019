@@ -40,15 +40,21 @@ public class RobotBuilder{
     }
     public void init(){
         drivetrain.resetGyro();
-        drivetrain.shiftGear(Drivetrain.GearState.HIGH);
         //todo - pwm absolute shit
         cargoIntake.setArmEncoder(0);
-        cargoIntake.setRollers(CargoIntake.RollerState.OFF);
+        lemonlight.enableLights();
+    }
+    public void matchInit(){
         peg.setPeg(Peg.PegState.UP);
+        cargoIntake.setRollers(CargoIntake.RollerState.OFF);
+        drivetrain.shiftGear(Drivetrain.GearState.HIGH);
         peg.setChair(Peg.PneumaticState.IN);
         peg.setBop(Peg.PneumaticState.IN);
-        lemonlight.enableLights();
         claw.setClaw(Claw.ClawState.OPEN);
+        drivetrain.resetGyro();
+        cargoIntake.setArmEncoder(0);
+        claw.setArmEncoder(0);
+
     }
     
     public void run(){

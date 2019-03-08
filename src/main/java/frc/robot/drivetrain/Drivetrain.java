@@ -164,7 +164,7 @@ public class Drivetrain extends Subsystem{
         //SETPOINTS MUST BE IN ROTATIONS
         leftPID.setReference(setpoint, ControlType.kPosition);
         rightPID.setReference(setpoint, ControlType.kPosition);
-        return (setpoint - RobotConstants.NEO_TICKS_TO_INCHES(leftEncoder.getPosition()) == 0) || (setpoint - RobotConstants.NEO_TICKS_TO_INCHES(leftEncoder.getPosition()) == 0);
+        return (setpoint - leftEncoder.getPosition() == 0) || (setpoint - rightEncoder.getPosition() == 0);
     }
 
 

@@ -30,6 +30,7 @@ public class Claw extends Subsystem{
     public enum ClawArmState{
         //values in degrees
         UP(0),
+        CARGO_DOWN(10),
         DOWN(50);
 
         public final double value;

@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.autonomous.TestAuto;
+import frc.robot.autonomous.LeftCargoShip;
+import frc.robot.autonomous.RightCargoShip;
+import frc.robot.autonomous.RocketLeft;
+import frc.robot.autonomous.RocketRight;
 import frc.robot.autonomous.Yeet;
 import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
@@ -40,7 +43,10 @@ public class Robot extends TimedRobot {
     teleop = new TeleopArcade();
 
     autoChooser.setDefaultOption("Jump From HAB", new Yeet());
-    autoChooser.addOption("Test Auto", new TestAuto());
+    autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
+    autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
+    autoChooser.addOption("Left Rocket", new RocketLeft());
+    autoChooser.addOption("Right Rocket", new RocketRight());
     //THIS MUST OCCUR AFTER ROBOT INIT
     gamepad = OI.getInstance();
   }
@@ -68,6 +74,7 @@ public class Robot extends TimedRobot {
     if(auto != null){
       auto.start();
     }
+    robot.matchInit();
   }
 
   @Override

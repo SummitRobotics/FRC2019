@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
 import frc.robot.cargointake.cargoautomation.LoadFromCargoStation;
+import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Climb;
 import frc.robot.drivetrain.drivetraincommands.Shift;
@@ -48,15 +49,22 @@ public class OI {
         PanelGround.whenPressed(new IntakePanel());*/
 
         dashboard.CargoGround.whenPressed(new LoadCargoFromGround());
-        dashboard.CargoLoadStation.whenPressed(new LoadFromCargoStation());
+        //dashboard.CargoLoadStation.whenPressed(new LoadFromCargoStation());
         dashboard.MastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
         dashboard.MastMid.whenPressed(new MoveMast(Lift.LiftState.MID));
         dashboard.MastLow.whenPressed(new MoveMast(Lift.LiftState.LOW));
         dashboard.PanelGround.whenPressed(new FloorIntakePanel());
-        dashboard.PanelLoad.whenPressed(new IntakePanelNew());
+        //dashboard.PanelLoad.whenPressed(new EjectPanel());
         //dashboard.climb.whenPressed(new Climb());
 
-        driver1.AButtonCmd.whileHeld(new TargetAlignment(0.5));
+        driver1.AButtonCmd.whileHeld(new TargetAlignment());
+        driver1.BButtonCmd.whileHeld(new EjectPanel());
+        driver1.XButtonCmd.whileHeld(new ActuatePeg().new TogglePeg());
+        driver1.YButtonCmd.whenPressed(new PunchCargo());
+        driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
+        driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
+        
+        
     }
 
     
