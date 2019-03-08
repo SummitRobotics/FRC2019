@@ -14,7 +14,7 @@ public class LoadCargoFromGround extends CommandGroup{
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.INTAKE_LOWER));
         addSequential(new DetectCargo(CargoIntake.CargoPosition.DETECTED));
-        addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.SLOW).23);
+        addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.SLOW));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.DOWN));
         addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));
         addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 0.25));

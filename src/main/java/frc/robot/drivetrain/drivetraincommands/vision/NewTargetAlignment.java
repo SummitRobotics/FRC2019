@@ -10,7 +10,7 @@ public class NewTargetAlignment extends CommandGroup{
     Limelight limelight = Limelight.getInstance();
 
     public NewTargetAlignment(){
-        addSequential(new TargetAlignment(0.5));
+        addSequential(new TargetAlignment());
         addSequential(new EncoderDrive(5));
     }
 }
