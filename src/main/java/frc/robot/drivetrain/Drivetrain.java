@@ -76,7 +76,7 @@ public class Drivetrain extends Subsystem{
         leftDrive2.setSmartCurrentLimit(30);
 
         leftEncoder = new CANEncoder(leftDrive0);
-        leftPID = new CANPIDController(leftDrive1);
+        //leftPID = new CANPIDController(leftDrive1);
         //DrivetrainConfig.configMotorController(leftDrive1);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
@@ -90,7 +90,7 @@ public class Drivetrain extends Subsystem{
         rightDrive2.setSmartCurrentLimit(30);
 
         rightEncoder = new CANEncoder(rightDrive0);
-        rightPID = new CANPIDController(rightDrive1);
+        //rightPID = new CANPIDController(rightDrive1);
         //DrivetrainConfig.configMotorController(rightDrive1);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
