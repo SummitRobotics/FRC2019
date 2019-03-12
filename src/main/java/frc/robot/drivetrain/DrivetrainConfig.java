@@ -17,8 +17,8 @@ public class DrivetrainConfig{
         MAX_VELOCITY = 1,
         MAX_ACCEL = 1,
         CLOSED_LOOP_ERROR =0,
-        STALL_CURRENT_LIMIT = 50,
-        FREESPIN_CURRENT_LIMIT = 40;
+        STALL_CURRENT_LIMIT = 40,
+        FREESPIN_CURRENT_LIMIT = 35;
 
     public DrivetrainConfig(){
 
@@ -28,7 +28,7 @@ public class DrivetrainConfig{
         setPIDF(controller);
         setOutputs(controller);
         //configMotionProfile(controller);
-        //configCurrentLimits(controller);
+        configCurrentLimits(controller);
     }
 
     public static void setPIDF(CANSparkMax controller){

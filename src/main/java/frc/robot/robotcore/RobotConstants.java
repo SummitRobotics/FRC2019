@@ -5,6 +5,8 @@ public class RobotConstants {
   public static final double TALON_TICKS_PER_ROT = 4096;
   public static final double NEO_TICKS_PER_REV = 42;
 
+  public static final double EPSILON = 1;
+
   public static final double MAX_DRIVETRAIN_RPM = 5700;
   
   //TODO - new angles and heights

@@ -17,6 +17,7 @@ public class EncoderDrive extends Command{
     @Override
     protected void initialize() {
         target = RobotConstants.NEO_INCHES_TO_TICKS(distance);
+        SmartDashboard.putNumber("Target", target);
     }
     @Override
     protected void execute() {

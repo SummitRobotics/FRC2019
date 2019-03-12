@@ -10,14 +10,14 @@ public class PowerDrive extends Command{
     
     public PowerDrive(double power, double timeout){
         requires(drivetrain);
-        this.power = power;
+        this.power = -power;
         setTimeout(timeout);
         this.isTurn = false;
     }
     public PowerDrive(double power, boolean isTurn, double timeout){
         requires(drivetrain);
         setTimeout(timeout);
-        this.power = power;
+        this.power = -power;
         this.isTurn = isTurn;
     
     }

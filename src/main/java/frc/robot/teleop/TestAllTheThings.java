@@ -18,10 +18,10 @@ public class TestAllTheThings{
     public void run(){
         //robot.lift.runLiftManual(-OI.getInstance().getRightJoystickY());
         //robot.claw.runArm(-OI.getInstance().getLeftJoystickX());
-        /*double xSpeed = gamepad.getForwardPower();
-        double zRotation = gamepad.getRotationalPower();
+        double xSpeed = gamepad.driver1.getForwardPower();
+        double zRotation = gamepad.driver1.getRotationalPower();
         robot.drivetrain.robotDrive.arcadeDrive(xSpeed, zRotation);
-        robot.claw.runArm(gamepad.getRightJoystickX() * 0.45);
+        /*robot.claw.runArm(gamepad.getRightJoystickX() * 0.45);
         robot.intake.moveIntakeArm(gamepad.getRightJoystickY() * 0.30);
 
         if(gamepad.isButtonA()){
@@ -33,5 +33,6 @@ public class TestAllTheThings{
         if(gamepad.isButtonX()){
             robot.peg.setPeg(PegState.DOWN);
         }*/
+        
     }
 }

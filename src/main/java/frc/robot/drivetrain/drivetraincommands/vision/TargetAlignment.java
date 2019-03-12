@@ -14,7 +14,7 @@ public class TargetAlignment extends PIDCommand {
     private static final double
         P = 0.01,
         I = 0.0,
-        D = 0.0;
+        D = 0.001;
     //private final double kP = 0.0265;
     private double min_command = 0.0;
     private double leftFwd, rightFwd, power;

@@ -11,6 +11,7 @@ public class ArcadeDrive extends Command{
 
     public ArcadeDrive(){
         requires(drivetrain);
+        setInterruptible(true);
     }
     @Override
     protected void initialize() {
@@ -19,7 +20,11 @@ public class ArcadeDrive extends Command{
     @Override
     protected void execute() {
         SmartDashboard.putNumber("Driving", 1);
-        drivetrain.robotDrive.arcadeDrive(gamepad.driver1.getForwardPower(), gamepad.driver1.getRotationalPower());
+        double xSpeed = gamepad.driver1.getForwardPower();
+        double zRotation = gamepad.driver1.getRotationalPower();
+        SmartDashboard.putNumber("Xspeed", xSpeed);
+        SmartDashboard.putNumber("Zrotation", zRotation);
+        drivetrain.robotDrive.arcadeDrive(xSpeed, zRotation);
     }
     @Override
     protected boolean isFinished() {

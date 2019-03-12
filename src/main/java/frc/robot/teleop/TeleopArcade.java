@@ -1,5 +1,6 @@
 package frc.robot.teleop;
 
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotBuilder;
 import frc.robot.robotcore.userinput.OI;
@@ -23,10 +24,12 @@ public class TeleopArcade {
         //Potentially implement curvatureDrive in the future?
         robot.drivetrain.robotDrive.arcadeDrive(xSpeed, -zRotation);
         
-        SmartDashboard.putNumber("Left Encoder", robot.drivetrain.getLeftEncoderPos());
+        //Scheduler.getInstance().run();
+        
+        /*SmartDashboard.putNumber("Left Encoder", robot.drivetrain.getLeftEncoderPos());
         SmartDashboard.putNumber("Right Encoder", robot.drivetrain.getRightEncoderPos());
         SmartDashboard.putNumber("Fwd Power", xSpeed);
-        SmartDashboard.putNumber("Gyro Angle", robot.drivetrain.getYaw());
+        SmartDashboard.putNumber("Gyro Angle", robot.drivetrain.getYaw());*/
     
     }
 

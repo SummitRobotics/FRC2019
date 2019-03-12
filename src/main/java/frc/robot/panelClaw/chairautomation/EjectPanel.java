@@ -1,6 +1,7 @@
 package frc.robot.panelclaw.chairautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
 import frc.robot.panelclaw.Claw;
@@ -15,14 +16,15 @@ public class EjectPanel extends CommandGroup{
 
     public EjectPanel(){
         requires(claw);
-
+        addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
         addSequential(new ActuatePeg(). new SetPeg(PegState.DOWN));
-        addSequential(new Wait(0.15)); 
+        addSequential(new PowerDrive(0.25, false, 0.25));
+        addSequential(new Wait(0.1)); 
         addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.OUT));
-        addSequential(new Wait(0.15));
+        addSequential(new Wait(0.2));
         addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
         addSequential(new Wait(1.0));
-        addSequential(new ActuatePeg().new SetPeg(PegState.UP));
+        //addSequential(new ActuatePeg().new SetPeg(PegState.UP));
         //addSequential(new MoveMast(LiftState.LOW));
     }
 }

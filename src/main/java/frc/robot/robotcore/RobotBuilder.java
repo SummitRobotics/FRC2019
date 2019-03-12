@@ -12,6 +12,7 @@ import frc.robot.devices.REVdisplay;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.lift.Lift;
 import frc.robot.panelclaw.Peg;
+import frc.robot.robotcore.userinput.OI;
 
 public class RobotBuilder{
     public Drivetrain drivetrain;
@@ -50,7 +51,7 @@ public class RobotBuilder{
         peg.setPeg(Peg.PegState.UP);
         cargoIntake.setRollers(CargoIntake.RollerState.OFF);
         drivetrain.shiftGear(Drivetrain.GearState.HIGH);
-        peg.setChair(Peg.PneumaticState.IN);
+        peg.setChair(Peg.PneumaticState.OUT);
         peg.setBop(Peg.PneumaticState.IN);
         claw.setClaw(Claw.ClawState.OPEN);
         drivetrain.resetGyro();
@@ -85,5 +86,15 @@ public class RobotBuilder{
 
         Shuffleboard.getTab("Main").add("Current PSI", pressureSensor.getPressure());
         Shuffleboard.getTab("Main").add("Voltage", RobotController.getBatteryVoltage());*/
+
+        SmartDashboard.putNumber("turn Power", OI.getInstance().driver1.getRotationalPower());
+        SmartDashboard.putNumber("Current 1", drivetrain.leftDrive0.getOutputCurrent());
+        SmartDashboard.putNumber("Current 2", drivetrain.leftDrive1.getOutputCurrent());
+        SmartDashboard.putNumber("Current 3", drivetrain.leftDrive2.getOutputCurrent());
+        SmartDashboard.putNumber("Current 4", drivetrain.rightDrive0.getOutputCurrent());
+        SmartDashboard.putNumber("Current 5", drivetrain.rightDrive1.getOutputCurrent());
+        SmartDashboard.putNumber("Current 6", drivetrain.rightDrive2.getOutputCurrent());
+
+
     }
 }
