@@ -62,6 +62,6 @@ public class Lift extends Subsystem{
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new MoveMastManual());
+        //setDefaultCommand(new MoveMastManual());
     }
 }

@@ -161,11 +161,9 @@ public class CargoIntake extends Subsystem {
     }
 
     //Servos the intake arm to a given position
-    public boolean setIntakeArm(double intakePosition){
-            double target = (intakePosition/360) * 4096;
+    public boolean setIntakeArm(IntakeArmState intakePosition){
+            double target = (intakePosition.value/360) * RobotConstants.TALON_TICKS_PER_ROT;
             arm.set(ControlMode.Position, target); 
-            SmartDashboard.putNumber("Target", target);
             return arm.getClosedLoopError() == 0;
     }
-
 }

@@ -16,12 +16,13 @@ public class EncoderDrive extends Command{
     }
     @Override
     protected void initialize() {
-
+        target = RobotConstants.NEO_INCHES_TO_TICKS(distance);
+        SmartDashboard.putNumber("Target", target);
     }
     @Override
     protected void execute() {
-        SmartDashboard.putBoolean("Yes", true);
-        isDone = drivetrain.toPosition(distance);
+        SmartDashboard.putBoolean("Encoder Command Finished ", true);
+        isDone = drivetrain.toPosition(target);
     }
     @Override
     protected boolean isFinished() {

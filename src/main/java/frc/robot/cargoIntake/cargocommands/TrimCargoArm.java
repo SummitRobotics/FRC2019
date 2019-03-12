@@ -3,6 +3,7 @@ package frc.robot.cargointake.cargocommands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.cargointake.CargoIntake;
+import frc.robot.robotcore.userinput.OI;
 
 public class TrimCargoArm extends Command{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
@@ -17,15 +18,7 @@ public class TrimCargoArm extends Command{
     }
     @Override
     protected void execute() {
-        if(Robot.gamepad.isDpadUp()){
-            cargoIntake.moveIntakeArm(POWER);
-        }
-        else if(Robot.gamepad.isDpadDown()){
-            cargoIntake.moveIntakeArm(-POWER);
-        }
-        else{
-            cargoIntake.moveIntakeArm(0);
-        }
+        cargoIntake.moveIntakeArm(OI.getInstance().cargoArmDrive());
     }
     @Override
     protected boolean isFinished() {

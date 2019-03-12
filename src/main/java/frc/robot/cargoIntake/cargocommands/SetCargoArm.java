@@ -20,7 +20,7 @@ public class SetCargoArm extends Command{
     }
     @Override
     protected void execute() {
-        isDone = cargoIntake.setIntakeArm(armPos.value);
+        isDone = cargoIntake.setIntakeArm(armPos);
         SmartDashboard.putBoolean("Is Running", true);
 
     }

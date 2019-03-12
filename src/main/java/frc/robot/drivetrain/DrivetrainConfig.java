@@ -17,8 +17,8 @@ public class DrivetrainConfig{
         MAX_VELOCITY = 1,
         MAX_ACCEL = 1,
         CLOSED_LOOP_ERROR =0,
-        STALL_CURRENT_LIMIT = 0,
-        FREESPIN_CURRENT_LIMIT = 0;
+        STALL_CURRENT_LIMIT = 40,
+        FREESPIN_CURRENT_LIMIT = 35;
 
     public DrivetrainConfig(){
 
@@ -27,7 +27,7 @@ public class DrivetrainConfig{
     public static void configMotorController(CANSparkMax controller){
         setPIDF(controller);
         setOutputs(controller);
-        configMotionProfile(controller);
+        //configMotionProfile(controller);
         configCurrentLimits(controller);
     }
 
@@ -43,13 +43,13 @@ public class DrivetrainConfig{
         controller.getPIDController().setOutputRange(OUTPUT_MIN, OUTPUT_MAX);
     }
 
-    public static void configMotionProfile(CANSparkMax controller){
+    /*public static void configMotionProfile(CANSparkMax controller){
         controller.getPIDController().setSmartMotionMinOutputVelocity(MIN_VELOCITY, 0);
         controller.getPIDController().setSmartMotionMaxVelocity(MAX_VELOCITY, 0);
         controller.getPIDController().setSmartMotionAllowedClosedLoopError(CLOSED_LOOP_ERROR, 0);
         controller.getPIDController().setSmartMotionMaxAccel(MAX_ACCEL, 0);
         controller.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kSCurve, 0);
-    }
+    }*/
 
     public static void configCurrentLimits(CANSparkMax controller){
         controller.setSmartCurrentLimit((int)STALL_CURRENT_LIMIT, (int)FREESPIN_CURRENT_LIMIT);

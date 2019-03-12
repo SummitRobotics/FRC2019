@@ -35,6 +35,13 @@ public class BlinkinRGB{
         blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
     }
 
+    public BlinkinRGB getInstance(){
+        if(instance == null){
+            instance = new BlinkinRGB();
+        }
+        return instance;
+    }
+
     public void setLEDColor(Blinkin blinkinValue){
         blinkin.set(blinkinValue.value);
         SmartDashboard.putNumber("value", blinkinValue.value);

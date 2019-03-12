@@ -4,9 +4,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Peg;
+import frc.robot.robotcore.userinput.OI;
 
 public class MoveClawWrist extends Command{
     private Claw claw = Claw.getInstance();
+    private OI gamepad = OI.getInstance();
     private final double POWER = 0.30;
 
     public MoveClawWrist(){
@@ -19,15 +21,7 @@ public class MoveClawWrist extends Command{
     }
     @Override
     protected void execute() {
-        if(Robot.gamepad.isDpadLeft()){
-            claw.runArm(POWER);
-        }
-        else if(Robot.gamepad.isDpadRight()){
-            claw.runArm(-POWER);
-        }
-        else{
-            claw.runArm(0);
-        }
+        claw.runArm(gamepad.clawArmDrive());
     }
     @Override
     protected boolean isFinished() {

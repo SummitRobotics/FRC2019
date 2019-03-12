@@ -11,9 +11,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.autonomous.TestAuto;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autonomous.LeftCargoShip;
+import frc.robot.autonomous.LeftCargoShipPower;
+import frc.robot.autonomous.RightCargoShip;
+import frc.robot.autonomous.RocketLeft;
+import frc.robot.autonomous.RocketRight;
 import frc.robot.autonomous.Yeet;
-import frc.robot.robotcore.OI;
+import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
 import frc.robot.teleop.TeleopArcade;
 import frc.robot.teleop.TestAllTheThings;
@@ -37,10 +42,18 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robot = RobotBuilder.getInstance();
     robot.init();
+    robot.matchInit();
     teleop = new TeleopArcade();
 
-    autoChooser.setDefaultOption("Jump From HAB", new Yeet());
-    autoChooser.addOption("Test Auto", new TestAuto());
+    autoChooser.setDefaultOption("No Auto", null);
+    /*autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
+    autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
+    autoChooser.addOption("Left Rocket", new RocketLeft());
+    autoChooser.addOption("Power Cargo", new LeftCargoShipPower());
+    autoChooser.addOption("Right Rocket", new RocketRight());
+    autoChooser.addOption("No Auto", null);*/
+    SmartDashboard.putData("Select Auto", autoChooser);
+
     //THIS MUST OCCUR AFTER ROBOT INIT
     gamepad = OI.getInstance();
   }
@@ -68,6 +81,7 @@ public class Robot extends TimedRobot {
     if(auto != null){
       auto.start();
     }
+    robot.matchInit();
   }
 
   @Override
@@ -86,16 +100,17 @@ public class Robot extends TimedRobot {
       auto.cancel();
     }
     //teleop.init();
-    robot.init();
+    //robot.init();
     /*test = new TestAllTheThings();
     test.init();*/
   }
 
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
+    //Scheduler.getInstance().run();
     //test.run();
     //teleop.run();
+    Scheduler.getInstance().run();
   }
 
   @Override

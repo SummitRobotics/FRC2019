@@ -20,10 +20,15 @@ public class Limelight implements PIDSource{
 
     private Limelight(){
         table = NetworkTableInstance.getDefault().getTable("limelight");
+        //Target Displacement: X-axis
         tx = table.getEntry("tx");
+        //Target Displacement: Y-axis
         ty = table.getEntry("ty");
+        //Target Area
         ta = table.getEntry("ta");
+        //Target Skew
         ts = table.getEntry("ts");
+        //State of target. Returns "1" if target is visible, else "0"
         tv = table.getEntry("tv");
     }
 
@@ -69,6 +74,10 @@ public class Limelight implements PIDSource{
     }
     public void enableLights(){
         table.getEntry("ledMode").setNumber(0);
+    }
+
+    public boolean isTarget(){
+        return getTarget() != 0;
     }
 
     public void setPipeline(double pipeline){

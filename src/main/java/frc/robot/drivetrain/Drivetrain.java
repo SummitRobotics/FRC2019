@@ -43,7 +43,7 @@ public class Drivetrain extends Subsystem{
 
 /* ----- Instance Members ----- */
 
-    private CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
+    public CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
     private CANPIDController leftPID, rightPID;
     private SpeedControllerGroup leftDrive, rightDrive;
     public DifferentialDrive robotDrive;
@@ -59,6 +59,8 @@ public class Drivetrain extends Subsystem{
 
     private Compressor compressor;
 
+    private double[] ypr;
+
 /* ----- INSTANTIATION METHODS ----- */
 
     private static Drivetrain instance;
@@ -69,23 +71,33 @@ public class Drivetrain extends Subsystem{
         leftDrive1.follow(leftDrive0);
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
         leftDrive2.follow(leftDrive0);
+        leftDrive0.setSmartCurrentLimit(30);
+        leftDrive1.setSmartCurrentLimit(30);
+        leftDrive2.setSmartCurrentLimit(30);
+
         leftEncoder = new CANEncoder(leftDrive0);
-        leftPID = new CANPIDController(leftDrive1);
-        DrivetrainConfig.configMotorController(leftDrive1);
+        //leftPID = new CANPIDController(leftDrive1);
+        //DrivetrainConfig.configMotorController(leftDrive1);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
         rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
         rightDrive2.follow(rightDrive0);
+
+        rightDrive0.setSmartCurrentLimit(30);
+        rightDrive1.setSmartCurrentLimit(30);
+        rightDrive2.setSmartCurrentLimit(30);
+
         rightEncoder = new CANEncoder(rightDrive0);
-        rightPID = new CANPIDController(rightDrive1);
-        DrivetrainConfig.configMotorController(rightDrive1);
+        //rightPID = new CANPIDController(rightDrive1);
+        //DrivetrainConfig.configMotorController(rightDrive1);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
-        robotDrive.setSafetyEnabled(false);
+        robotDrive.setSafetyEnabled(true);
+        
 
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
@@ -119,12 +131,12 @@ public class Drivetrain extends Subsystem{
     }
 
     public double getYaw(){
-        double[] ypr = new double[2];
+        ypr = new double[3];
         gyro.getYawPitchRoll(ypr);
-        return ypr[0];
+        return -ypr[0];
     }
-    public double getPitch(){
-        double[] ypr = new double[2];
+    /*public double getPitch(){
+        ypr = new double[2];
         gyro.getYawPitchRoll(ypr);
         return ypr[1];
     }
@@ -132,7 +144,7 @@ public class Drivetrain extends Subsystem{
         double[] ypr = new double[2];
         gyro.getYawPitchRoll(ypr);
         return ypr[2];
-    }
+    }*/
 
     //Feedback Config
     public void setDrivetrainEncoders(double value){
@@ -161,10 +173,12 @@ public class Drivetrain extends Subsystem{
     }
     
     public boolean toPosition(double setpoint){
-        //SETPOINTS MUST BE IN ROTATIONS
+        //SETPOINTS MUST BE IN TICKS+
+        double threshold = RobotConstants.EPSILON;
         leftPID.setReference(setpoint, ControlType.kPosition);
         rightPID.setReference(setpoint, ControlType.kPosition);
-        return (setpoint - RobotConstants.NEO_TICKS_TO_INCHES(leftEncoder.getPosition()) == 0) || (setpoint - RobotConstants.NEO_TICKS_TO_INCHES(leftEncoder.getPosition()) == 0);
+        //return (setpoint - leftEncoder.getPosition() == 0) || (setpoint - rightEncoder.getPosition() == 0);
+        return (Math.abs(setpoint - leftEncoder.getPosition()) <= threshold) || (Math.abs(setpoint - rightEncoder.getPosition()) <= threshold);
     }
 
 
