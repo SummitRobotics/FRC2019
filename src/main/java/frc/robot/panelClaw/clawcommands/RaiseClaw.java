@@ -1,7 +1,6 @@
 package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.panelclaw.Claw;
 import frc.robot.robotcore.RobotConstants;
 

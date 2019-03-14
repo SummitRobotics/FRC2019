@@ -26,7 +26,6 @@ import frc.robot.teleop.TestAllTheThings;
 
 public class Robot extends TimedRobot {
   public RobotBuilder robot;
-  public static TeleopArcade teleop;
   public static OI gamepad;
   private TestAllTheThings test;
 
@@ -43,15 +42,13 @@ public class Robot extends TimedRobot {
     robot = RobotBuilder.getInstance();
     robot.init();
     robot.matchInit();
-    teleop = new TeleopArcade();
 
     autoChooser.setDefaultOption("No Auto", null);
-    /*autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
+    autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
     autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
     autoChooser.addOption("Left Rocket", new RocketLeft());
     autoChooser.addOption("Power Cargo", new LeftCargoShipPower());
     autoChooser.addOption("Right Rocket", new RocketRight());
-    autoChooser.addOption("No Auto", null);*/
     SmartDashboard.putData("Select Auto", autoChooser);
 
     //THIS MUST OCCUR AFTER ROBOT INIT
@@ -61,7 +58,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     robot.run();
-    robot.dashboard();
+    //robot.dashboard();
   }
 
   @Override
@@ -76,12 +73,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     auto = autoChooser.getSelected();
-    robot.init();
+    //robot.init();
     
     if(auto != null){
       auto.start();
     }
-    robot.matchInit();
+    //robot.matchInit();
   }
 
   @Override
@@ -99,17 +96,10 @@ public class Robot extends TimedRobot {
     if (auto != null) {
       auto.cancel();
     }
-    //teleop.init();
-    //robot.init();
-    /*test = new TestAllTheThings();
-    test.init();*/
   }
 
   @Override
   public void teleopPeriodic() {
-    //Scheduler.getInstance().run();
-    //test.run();
-    //teleop.run();
     Scheduler.getInstance().run();
   }
 

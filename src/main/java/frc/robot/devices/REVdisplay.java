@@ -1,9 +1,9 @@
 package frc.robot.devices; 
 
-import edu.wpi.first.wpilibj.RobotController;
+//import edu.wpi.first.wpilibj.RobotController;
 
 public class REVdisplay{
-    private REVDigitBoardDriver revBoard = new REVDigitBoardDriver();
+    /*private REVDigitBoardDriver revBoard = new REVDigitBoardDriver();
     private double battVolt;
     private final String teamNum = "5468";
     private double psi;
@@ -64,6 +64,6 @@ public class REVdisplay{
             buttonStatusB = !buttonStatusB;
         }
         return buttonStatusB;
-    }
+    }*/
 
 }

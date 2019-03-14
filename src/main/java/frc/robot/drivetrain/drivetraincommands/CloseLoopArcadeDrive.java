@@ -19,8 +19,8 @@ public class CloseLoopArcadeDrive extends Command{
     @Override
     protected void execute() {
         double[] inputs = getOutputs(gamepad.fwdDrive(), gamepad.turnDrive());
-        drivetrain.leftClosedLoop(inputs[0]);
-        drivetrain.rightClosedLoop(inputs[1]);
+        //drivetrain.leftClosedLoop(inputs[0]);
+        //drivetrain.rightClosedLoop(inputs[1]);
     }
     protected double[] getOutputs(double xSpeed, double zRotation){
         //where array[0] is left, and array[1] is right.

@@ -1,7 +1,6 @@
 package frc.robot.devices;
 
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotConstants;
 
 public class BlinkinRGB{
@@ -44,7 +43,6 @@ public class BlinkinRGB{
 
     public void setLEDColor(Blinkin blinkinValue){
         blinkin.set(blinkinValue.value);
-        SmartDashboard.putNumber("value", blinkinValue.value);
         RGBState = blinkinValue;
     }
 }

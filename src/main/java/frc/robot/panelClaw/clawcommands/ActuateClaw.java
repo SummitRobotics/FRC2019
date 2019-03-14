@@ -1,7 +1,6 @@
 package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawState;
 
@@ -30,7 +29,6 @@ public class ActuateClaw{
         protected void execute() {
             //claw.claw.set(clawPosition.value);
             claw.setClaw(clawPosition);
-            SmartDashboard.putString("Claw Value", Claw.getInstance().getClawState().toString());
         }
         @Override
         protected void end() {

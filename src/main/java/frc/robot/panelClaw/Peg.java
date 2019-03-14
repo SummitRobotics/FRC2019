@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotConstants;
 
 public class Peg extends Subsystem{
@@ -68,7 +67,6 @@ public class Peg extends Subsystem{
             return pegState;
         }
         else{
-            SmartDashboard.putString("Error", "Peg State currently at null");
             setPeg(PegState.DOWN);
             return pegState;
         }

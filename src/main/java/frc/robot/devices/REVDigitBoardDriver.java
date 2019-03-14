@@ -1,12 +1,12 @@
 package frc.robot.devices; 
 
-import edu.wpi.first.wpilibj.I2C;
+/*import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.AnalogInput;
 
-import java.util.*;
+import java.util.*;*/
 
 public class REVDigitBoardDriver {
 	/*
@@ -21,7 +21,7 @@ public class REVDigitBoardDriver {
 	 * double getPot() : potentiometer value
 	 */
 	
-	I2C i2c;
+	/*I2C i2c;
 	DigitalInput buttonA, buttonB;
 	AnalogInput pot;
 	
@@ -196,6 +196,6 @@ public class REVDigitBoardDriver {
 	    char[] arr = new char[n];
 	    Arrays.fill(arr, c);
 	    return new String(arr);
-	}
+	}*/
 	
 }

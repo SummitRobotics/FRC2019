@@ -3,7 +3,6 @@ package frc.robot.devices;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -13,6 +12,8 @@ public class Limelight implements PIDSource{
 
     private final double CAMERA_HEIGHT = 21.5;
     private final double CAMERA_ANGLE = 21.86;
+    //TODO - Tune
+    private final double EXPECTED_AREA = 0.0;
 
     private PIDSourceType pidSource = PIDSourceType.kDisplacement;
 
@@ -63,6 +64,10 @@ public class Limelight implements PIDSource{
     public double getTarget(){
         return tv.getDouble(0.0);
     }
+
+    public double getAreaError(){
+        return (EXPECTED_AREA - getArea());
+    }
     
     @Override
     public double pidGet() {
@@ -87,9 +92,6 @@ public class Limelight implements PIDSource{
     }
     public double getDistance(double targetHeight){
         double deltaHeight = targetHeight - CAMERA_HEIGHT;
-        SmartDashboard.putNumber("deltaheight", deltaHeight);
-        SmartDashboard.putNumber("ANGLE", CAMERA_ANGLE + getY());
-        SmartDashboard.putNumber("Tangent", Math.tan(Math.toRadians(CAMERA_ANGLE + getY())));
         return (targetHeight - CAMERA_HEIGHT) / Math.tan(Math.toRadians(CAMERA_ANGLE + getY()));
     }
 }

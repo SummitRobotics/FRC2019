@@ -74,24 +74,29 @@ public class Drivetrain extends Subsystem{
         leftDrive0.setSmartCurrentLimit(30);
         leftDrive1.setSmartCurrentLimit(30);
         leftDrive2.setSmartCurrentLimit(30);
+        leftDrive0.setOpenLoopRampRate(0.35);
+        leftDrive1.setOpenLoopRampRate(0.35);
+        leftDrive2.setOpenLoopRampRate(0.35);
 
-        leftEncoder = new CANEncoder(leftDrive0);
-        //leftPID = new CANPIDController(leftDrive1);
-        //DrivetrainConfig.configMotorController(leftDrive1);
+        leftEncoder = new CANEncoder(leftDrive1);
+        leftPID = new CANPIDController(leftDrive1);
+        DrivetrainConfig.configMotorController(leftDrive1);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
         rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
         rightDrive2.follow(rightDrive0);
-
         rightDrive0.setSmartCurrentLimit(30);
         rightDrive1.setSmartCurrentLimit(30);
         rightDrive2.setSmartCurrentLimit(30);
+        rightDrive0.setOpenLoopRampRate(0.35);
+        rightDrive1.setOpenLoopRampRate(0.35);
+        rightDrive2.setOpenLoopRampRate(0.35);
 
-        rightEncoder = new CANEncoder(rightDrive0);
-        //rightPID = new CANPIDController(rightDrive1);
-        //DrivetrainConfig.configMotorController(rightDrive1);
+        rightEncoder = new CANEncoder(rightDrive1);
+        rightPID = new CANPIDController(rightDrive1);
+        DrivetrainConfig.configMotorController(rightDrive1);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
@@ -123,12 +128,12 @@ public class Drivetrain extends Subsystem{
 
 /* ----- FEEDBACK DEVICES ----- */
 
-    public double getLeftEncoderPos(){
+    /*public double getLeftEncoderPos(){
         return leftEncoder.getPosition();
     }
     public double getRightEncoderPos(){
         return rightEncoder.getPosition();
-    }
+    }*/
 
     public double getYaw(){
         ypr = new double[3];
@@ -147,10 +152,10 @@ public class Drivetrain extends Subsystem{
     }*/
 
     //Feedback Config
-    public void setDrivetrainEncoders(double value){
+    /*public void setDrivetrainEncoders(double value){
         leftEncoder.setPosition(value);
         rightEncoder.setPosition(value);
-    }
+    }*/
     public void resetGyro(){
         gyro.setYaw(0);
         gyro.setAccumZAngle(0);
@@ -161,7 +166,7 @@ public class Drivetrain extends Subsystem{
         robotDrive.tankDrive(0, 0);
     }
 
-    public void leftClosedLoop(double input){
+    /*public void leftClosedLoop(double input){
         //In RPM
         double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
         leftPID.setReference(setpoint, ControlType.kSmartVelocity);
@@ -170,7 +175,7 @@ public class Drivetrain extends Subsystem{
         //In RPM
         double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
         rightPID.setReference(setpoint, ControlType.kSmartVelocity);
-    }
+    }*/
     
     public boolean toPosition(double setpoint){
         //SETPOINTS MUST BE IN TICKS+

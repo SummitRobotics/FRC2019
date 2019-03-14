@@ -38,24 +38,17 @@ public class OI {
         dashboard.MastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
         dashboard.MastMid.whenPressed(new MoveMast(Lift.LiftState.MID));
         dashboard.MastLow.whenPressed(new MoveMast(Lift.LiftState.LOW));
-        //dashboard.PanelGround.whenPressed(new FloorIntakePanel());
-        //dashboard.PanelLoad.whenPressed(new EjectPanel());
-        //dashboard.climb.whenPressed(new Climb());*/
+        dashboard.PanelGround.whenPressed(new FloorIntakePanel());
+        dashboard.PanelLoad.whenPressed(new EjectPanel());
+        dashboard.climb.whenPressed(new Climb());*/
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());
-        //driver1.XButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());
         driver1.XButtonCmd.whenPressed(new PinPanel());
         driver1.YButtonCmd.whenPressed(new PunchCargo());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
         driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
-        driver1.BackButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());
-
-        /*driver1.AButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());
-        driver1.BButtonCmd.whenPressed(new BopIt().new ToggleBop());
-        driver1.XButtonCmd.whenPressed(new ActuateChair().new ToggleChair());*/
-        
-        
+        driver1.BackButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());       
     }
 
     

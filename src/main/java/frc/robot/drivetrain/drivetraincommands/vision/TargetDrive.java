@@ -3,10 +3,27 @@ package frc.robot.drivetrain.drivetraincommands.vision;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.devices.Limelight;
 import frc.robot.drivetrain.Drivetrain;
+
+//shoot me please and thank you
+//"me first bitch"
+//mate ive eaerned this
+
+/* no
+    u*/
+
+/***n
+ * a
+ * y
+ * 
+ * t
+ * h
+ * e
+ * e
+ */
 
 public class TargetDrive extends Command {
 
@@ -30,19 +47,79 @@ public class TargetDrive extends Command {
 
 
     public TargetDrive(){
+        fwdSource = new PIDSource(){
+        
+            @Override
+            public void setPIDSourceType(PIDSourceType pidSource) {
+                setPIDSourceType(PIDSourceType.kDisplacement);
+            }
+        
+            @Override
+            public double pidGet() {
+                return lemonlight.getAreaError();
+            }
+        
+            @Override
+            public PIDSourceType getPIDSourceType() {
+                return getPIDSourceType();
+            }
+        };
+
+        turnSource = new PIDSource(){
+        
+            @Override
+            public void setPIDSourceType(PIDSourceType pidSource) {
+                setPIDSourceType(PIDSourceType.kDisplacement);
+            }
+        
+            @Override
+            public double pidGet() {
+                return lemonlight.getX();
+            }
+        
+            @Override
+            public PIDSourceType getPIDSourceType() {
+                return getPIDSourceType();
+            }
+        };
+        
+
+        fwdOutput = new PIDOutput(){
+        
+            @Override
+            public void pidWrite(double output) {
+                
+            }
+        };
+
+        turnOutput = new PIDOutput(){
+        
+            @Override
+            public void pidWrite(double output) {
+                
+            }
+        };
         fwdPID = new PIDController(FWD_P, FWD_I, FWD_D, FWD_F, fwdSource, fwdOutput);
-        turnPID = new PIDController(TURN_P, TURN_I, TURN_D, TURN_F, fwdSource, fwdOutput);
+        turnPID = new PIDController(TURN_P, TURN_I, TURN_D, TURN_F, turnSource, turnOutput);
     }
 
     @Override
     protected void initialize() {
         super.initialize();
         lemonlight.enableLights();
+        fwdPID.setPercentTolerance(5);
+        turnPID.setPercentTolerance(5);
+
+        fwdPID.setSetpoint(0);
+        turnPID.setSetpoint(0);
     }
     @Override
     protected void execute() {
-        SmartDashboard.putNumber("Left Drive", leftFwd);
-        SmartDashboard.putNumber("Right Drive", rightFwd);
+        double fwdAdjust, turnAdjust;
+        
+        if(lemonlight.isTarget()){
+
+        }
     }
     /*@Override
     protected void usePIDOutput(double output) {
@@ -69,8 +146,6 @@ public class TargetDrive extends Command {
             drivetrain.robotDrive.tankDrive(leftFwd, rightFwd);
         }
         
-        SmartDashboard.putNumber("Output", steeringAdjust);
-        SmartDashboard.putBoolean("Yeah Done", isFinished());
     }*/
     @Override
     protected boolean isFinished() {
@@ -80,10 +155,5 @@ public class TargetDrive extends Command {
     protected void end() {
         super.end();
         drivetrain.stopRobot();
-    }
-
-
-    public double getTurnPIDInput(){
-        return lemonlight.getX();
     }
 }

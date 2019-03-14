@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
@@ -94,12 +93,10 @@ public class Claw extends Subsystem{
         ClawState clawPos = clawState;
             if(isClawOpen()){
                 clawPos = ClawState.CLOSE;
-                SmartDashboard.putString("Claw", clawPos.toString());
                 return clawPos;
             }
             if(!isClawOpen()){
                 clawPos = ClawState.OPEN;
-                SmartDashboard.putString("Claw", clawPos.toString());
                 return clawPos;
             }
         return clawPos;
@@ -135,7 +132,6 @@ public class Claw extends Subsystem{
 
     public boolean setArm(double angle){
         double target = (angle/360) * 4096;
-        SmartDashboard.putNumber("Target", target);
         clawArm.set(ControlMode.Position, target);
         return clawArm.getClosedLoopError() == 0;
     }
