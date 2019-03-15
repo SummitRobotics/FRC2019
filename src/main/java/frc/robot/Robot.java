@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
     robot.matchInit();
 
     autoChooser.setDefaultOption("No Auto", null);
+    autoChooser.addOption("Yeet", new Yeet());
     autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
     autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
     autoChooser.addOption("Left Rocket", new RocketLeft());
