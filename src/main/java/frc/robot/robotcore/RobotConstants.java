@@ -114,39 +114,4 @@ public class RobotConstants {
     isInverted = false,
     isPhaseInverted = false;
   }
-  public class Cargo_PID{
-    public static final double
-    ARM_P = 1,
-    ARM_I = 0,
-    ARM_D = 0,
-    ARM_F = 0,
-    ARM_NOMINAL_FORWARD = 0,
-    ARM_NOMINAL_REVERSE = 0,
-    ARM_PEAK_FORWARD = 0.40,
-    ARM_PEAK_REVERSE = 0.40,
-    ARM_CONST_CURRENT = 30,
-    ARM_PEAK_CURRENT = 30,
-    //in ticks
-    CLOSED_LOOP_ERROR = 25;
-    public static final boolean isInverted = false;
-    public static final boolean isPhaseInverted = false;
-  }
-  public class Claw_PID{
-    public static final double
-    ARM_P = 1,
-    ARM_I = 0,
-    ARM_D = 0,
-    ARM_F = 0,
-    ARM_NOMINAL_FORWARD = 0,
-    ARM_NOMINAL_REVERSE = 0,
-    ARM_PEAK_FORWARD = 0.35,
-    ARM_PEAK_REVERSE = 0.35,
-    ARM_CONST_CURRENT = 30,
-    ARM_PEAK_CURRENT = 30,
-    CLOSED_LOOP_ERROR = 25;
-    
-    public static final boolean 
-    isInverted = false,
-    isPhaseInverted = false;
-  }
 }
