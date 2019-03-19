@@ -11,9 +11,14 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.autonomous.TestAuto;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.autonomous.LeftCargoShip;
+import frc.robot.autonomous.LeftCargoShipPower;
+import frc.robot.autonomous.RightCargoShip;
+import frc.robot.autonomous.RocketLeft;
+import frc.robot.autonomous.RocketRight;
 import frc.robot.autonomous.Yeet;
-import frc.robot.robotcore.OI;
+import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
 import frc.robot.teleop.TeleopArcade;
 import frc.robot.teleop.TestAllTheThings;
@@ -21,7 +26,6 @@ import frc.robot.teleop.TestAllTheThings;
 
 public class Robot extends TimedRobot {
   public RobotBuilder robot;
-  public static TeleopArcade teleop;
   public static OI gamepad;
   private TestAllTheThings test;
 
@@ -37,10 +41,17 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robot = RobotBuilder.getInstance();
     robot.init();
-    teleop = new TeleopArcade();
+    robot.matchInit();
 
-    autoChooser.setDefaultOption("Jump From HAB", new Yeet());
-    autoChooser.addOption("Test Auto", new TestAuto());
+    autoChooser.setDefaultOption("No Auto", null);
+    autoChooser.addOption("Yeet", new Yeet());
+    autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
+    autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
+    autoChooser.addOption("Left Rocket", new RocketLeft());
+    autoChooser.addOption("Power Cargo", new LeftCargoShipPower());
+    autoChooser.addOption("Right Rocket", new RocketRight());
+    SmartDashboard.putData("Select Auto", autoChooser);
+
     //THIS MUST OCCUR AFTER ROBOT INIT
     gamepad = OI.getInstance();
   }
@@ -68,6 +79,7 @@ public class Robot extends TimedRobot {
     if(auto != null){
       auto.start();
     }
+    robot.matchInit();
   }
 
   @Override
@@ -78,24 +90,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
     if (auto != null) {
       auto.cancel();
     }
-    //teleop.init();
+
+    /* ----- COMMENT THIS OUT WHEN ON FIELD: ***ONLY USE WHEN IN PRACTICE*** ----- */
     robot.init();
-    /*test = new TestAllTheThings();
-    test.init();*/
+    robot.matchInit();
   }
 
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    //test.run();
-    //teleop.run();
   }
 
   @Override

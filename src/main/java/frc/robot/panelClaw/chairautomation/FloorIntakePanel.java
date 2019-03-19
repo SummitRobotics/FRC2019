@@ -1,4 +1,4 @@
-package frc.robot.robotcore.universalcommands;
+package frc.robot.panelclaw.chairautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.panelclaw.*;
@@ -6,11 +6,12 @@ import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.clawcommands.DetectPanel;
 import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
+import frc.robot.robotcore.universalcommands.Wait;
 
-public class IntakePanel extends CommandGroup{
+public class FloorIntakePanel extends CommandGroup{
     private Peg peg = Peg.getInstance();
     private Claw claw = Claw.getInstance();
-    public IntakePanel(){
+    public FloorIntakePanel(){
         requires(claw);
         requires(peg);
         
@@ -19,7 +20,9 @@ public class IntakePanel extends CommandGroup{
         addSequential(new RaiseClaw(Claw.ClawArmState.DOWN));
         addSequential(new DetectPanel());
         addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.CLOSE));
+        addSequential(new Wait(1.0));
         addSequential(new RaiseClaw(Claw.ClawArmState.UP));
         addSequential(new ActuatePeg().new SetPeg(Peg.PegState.UP));
+        addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.OPEN));
     }
 }

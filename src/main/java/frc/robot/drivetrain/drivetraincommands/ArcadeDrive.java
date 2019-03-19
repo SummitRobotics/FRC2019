@@ -1,7 +1,7 @@
 package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.robotcore.OI;
+import frc.robot.robotcore.userinput.OI;
 import frc.robot.drivetrain.Drivetrain;
 
 public class ArcadeDrive extends Command{
@@ -10,6 +10,7 @@ public class ArcadeDrive extends Command{
 
     public ArcadeDrive(){
         requires(drivetrain);
+        setInterruptible(true);
     }
     @Override
     protected void initialize() {
@@ -17,7 +18,9 @@ public class ArcadeDrive extends Command{
     }
     @Override
     protected void execute() {
-        drivetrain.robotDrive.arcadeDrive(gamepad.getForwardPower(), gamepad.getRotationalPower());
+        double xSpeed = gamepad.driver1.getForwardPower();
+        double zRotation = gamepad.driver1.getRotationalPower();
+        drivetrain.robotDrive.arcadeDrive(xSpeed, zRotation);
     }
     @Override
     protected boolean isFinished() {

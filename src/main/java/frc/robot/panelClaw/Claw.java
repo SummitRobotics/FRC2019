@@ -3,18 +3,19 @@ package frc.robot.panelclaw;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.robotcore.IterativeSubsystem;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.VictorSP;
+import frc.robot.panelclaw.clawcommands.MoveClawWrist;
 
-public class Claw extends Subsystem implements IterativeSubsystem{
+public class Claw extends Subsystem{
 
     public enum ClawState{
         OPEN(Value.kForward),
@@ -30,7 +31,8 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public enum ClawArmState{
         //values in degrees
         UP(0),
-        DOWN(90);
+        CARGO_DOWN(10),
+        DOWN(50);
 
         public final double value;
         ClawArmState(double value){
@@ -41,6 +43,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public DoubleSolenoid claw;
 
     private TalonSRX clawArm;
+    private VictorSPX clawArmFollow;
 
     public ColorSensor panelSensor;
     private DigitalInput limit;
@@ -51,12 +54,17 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     private Claw() {
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_MOVEMENT);
-        clawArm.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+        ClawArmConfig.configTalon(clawArm);
+        clawArmState = ClawArmState.UP;
+
+        clawArmFollow = new VictorSPX(RobotConstants.Ports.CLAW_MOVEMENT_FOLLOW);
+        clawArmFollow.follow(clawArm);
 
         claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
         limit = new DigitalInput(RobotConstants.Ports.CLAW_LIMIT_SWITCH);
+
     }
     public static Claw getInstance(){
         if(instance == null){
@@ -67,7 +75,7 @@ public class Claw extends Subsystem implements IterativeSubsystem{
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new frc.robot.panelclaw.clawcommands.MoveClawWrist());
+        setDefaultCommand(new MoveClawWrist());
     }
 
 
@@ -91,12 +99,10 @@ public class Claw extends Subsystem implements IterativeSubsystem{
         ClawState clawPos = clawState;
             if(isClawOpen()){
                 clawPos = ClawState.CLOSE;
-                SmartDashboard.putString("Claw", clawPos.toString());
                 return clawPos;
             }
             if(!isClawOpen()){
                 clawPos = ClawState.OPEN;
-                SmartDashboard.putString("Claw", clawPos.toString());
                 return clawPos;
             }
         return clawPos;
@@ -119,24 +125,24 @@ public class Claw extends Subsystem implements IterativeSubsystem{
     public boolean isPanelPresent(){
         return panelSensor.isActive();
     }
-
     public void runArm(double power){
         clawArm.set(ControlMode.PercentOutput, power);
     }
-    public void resetArmEncoder(){
-        clawArm.setSelectedSensorPosition(0);
+    /*public boolean setArm(ClawArmState clawArmPos){
+        double target = clawArmPos.value * RobotConstants.TALON_TICKS_PER_ROT;
+        SmartDashboard.putNumber("Target", target);
+        clawArm.set(ControlMode.Position, target);
+        clawArmState = clawArmPos;
+        return clawArm.getClosedLoopError() == 0;
+    }*/
+
+    public boolean setArm(double angle){
+        double target = (angle/360) * 4096;
+        clawArm.set(ControlMode.Position, target);
+        return clawArm.getClosedLoopError() == 0;
     }
 
-    /* ----- RUN METHODS ----- */
-    @Override
-    public void run(){
-        checkForLimit();
+    public void setArmEncoder(int position){
+        clawArm.setSelectedSensorPosition(position);
     }
-    public void checkForLimit(){
-        if(getClawLimit()){
-            resetArmEncoder();
-            
-        }
-    }
-
 }

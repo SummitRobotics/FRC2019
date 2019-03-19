@@ -2,22 +2,23 @@ package frc.robot.drivetrain;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.drivetraincommands.ArcadeDrive;
 import frc.robot.robotcore.RobotConstants;
 
 public class Drivetrain extends Subsystem{
 
+    //Enum which indicatese wether we're in high gear or low. Mainly for readability. 
     public enum GearState{
         LOW(Value.kForward),
         HIGH(Value.kReverse);
@@ -28,7 +29,8 @@ public class Drivetrain extends Subsystem{
         }
     }
 
-    public enum PTOState{
+    //Indicates wether PTO is engaged or not. Mainly for readability. 
+    /*public enum PTOState{
         ENGAGED(Value.kForward),
         DISENGAGED(Value.kReverse);
 
@@ -36,28 +38,13 @@ public class Drivetrain extends Subsystem{
         PTOState(Value value){
             this.value = value;
         }
-    }
+    }*/
 
-    public enum Blinkin{
-        RAINBOW_PALETTE(-0.99),
-        RAINBOW_PARTY(-0.97),
-        RAINBOW_OCEAN(-0.95),
-        LARSON_SCANNER_RED(-0.35),
-        COLOR_1_SLOW(0.03),
-        COLOR_1_MED(0.05),
-        COLOR_1_FAST(0.07),
-        COLOR_1_2(0.53),
-        BLUE(0.87),
-        BLUE_VIOLET(0.89),
-        VIOLET(0.91);
 
-        public final double value;
+/* ----- Instance Members ----- */
 
-        Blinkin(double value){
-            this.value = value;
-        }
-    }
-    private CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
+    public CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
+    private CANPIDController leftPID, rightPID;
     private SpeedControllerGroup leftDrive, rightDrive;
     public DifferentialDrive robotDrive;
     private CANEncoder leftEncoder, rightEncoder;
@@ -65,16 +52,16 @@ public class Drivetrain extends Subsystem{
     private DoubleSolenoid gearShifter;
     private GearState gearState;
 
-    private DoubleSolenoid PTOshifter;
-    private PTOState ptoState;
-
-    private Spark blinkin;
-    private Blinkin RGBState;
+    /*private DoubleSolenoid PTOshifter;
+    private PTOState ptoState;*/
 
     private PigeonIMU gyro;
-    double[] ypr;
 
     private Compressor compressor;
+
+    private double[] ypr;
+
+/* ----- INSTANTIATION METHODS ----- */
 
     private static Drivetrain instance;
     
@@ -84,21 +71,38 @@ public class Drivetrain extends Subsystem{
         leftDrive1.follow(leftDrive0);
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
         leftDrive2.follow(leftDrive0);
-        leftEncoder = new CANEncoder(leftDrive0);
+        leftDrive0.setSmartCurrentLimit(30);
+        leftDrive1.setSmartCurrentLimit(30);
+        leftDrive2.setSmartCurrentLimit(30);
+        leftDrive0.setOpenLoopRampRate(0.2);
+        leftDrive1.setOpenLoopRampRate(0.2);
+        leftDrive2.setOpenLoopRampRate(0.2);
+
+        leftEncoder = new CANEncoder(leftDrive1);
+        leftPID = new CANPIDController(leftDrive1);
+        DrivetrainConfig.configMotorController(leftDrive1);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
         rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
         rightDrive2.follow(rightDrive0);
-        rightEncoder = new CANEncoder(rightDrive0);
+        rightDrive0.setSmartCurrentLimit(30);
+        rightDrive1.setSmartCurrentLimit(30);
+        rightDrive2.setSmartCurrentLimit(30);
+        rightDrive0.setOpenLoopRampRate(0.2);
+        rightDrive1.setOpenLoopRampRate(0.2);
+        rightDrive2.setOpenLoopRampRate(0.2);
+
+        rightEncoder = new CANEncoder(rightDrive1);
+        rightPID = new CANPIDController(rightDrive1);
+        DrivetrainConfig.configMotorController(rightDrive1);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
         robotDrive.setSafetyEnabled(false);
-
-        blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
+        
 
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
@@ -122,36 +126,82 @@ public class Drivetrain extends Subsystem{
        setDefaultCommand(new ArcadeDrive());
     }
 
-    public void stopRobot(){
-        robotDrive.tankDrive(0, 0);
-    }
+/* ----- FEEDBACK DEVICES ----- */
 
-    public double getLeftEncoderPos(){
+    /*public double getLeftEncoderPos(){
         return leftEncoder.getPosition();
     }
     public double getRightEncoderPos(){
         return rightEncoder.getPosition();
-    }
+    }*/
 
+    public double getYaw(){
+        ypr = new double[3];
+        gyro.getYawPitchRoll(ypr);
+        return -ypr[0];
+    }
+    /*public double getPitch(){
+        ypr = new double[2];
+        gyro.getYawPitchRoll(ypr);
+        return ypr[1];
+    }
+    public double getRoll(){
+        double[] ypr = new double[2];
+        gyro.getYawPitchRoll(ypr);
+        return ypr[2];
+    }*/
+
+    //Feedback Config
+    /*public void setDrivetrainEncoders(double value){
+        leftEncoder.setPosition(value);
+        rightEncoder.setPosition(value);
+    }*/
     public void resetGyro(){
         gyro.setYaw(0);
         gyro.setAccumZAngle(0);
     }
-    public double getGyroYaw(){
-        ypr = new double[3];
-        gyro.getYawPitchRoll(ypr);
-        return ypr[0];
+
+/* ----- DRIVETRAIN METHODS ----- */
+    public void stopRobot(){
+        robotDrive.tankDrive(0, 0);
     }
 
-    public void shiftGear(GearState gearValue){
-        gearState = gearValue;
-        gearShifter.set(gearValue.value);
+    /*public void leftClosedLoop(double input){
+        //In RPM
+        double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
+        leftPID.setReference(setpoint, ControlType.kSmartVelocity);
     }
+    public void rightClosedLoop(double input){
+        //In RPM
+        double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
+        rightPID.setReference(setpoint, ControlType.kSmartVelocity);
+    }*/
+    
+    public boolean toPosition(double setpoint){
+        //SETPOINTS MUST BE IN TICKS+
+        double threshold = RobotConstants.EPSILON;
+        leftPID.setReference(setpoint, ControlType.kPosition);
+        rightPID.setReference(setpoint, ControlType.kPosition);
+        //return (setpoint - leftEncoder.getPosition() == 0) || (setpoint - rightEncoder.getPosition() == 0);
+        return (Math.abs(setpoint - leftEncoder.getPosition()) <= threshold) || (Math.abs(setpoint - rightEncoder.getPosition()) <= threshold);
+    }
+
+
+
+/* ----- CLIMB PTO ----- */
 
     /*public void setPTO(PTOState ptoValue){
         PTOshifter.set(ptoValue.value);
         ptoState = ptoValue;
     }*/
+
+
+/* ----- GEAR SHIFTING ----- */
+
+    public void shiftGear(GearState gearValue){
+        gearState = gearValue;
+        gearShifter.set(gearValue.value);
+    }
 
     public GearState toggleGear(){
         GearState gearPos = gearState;
@@ -164,10 +214,5 @@ public class Drivetrain extends Subsystem{
                 return gearPos;
             }
             return gearPos;
-    }
-    public void setLEDColor(Blinkin blinkinValue){
-        blinkin.set(blinkinValue.value);
-        SmartDashboard.putNumber("value", blinkinValue.value);
-        RGBState = blinkinValue;
     }
 }
