@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
     robot.matchInit();
 
     autoChooser.setDefaultOption("No Auto", null);
+    autoChooser.addOption("Yeet", new Yeet());
     autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
     autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
     autoChooser.addOption("Left Rocket", new RocketLeft());
@@ -78,7 +79,7 @@ public class Robot extends TimedRobot {
     if(auto != null){
       auto.start();
     }
-    //robot.matchInit();
+    robot.matchInit();
   }
 
   @Override
@@ -89,13 +90,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
     if (auto != null) {
       auto.cancel();
     }
+
+    /* ----- COMMENT THIS OUT WHEN ON FIELD: ***ONLY USE WHEN IN PRACTICE*** ----- */
+    robot.init();
+    robot.matchInit();
   }
 
   @Override

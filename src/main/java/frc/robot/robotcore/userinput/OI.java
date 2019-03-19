@@ -4,9 +4,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.buttons.Button;
+import frc.robot.cargointake.CargoIntake;
+import frc.robot.cargointake.cargoautomation.EjectCargoToRocket;
+import frc.robot.cargointake.cargoautomation.IntakeCargo;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
 import frc.robot.cargointake.cargoautomation.LoadFromCargoStation;
+import frc.robot.cargointake.cargocommands.DetectCargo;
 import frc.robot.cargointake.cargocommands.EnableRollers;
+import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Climb;
 import frc.robot.drivetrain.drivetraincommands.Shift;
@@ -27,6 +32,7 @@ public class OI {
 
     //ButtonDashboard dashboard = new ButtonDashboard();
     public DriverController driver1 = new DriverController(DriverController.Driver.DRIVER_1);
+    public DriverController driver2 = new DriverController(DriverController.Driver.DRIVER_2);
 
     private final double DEADZONE = 0.10;
     private static OI instance;
@@ -45,13 +51,15 @@ public class OI {
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());
         driver1.XButtonCmd.whenPressed(new PinPanel());
-        driver1.YButtonCmd.whenPressed(new PunchCargo());
+        //driver1.YButtonCmd.whenPressed(new EjectCargo());
+        //driver1.rightBumperCmd.whenPressed(new LoadCargoFromGround());
+        //driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
-        driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
-        driver1.BackButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());       
+        driver1.BackButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());  
+        //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());    
+           
     }
 
-    
     public static OI getInstance(){
         if(instance == null){
             instance = new OI();
