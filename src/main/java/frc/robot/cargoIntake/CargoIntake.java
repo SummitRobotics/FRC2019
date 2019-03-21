@@ -66,6 +66,7 @@ public class CargoIntake extends Subsystem {
     private static CargoIntake instance;
 
     private CargoIntake(){
+
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         CargoArmConfig.configTalon(arm);
         arm.setSelectedSensorPosition(0);

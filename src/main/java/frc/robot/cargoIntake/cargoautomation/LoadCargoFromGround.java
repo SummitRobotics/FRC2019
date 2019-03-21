@@ -12,6 +12,7 @@ import frc.robot.cargointake.cargocommands.DetectCargo;
 
 public class LoadCargoFromGround extends CommandGroup{
     public LoadCargoFromGround(){
+        
         setInterruptible(true);
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.INTAKE_LOWER));

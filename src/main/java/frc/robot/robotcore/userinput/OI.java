@@ -25,14 +25,14 @@ import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.panelclaw.pegcommands.BopIt;
+import frc.robot.robotcore.RobotConstants;
 import frc.robot.robotcore.universalcommands.lifteject;
 
 
 public class OI {
 
     //ButtonDashboard dashboard = new ButtonDashboard();
-    public DriverController driver1 = new DriverController(DriverController.Driver.DRIVER_1);
-    public DriverController driver2 = new DriverController(DriverController.Driver.DRIVER_2);
+    public DriverController driver1 = new DriverController(RobotConstants.Ports.DRIVER_1_PORT);
 
     private final double DEADZONE = 0.10;
     private static OI instance;

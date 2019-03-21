@@ -7,16 +7,6 @@ import frc.robot.robotcore.RobotConstants;
 
 public class DriverController{
 
-    public enum Driver{
-        DRIVER_1(RobotConstants.Ports.DRIVER_1_PORT),
-        DRIVER_2(RobotConstants.Ports.DRIVER_2_PORT);
-
-        public final int value;
-        Driver(int value){
-            this.value = value;
-        }
-    }
-
     private XboxController controller;
 
     //Command Schedulers
@@ -47,7 +37,7 @@ public class DriverController{
     
         @Override
         public boolean get() {
-            return controller.getAButton();
+            return isButtonA();
         }
     };
 
@@ -83,8 +73,8 @@ public class DriverController{
         }
     };
 
-    public DriverController(Driver driver){
-        controller = new XboxController(driver.value);
+    public DriverController(int port){
+        controller = new XboxController(port);
     }
 
     //Joystick Getters

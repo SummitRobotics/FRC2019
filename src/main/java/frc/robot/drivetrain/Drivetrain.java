@@ -18,7 +18,7 @@ import frc.robot.robotcore.RobotConstants;
 
 public class Drivetrain extends Subsystem{
 
-    //Enum which indicatese wether we're in high gear or low. Mainly for readability. 
+    //Enum which indicatese whether we're in high gear or low. Mainly for readability. 
     public enum GearState{
         LOW(Value.kForward),
         HIGH(Value.kReverse);
