@@ -69,14 +69,15 @@ public class OI {
 
     //"Driver" methods
     public double mastDrive(){
-        return deadzone(driver1.getRightJoystickY());
+        return driver1.getRightJoystickY();
     }
     public double fwdDrive(){
-        return deadzone(driver1.getForwardPower());
+        return driver1.getForwardPower();
     }
     public double turnDrive(){
-        return deadzone(driver1.getRotationalPower());
+        return driver1.getRotationalPower();
     }
+
     public double cargoArmDrive(){
         double POWER = 0.35;
         if(driver1.isDpadUp()){
@@ -102,14 +103,27 @@ public class OI {
         }
     }
 
-
-    public double deadzone(double input){
-        if(input < DEADZONE){
-            return 0;
+    public double truncatePower(double input){
+        if(input > 0){
+            if(input < DEADZONE){
+                return 0;
+            }
+            else if(input >= 1){
+                return 1;
+            }
+            return input;
         }
-        else if(input > -DEADZONE){
-            return 0;
+        else if(input < 0){
+            if(input > -DEADZONE){
+                return 0;
+            }
+            else if(input <= -1){
+                return -1;
+            }
+            return input;
         }
-        return input;
+        else{
+            return input;
+        }
     }
 }

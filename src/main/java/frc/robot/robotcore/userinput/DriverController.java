@@ -145,25 +145,16 @@ public class DriverController{
 
     //Math
     public double makeFwdCurve(double input){
-        return (Math.pow(2, input) -1);
+        return (Math.pow(2, OI.getInstance().truncatePower(input)) -1);
     }
     public double makeTurnCurve(double input){
-        return(Math.pow(input, 1.8));
+        return(Math.pow(OI.getInstance().truncatePower(input), 1.8));
     }
     public double getForwardPower(){
-        return livezone(makeFwdCurve(getLeftTrigger()) - makeFwdCurve(getRightTrigger()));
+        return makeFwdCurve(getLeftTrigger()) - makeFwdCurve(getRightTrigger());
     }
     //todo - power curving for rotation
     public double getRotationalPower(){
-        return livezone(Math.copySign(makeTurnCurve(Math.abs(getLeftJoystickX())), -getLeftJoystickX()));
-    }
-    public double livezone(double input){
-        /*if(input > 0.90){
-            input = 0.90;
-        }
-        else if(input < -0.90){
-            input = -0.90;
-        }*/
-        return input;
+        return Math.copySign(makeTurnCurve(Math.abs(getLeftJoystickX())), -getLeftJoystickX());
     }
 }
