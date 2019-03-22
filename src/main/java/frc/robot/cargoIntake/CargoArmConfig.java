@@ -30,7 +30,7 @@ public class CargoArmConfig{
         talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         configPIDF(talon);
         configOutputs(talon);
-        //configCurrentLimits(talon);
+        configCurrentLimits(talon);
         configInverts(talon);
         configClosedLoop(talon);
 

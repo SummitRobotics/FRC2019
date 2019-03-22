@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 
-public class SetCargoArm extends InstantCommand{
+public class SetCargoArm extends Command{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
     private CargoIntake.IntakeArmState armPos;
     boolean isDone = false;
@@ -23,7 +23,10 @@ public class SetCargoArm extends InstantCommand{
     protected void execute() {
         isDone = cargoIntake.setIntakeArm(armPos.value);
         SmartDashboard.putBoolean("Command Finished", isDone);
-
+    }
+    @Override
+    protected boolean isFinished() {
+        return isDone;
     }
     
     @Override

@@ -27,7 +27,7 @@ public class CargoIntake extends Subsystem {
     //List of states for rollers. Values given in power [-1, 1]
     public enum RollerState{
         ON(0.55),
-        SLOW(0.35),
+        SLOW(0.25),
         OFF(0),
         REVERSE(-0.55);
 
@@ -169,8 +169,9 @@ public class CargoIntake extends Subsystem {
 
     //Servos the intake arm to a given position
     public boolean setIntakeArm(double intakePosition){
-            double target = (intakePosition/360) * 4096;
-            double THRESHOLD = 15;
+            double target = (intakePosition/360) * RobotConstants.TALON_TICKS_PER_ROT;
+            double THRESHOLD = 75;
+            //adjust for sprocket ratio
             target *= 3;            
             arm.set(ControlMode.Position, target); 
             SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());

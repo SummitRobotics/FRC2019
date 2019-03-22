@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
   public static OI gamepad;
   private TestAllTheThings test;
 
-  //public static SendableChooser<OI.Driver_Profile> DriverProfileChooser = new SendableChooser<>();
   private Command auto;
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -43,7 +42,7 @@ public class Robot extends TimedRobot {
     robot.matchInit();
 
     autoChooser.setDefaultOption("No Auto", null);
-    autoChooser.addOption("Yeet", new Yeet());
+    //autoChooser.addOption("Yeet", new Yeet());
     autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
     autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
     autoChooser.addOption("Left Rocket", new RocketLeft());

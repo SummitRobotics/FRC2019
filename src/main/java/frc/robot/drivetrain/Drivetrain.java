@@ -71,12 +71,8 @@ public class Drivetrain extends Subsystem{
         leftDrive1.follow(leftDrive0);
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
         leftDrive2.follow(leftDrive0);
-        leftDrive0.setSmartCurrentLimit(30);
-        leftDrive1.setSmartCurrentLimit(30);
-        leftDrive2.setSmartCurrentLimit(30);
-        leftDrive0.setOpenLoopRampRate(0.2);
-        leftDrive1.setOpenLoopRampRate(0.2);
-        leftDrive2.setOpenLoopRampRate(0.2);
+        setCurrentLimits(leftDrive0, leftDrive1, leftDrive2, 30);
+        setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.20);
 
         leftEncoder = new CANEncoder(leftDrive1);
         leftPID = new CANPIDController(leftDrive1);
@@ -87,12 +83,8 @@ public class Drivetrain extends Subsystem{
         rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
         rightDrive2.follow(rightDrive0);
-        rightDrive0.setSmartCurrentLimit(30);
-        rightDrive1.setSmartCurrentLimit(30);
-        rightDrive2.setSmartCurrentLimit(30);
-        rightDrive0.setOpenLoopRampRate(0.2);
-        rightDrive1.setOpenLoopRampRate(0.2);
-        rightDrive2.setOpenLoopRampRate(0.2);
+        setCurrentLimits(rightDrive0, rightDrive1, rightDrive2, 30);
+        setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.20);
 
         rightEncoder = new CANEncoder(rightDrive1);
         rightPID = new CANPIDController(rightDrive1);
@@ -124,6 +116,18 @@ public class Drivetrain extends Subsystem{
     @Override
     protected void initDefaultCommand() {
        setDefaultCommand(new ArcadeDrive());
+    }
+
+    private void setOpenRampRates(CANSparkMax controller1, CANSparkMax controller2, CANSparkMax controller3, double rampRate){
+        controller1.setOpenLoopRampRate(rampRate);
+        controller2.setOpenLoopRampRate(rampRate);
+        controller3.setOpenLoopRampRate(rampRate);
+    }
+   
+    private void setCurrentLimits(CANSparkMax controller1, CANSparkMax controller2, CANSparkMax controller3, int currentLimit){
+        controller1.setSmartCurrentLimit(currentLimit);
+        controller2.setSmartCurrentLimit(currentLimit);
+        controller3.setSmartCurrentLimit(currentLimit);
     }
 
 /* ----- FEEDBACK DEVICES ----- */
