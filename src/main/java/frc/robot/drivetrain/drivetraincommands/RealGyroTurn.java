@@ -11,6 +11,7 @@ public class RealGyroTurn extends Command{
     private static final double TOLERANCE = 1;
 
     public RealGyroTurn(double angle, double power){
+        setInterruptible(true);
         this.angle = angle;
         this.power = power;
        }

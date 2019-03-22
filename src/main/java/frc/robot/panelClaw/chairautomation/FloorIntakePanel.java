@@ -12,6 +12,7 @@ public class FloorIntakePanel extends CommandGroup{
     private Peg peg = Peg.getInstance();
     private Claw claw = Claw.getInstance();
     public FloorIntakePanel(){
+        setInterruptible(true);
         requires(claw);
         requires(peg);
         

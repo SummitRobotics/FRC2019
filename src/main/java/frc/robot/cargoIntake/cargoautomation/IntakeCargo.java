@@ -10,6 +10,7 @@ import frc.robot.robotcore.universalcommands.Wait;
 public class IntakeCargo extends CommandGroup{
 
     public IntakeCargo(){
+        setInterruptible(true);
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));
         addSequential(new TrimCargoArm());

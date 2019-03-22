@@ -15,6 +15,7 @@ public class BopIt{
         private Peg.PneumaticState bopPos;
 
         public SetBop(Peg.PneumaticState bopPos){
+            setInterruptible(true);
             requires(peg);
             this.bopPos = bopPos;
         }
@@ -35,6 +36,7 @@ public class BopIt{
         private Peg.PneumaticState bopPos;
         
         public ToggleBop(){
+            setInterruptible(true);
             requires(peg);
         }
         @Override

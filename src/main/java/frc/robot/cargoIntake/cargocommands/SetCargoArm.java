@@ -12,6 +12,7 @@ public class SetCargoArm extends InstantCommand{
     boolean isDone = false;
 
     public SetCargoArm(CargoIntake.IntakeArmState armPos){
+        setInterruptible(true);
         requires(cargoIntake);
         this.armPos = armPos;
     }

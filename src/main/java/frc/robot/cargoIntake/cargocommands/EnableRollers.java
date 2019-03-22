@@ -63,6 +63,7 @@ public class EnableRollers{
         private CargoIntake.RollerState rollerSpin;
     
         public ToggleRollers(){
+            setInterruptible(true);
             requires(cargoIntake);
         }
     

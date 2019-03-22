@@ -10,6 +10,7 @@ import frc.robot.panelclaw.pegcommands.ActuatePeg;
 public class EjectCargoToRocket extends CommandGroup{
 
     public EjectCargoToRocket(){
+        setInterruptible(true);
         addSequential(new ActuatePeg().new SetPeg(Peg.PegState.DOWN));
         addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
         addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 1));

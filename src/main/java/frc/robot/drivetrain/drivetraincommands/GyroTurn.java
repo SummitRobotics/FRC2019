@@ -18,6 +18,7 @@ public class GyroTurn extends PIDCommand{
 
     public GyroTurn(double angle){
         super(P, I, D);
+        setInterruptible(true);
         this.angle = angle;
         getPIDController().setPercentTolerance(PERCENT_TOLERANCE);
     }

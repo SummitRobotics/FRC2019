@@ -12,7 +12,7 @@ public class TurnToTarget extends Command {
     private double POWER = 0.375;
     
     public TurnToTarget(){
-
+        setInterruptible(true);
     }
 
     @Override

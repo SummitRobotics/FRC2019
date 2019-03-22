@@ -21,6 +21,7 @@ public class TargetAlignment extends PIDCommand {
 
     public TargetAlignment(){
         super("TargetAlignment", P, I, D, Drivetrain.getInstance());
+        setInterruptible(true);
         setSetpoint(0);
         getPIDController().setPercentTolerance(5);
         this.power = POWER;

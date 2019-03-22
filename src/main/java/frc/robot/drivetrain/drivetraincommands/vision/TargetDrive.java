@@ -30,6 +30,8 @@ public class TargetDrive extends Command {
 
 
     public TargetDrive(){
+        setInterruptible(true);
+
         fwdSource = new PIDSource(){
         
             @Override
