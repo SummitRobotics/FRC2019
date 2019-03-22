@@ -144,12 +144,12 @@ public class Drivetrain extends Subsystem{
         gyro.getYawPitchRoll(ypr);
         return -ypr[0];
     }
-    /*public double getPitch(){
+    public double getPitch(){
         ypr = new double[2];
         gyro.getYawPitchRoll(ypr);
         return ypr[1];
     }
-    public double getRoll(){
+    /*public double getRoll(){
         double[] ypr = new double[2];
         gyro.getYawPitchRoll(ypr);
         return ypr[2];
