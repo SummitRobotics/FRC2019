@@ -1,14 +1,22 @@
-package frc.robot.drivetrain.drivetraincommands;
+package frc.robot.robotcore.universalcommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
+import frc.robot.cargointake.CargoIntake;
 import frc.robot.drivetrain.Drivetrain;
+=
+public class Climb extends PIDCommand{
+    private static final double
+    P = 1,
+    I = 0,
+    D = 0;
 
-public class Climb extends Command{
+    private CargoIntake cargoIntake = CargoIntake.getInstance();
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
     public Climb(){
-        requires(drivetrain);
+        super(P, I, D, CargoIntake.getInstance());
         setInterruptible(true);
     }
     @Override
@@ -18,17 +26,12 @@ public class Climb extends Command{
             cancel();
         }
         else{
-            //drivetrain.setPTO(PTOState.ENGAGED);
+
         }
     }
     @Override
     protected void execute() {
-        if(!(Timer.getMatchTime() < 30)){
-            cancel();
-        }
-        else{
-            drivetrain.robotDrive.tankDrive(1, 1);
-        }
+
     }
     @Override
     protected boolean isFinished() {
