@@ -9,6 +9,7 @@ public class DetectCargo extends Command{
     private CargoIntake.CargoPosition detectionLevel;
 
     public DetectCargo(CargoIntake.CargoPosition detectionLevel){
+        setInterruptible(true);
         requires(cargoIntake);
         this.detectionLevel = detectionLevel;
     }

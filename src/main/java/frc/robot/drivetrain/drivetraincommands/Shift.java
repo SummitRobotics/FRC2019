@@ -15,6 +15,7 @@ public class Shift{
         private Drivetrain.GearState gearPos;
         
         public SetShift(Drivetrain.GearState gearPos) {
+            setInterruptible(true);
             requires(drivetrain);
             this.gearPos = gearPos;
         }

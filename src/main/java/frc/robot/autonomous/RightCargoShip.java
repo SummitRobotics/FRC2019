@@ -9,6 +9,7 @@ import frc.robot.robotcore.universalcommands.Wait;
 
 public class RightCargoShip extends CommandGroup{
     public RightCargoShip(){
+        setInterruptible(true);
         addSequential(new EncoderDrive(100));
         addSequential(new GyroTurn(30));
         addSequential(new EncoderDrive(50));

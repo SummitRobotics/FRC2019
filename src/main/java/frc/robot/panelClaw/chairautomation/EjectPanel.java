@@ -15,6 +15,7 @@ public class EjectPanel extends CommandGroup{
     private Claw claw = Claw.getInstance();
 
     public EjectPanel(){
+        setInterruptible(true);
         requires(claw);
         addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
         addSequential(new ActuatePeg(). new SetPeg(PegState.DOWN));

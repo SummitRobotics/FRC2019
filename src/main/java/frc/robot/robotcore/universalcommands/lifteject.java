@@ -6,9 +6,11 @@ import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
 import frc.robot.panelclaw.chairautomation.EjectPanel;
 
-public class lifteject extends CommandGroup{
+public class LiftEject extends CommandGroup{
 
-    public lifteject(LiftState pos){
+    public LiftEject(LiftState pos){
+        setInterruptible(true);
+
         addSequential(new MoveMast(pos));
         addSequential(new EjectPanel());
     }

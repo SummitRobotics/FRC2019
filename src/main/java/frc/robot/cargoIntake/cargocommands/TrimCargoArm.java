@@ -10,6 +10,7 @@ public class TrimCargoArm extends Command{
     private final double POWER = 0.3;
 
     public TrimCargoArm(){
+        setInterruptible(true);
         requires(cargoIntake);
     }
     @Override

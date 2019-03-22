@@ -11,6 +11,7 @@ public class EncoderDrive extends Command{
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
     public EncoderDrive(double distance){
+        setInterruptible(true);
         requires(drivetrain);
         this.distance = distance;
     }

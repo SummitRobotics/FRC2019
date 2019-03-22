@@ -13,6 +13,7 @@ public class PunchCargo extends CommandGroup{
     public Peg peg = Peg.getInstance();
 
     public PunchCargo(){
+        setInterruptible(true);
         requires(peg);
         SmartDashboard.putBoolean("Command Started yay", true);
         addSequential(new ActuatePeg().new SetPeg(Peg.PegState.DOWN));

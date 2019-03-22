@@ -15,6 +15,7 @@ public class GyroTurn extends PIDCommand{
     D = 0.06;
 
     public GyroTurn(double angle){
+        setInterruptible(true);
         super(P, I, D, Drivetrain.getInstance());
         this.angle = angle;
     }

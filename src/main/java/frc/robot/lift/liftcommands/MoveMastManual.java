@@ -9,6 +9,7 @@ public class MoveMastManual extends Command{
     private OI gamepad = OI.getInstance();
 
     public MoveMastManual(){
+        setInterruptible(true);
         requires(lift);
     }
     @Override

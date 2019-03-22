@@ -14,6 +14,7 @@ import frc.robot.robotcore.universalcommands.Wait;
 public class RocketLeft extends CommandGroup{
 
     public RocketLeft(){
+        setInterruptible(true);
         addSequential(new EncoderDrive(100));
         addSequential(new GyroTurn(-30));
         addSequential(new EncoderDrive(100));

@@ -10,6 +10,7 @@ import frc.robot.panelclaw.chairautomation.PinPanel;
 
 public class LeftCargoShipPower extends CommandGroup{
     public LeftCargoShipPower(){
+        setInterruptible(true);
         addSequential(new PowerDrive(0.35, false, 2.0));
         addSequential(new TargetAlignment());
         addSequential(new EjectPanel());

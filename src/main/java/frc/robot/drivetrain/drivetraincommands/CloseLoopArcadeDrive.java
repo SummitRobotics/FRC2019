@@ -10,6 +10,7 @@ public class CloseLoopArcadeDrive extends Command{
     OI gamepad = OI.getInstance();
 
     public CloseLoopArcadeDrive(){
+        setInterruptible(true);
         requires(drivetrain);
     }
     @Override
