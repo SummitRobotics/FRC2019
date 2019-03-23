@@ -1,7 +1,7 @@
 package frc.robot.devices;
 
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.drivetrain.Drivetrain;
 import frc.robot.robotcore.RobotConstants;
 
 public class Blinkin{
@@ -32,13 +32,14 @@ public class Blinkin{
     }
 
     private Spark blinkin;
-    private BlinkinState currentState;
+
+    public BlinkinState stateOne;
+    public BlinkinState stateTwo;
 
     private static Blinkin instance;
 
     private Blinkin(){
         blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
-        currentState = BlinkinState.values()[0];
     }
 
     public static Blinkin getInstance(){
@@ -48,8 +49,15 @@ public class Blinkin{
         return instance;
     }
 
-    public void setLEDColor(BlinkinState blinkenValue) {
+    public void setLEDState(BlinkinState blinkenValue) {
         blinkin.set(blinkenValue.value);
-        currentState = blinkenValue;
+    }
+
+    public void shiftSetLEDState(Drivetrain.GearState shiftState) {
+        if (shiftState == Drivetrain.GearState.LOW) {
+            blinkin.set(stateTwo.value);
+        } else {
+            blinkin.set(stateOne.value);
+        }
     }
 }

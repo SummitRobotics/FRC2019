@@ -1,11 +1,13 @@
 package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.devices.Blinkin;
 import frc.robot.drivetrain.Drivetrain;
 
 public class Shift{
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
+    private Blinkin blinkin = Blinkin.getInstance();
 
     public Shift(){
 
@@ -25,6 +27,9 @@ public class Shift{
         @Override
         protected void execute() {
             drivetrain.shiftGear(gearPos);
+
+            //Add once LED states have been decided
+            //blinkin.shiftSetLEDState(gearPos);
         }
         @Override
         protected void end() {
@@ -45,6 +50,9 @@ public class Shift{
         protected void execute() {
             gearPos = drivetrain.toggleGear();
             drivetrain.shiftGear(gearPos);
+
+            //Add once LED states have been decided
+            //blinkin.shiftSetLEDState(gearPos);
         }
         @Override
         protected void end() {

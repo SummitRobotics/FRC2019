@@ -184,15 +184,12 @@ public class Drivetrain extends Subsystem{
     }
 
     public GearState toggleGear(){
-        GearState gearPos = gearState;
-            if(gearState == GearState.HIGH){
-                gearPos = GearState.LOW;
-                return gearPos;
-            }
-            if(gearState == GearState.LOW){
-                gearPos = GearState.HIGH;
-                return gearPos;
-            }
-            return gearPos;
+        if(gearState == GearState.HIGH){
+            return GearState.LOW;
+        }
+        if(gearState == GearState.LOW){
+            return GearState.HIGH;
+        }
+        return gearState;
     }
 }

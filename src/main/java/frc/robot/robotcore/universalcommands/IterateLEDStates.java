@@ -27,9 +27,9 @@ public class IterateLEDStates extends InstantCommand {
         int newVal = Math.abs(currentState) % BlinkinState.values().length;
 
         if (Math.copySign(1, currentState) == -1) {
-            blinkin.setLEDColor(BlinkinState.values()[(newVal - newVal - 1)]);
+            blinkin.setLEDState(BlinkinState.values()[(newVal - newVal - 1)]);
         } else {
-            blinkin.setLEDColor(BlinkinState.values()[newVal]);
+            blinkin.setLEDState(BlinkinState.values()[newVal]);
         }
     }
 
