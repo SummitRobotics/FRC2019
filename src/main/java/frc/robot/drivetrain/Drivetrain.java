@@ -29,18 +29,6 @@ public class Drivetrain extends Subsystem{
         }
     }
 
-    //Indicates wether PTO is engaged or not. Mainly for readability. 
-    /*public enum PTOState{
-        ENGAGED(Value.kForward),
-        DISENGAGED(Value.kReverse);
-
-        public final Value value;
-        PTOState(Value value){
-            this.value = value;
-        }
-    }*/
-
-
 /* ----- Instance Members ----- */
 
     public CANSparkMax leftDrive0, leftDrive1, leftDrive2, rightDrive0, rightDrive1, rightDrive2;
@@ -95,15 +83,13 @@ public class Drivetrain extends Subsystem{
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
         robotDrive.setSafetyEnabled(false);
         
-
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
-        gearShifter = new DoubleSolenoid(RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
+        gearShifter = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
 
         compressor = new Compressor(0);
         compressor.setClosedLoopControl(true);
 
-        //PTOshifter = new DoubleSolenoid(RobotConstants.Ports.PTO_SOLENOID_OPEN, RobotConstants.Ports.PTO_SOLENOID_CLOSE);
     }
 
     public static Drivetrain getInstance(){
@@ -189,16 +175,6 @@ public class Drivetrain extends Subsystem{
         //return (setpoint - leftEncoder.getPosition() == 0) || (setpoint - rightEncoder.getPosition() == 0);
         return (Math.abs(setpoint - leftEncoder.getPosition()) <= threshold) || (Math.abs(setpoint - rightEncoder.getPosition()) <= threshold);
     }
-
-
-
-/* ----- CLIMB PTO ----- */
-
-    /*public void setPTO(PTOState ptoValue){
-        PTOshifter.set(ptoValue.value);
-        ptoState = ptoValue;
-    }*/
-
 
 /* ----- GEAR SHIFTING ----- */
 

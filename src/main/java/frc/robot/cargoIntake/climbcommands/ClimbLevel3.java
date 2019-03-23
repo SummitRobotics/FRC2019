@@ -1,12 +1,12 @@
-package frc.robot.robotcore.universalcommands;
+package frc.robot.cargointake.climbcommands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.drivetrain.Drivetrain;
-=
-public class Climb extends PIDCommand{
+
+public class ClimbLevel3 extends PIDCommand{
     private static final double
     P = 1,
     I = 0,
@@ -15,7 +15,7 @@ public class Climb extends PIDCommand{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
-    public Climb(){
+    public ClimbLevel3(){
         super(P, I, D, CargoIntake.getInstance());
         setInterruptible(true);
     }
@@ -30,8 +30,13 @@ public class Climb extends PIDCommand{
         }
     }
     @Override
-    protected void execute() {
+    protected double returnPIDInput() {
+        return drivetrain.getPitch();
+    }
 
+    @Override
+    protected void usePIDOutput(double output) {
+        cargoIntake.moveIntakeArm(output);
     }
     @Override
     protected boolean isFinished() {

@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
     robot.matchInit();
 
     autoChooser.setDefaultOption("No Auto", null);
-    //autoChooser.addOption("Yeet", new Yeet());
+    autoChooser.addOption("Yeet", new Yeet());
     autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
     autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
     autoChooser.addOption("Left Rocket", new RocketLeft());
@@ -83,6 +83,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    SmartDashboard.putNumber("Gyro Angle Yeet", robot.drivetrain.getYaw());
     Scheduler.getInstance().run();
   }
 
