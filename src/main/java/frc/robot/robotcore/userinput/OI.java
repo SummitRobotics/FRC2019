@@ -13,7 +13,6 @@ import frc.robot.cargointake.cargocommands.DetectCargo;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.panelclaw.chairautomation.*;
-import frc.robot.drivetrain.drivetraincommands.Climb;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift;
@@ -26,6 +25,7 @@ import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.panelclaw.pegcommands.BopIt;
 import frc.robot.robotcore.RobotConstants;
+import frc.robot.robotcore.universalcommands.KillCommands;
 import frc.robot.robotcore.universalcommands.LiftEject;
 
 
@@ -51,7 +51,7 @@ public class OI {
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());
         driver1.XButtonCmd.whenPressed(new PinPanel());
-        //driver1.YButtonCmd.whenPressed(new EjectCargo());
+        driver1.YButtonCmd.whenPressed(new KillCommands());
         //driver1.rightBumperCmd.whenPressed(new LoadCargoFromGround());
         //driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
