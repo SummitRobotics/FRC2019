@@ -40,6 +40,9 @@ public class Blinkin{
 
     private Blinkin(){
         blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
+
+        stateOne = BlinkinState.C1ENDTOENDBLENDTOBLACK;
+        stateTwo = BlinkinState.C2ENDTOENDBLENDTOBLACK;
     }
 
     public static Blinkin getInstance(){
