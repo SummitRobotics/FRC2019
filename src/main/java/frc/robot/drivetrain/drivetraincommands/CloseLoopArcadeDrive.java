@@ -61,6 +61,11 @@ public class CloseLoopArcadeDrive extends Command{
         return false;
     }
     @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
+    }
+    @Override
     protected void end() {
         super.end();
     }

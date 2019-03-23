@@ -15,8 +15,9 @@ public class GyroTurn extends PIDCommand{
     D = 0.06;
 
     public GyroTurn(double angle){
-        setInterruptible(true);
         super(P, I, D, Drivetrain.getInstance());
+        setInterruptible(true);
+        requires(drivetrain);
         this.angle = angle;
     }
     /*public GyroTurn(double angle, double radius, double power){
@@ -26,7 +27,6 @@ public class GyroTurn extends PIDCommand{
     protected void initialize() {
         target = angle + drivetrain.getYaw();
         setSetpoint(target);
-
     }
     @Override
     protected double returnPIDInput() {
@@ -36,13 +36,16 @@ public class GyroTurn extends PIDCommand{
     protected void usePIDOutput(double output) {
         drivetrain.robotDrive.tankDrive(output, -output);
     }
-
     @Override
     protected boolean isFinished() {
         double error = getPIDController().getError();
         return (error < THRESHOLD) && (error > -THRESHOLD);
     }
-
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
+    }
     @Override
     protected void end() {
         super.end();

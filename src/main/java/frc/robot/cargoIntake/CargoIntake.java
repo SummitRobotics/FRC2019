@@ -177,4 +177,9 @@ public class CargoIntake extends Subsystem {
             SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
             return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
     }
+
+    public void kill() {
+        arm.set(ControlMode.PercentOutput, 0);
+        rollers.set(ControlMode.PercentOutput, 0);
+    }
 }

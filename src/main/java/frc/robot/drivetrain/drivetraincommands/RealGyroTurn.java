@@ -12,6 +12,8 @@ public class RealGyroTurn extends Command{
 
     public RealGyroTurn(double angle, double power){
         setInterruptible(true);
+        requires(drivetrain);
+        
         this.angle = angle;
         this.power = power;
        }
@@ -23,7 +25,6 @@ public class RealGyroTurn extends Command{
     protected void initialize() {
         target = angle + drivetrain.getYaw();
     }
-
     @Override
     protected void execute() {
         error = target - drivetrain.getYaw();
@@ -34,12 +35,15 @@ public class RealGyroTurn extends Command{
             drivetrain.robotDrive.tankDrive(-power, power);
         }
     }
-
     @Override
     protected boolean isFinished() {
         return (error < TOLERANCE) && (error > -TOLERANCE);
     }
-
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
+    }
     @Override
     protected void end() {
         super.end();

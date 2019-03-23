@@ -11,6 +11,8 @@ public class NewTargetAlignment extends CommandGroup{
 
     public NewTargetAlignment(){
         setInterruptible(true);
+        requires(drivetrain);
+
         addSequential(new TargetAlignment());
         addSequential(new EncoderDrive(5));
     }

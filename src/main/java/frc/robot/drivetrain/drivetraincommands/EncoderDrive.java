@@ -26,7 +26,11 @@ public class EncoderDrive extends Command{
     @Override
     protected boolean isFinished() {
         return isDone;
-        
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {

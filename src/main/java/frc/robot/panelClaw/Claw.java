@@ -146,4 +146,8 @@ public class Claw extends Subsystem{
     public void setArmEncoder(int position){
         clawArm.setSelectedSensorPosition(position);
     }
+
+    public void kill(){
+        clawArm.set(ControlMode.PercentOutput, 0);
+    }
 }

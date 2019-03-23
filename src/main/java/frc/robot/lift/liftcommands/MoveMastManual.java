@@ -25,6 +25,11 @@ public class MoveMastManual extends Command{
         return false;
     }
     @Override
+    protected void interrupted() {
+        super.interrupted();
+        lift.kill();
+    }
+    @Override
     protected void end() {
         super.end();
     }

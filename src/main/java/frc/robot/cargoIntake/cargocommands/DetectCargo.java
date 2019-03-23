@@ -11,6 +11,7 @@ public class DetectCargo extends Command{
     public DetectCargo(CargoIntake.CargoPosition detectionLevel){
         setInterruptible(true);
         requires(cargoIntake);
+
         this.detectionLevel = detectionLevel;
     }
     @Override
@@ -32,6 +33,11 @@ public class DetectCargo extends Command{
         else{
             return true;
         }
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        cargoIntake.kill();
     }
     @Override
     protected void end() {

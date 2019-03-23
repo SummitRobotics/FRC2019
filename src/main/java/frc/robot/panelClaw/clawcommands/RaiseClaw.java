@@ -28,6 +28,11 @@ public class RaiseClaw extends Command{
         return isDone;
     }
     @Override
+    protected void interrupted() {
+        super.interrupted();
+        claw.kill();
+    }
+    @Override
     protected void end() {
         super.end();
     }

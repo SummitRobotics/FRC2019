@@ -12,6 +12,7 @@ public class MoveClawWrist extends Command{
     private final double POWER = 0.30;
 
     public MoveClawWrist(){
+        setInterruptible(true);
         requires(claw);
     }
 
@@ -27,6 +28,11 @@ public class MoveClawWrist extends Command{
     protected boolean isFinished() {
         //return claw.getClawLimit();
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        claw.kill();
     }
     @Override
     protected void end() {

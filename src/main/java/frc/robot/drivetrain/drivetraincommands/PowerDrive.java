@@ -11,6 +11,7 @@ public class PowerDrive extends Command{
     public PowerDrive(double power, double timeout){
         setInterruptible(true);
         requires(drivetrain);
+
         this.power = -power;
         setTimeout(timeout);
         this.isTurn = false;
@@ -18,6 +19,7 @@ public class PowerDrive extends Command{
     public PowerDrive(double power, boolean isTurn, double timeout){
         setInterruptible(true);
         requires(drivetrain);
+        
         setTimeout(timeout);
         this.power = -power;
         this.isTurn = isTurn;
@@ -37,6 +39,11 @@ public class PowerDrive extends Command{
     @Override
     protected boolean isFinished() {
         return isTimedOut();
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {

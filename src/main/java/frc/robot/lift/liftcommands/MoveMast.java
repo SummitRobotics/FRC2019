@@ -11,6 +11,7 @@ public class MoveMast extends Command{
     private boolean isDone = false;
 
     public MoveMast (LiftState position){
+        setInterruptible(true);
         requires(lift);
         this.position = position;
     }
@@ -26,6 +27,11 @@ public class MoveMast extends Command{
     @Override
     protected boolean isFinished() {
         return isDone;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        lift.kill();
     }
     @Override
     protected void end() {

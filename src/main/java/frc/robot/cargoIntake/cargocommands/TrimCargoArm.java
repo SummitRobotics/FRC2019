@@ -27,6 +27,11 @@ public class TrimCargoArm extends Command{
         return false;
     }
     @Override
+    protected void interrupted() {
+        super.interrupted();
+        cargoIntake.kill();
+    }
+    @Override
     protected void end() {
         super.end();
         cargoIntake.moveIntakeArm(0);

@@ -9,7 +9,6 @@ public class NewIntakeCargo extends CommandGroup{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
 
     public NewIntakeCargo(){
-        setInterruptible(true);
         /*addSequential(command);
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));

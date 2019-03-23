@@ -64,4 +64,8 @@ public class Lift extends Subsystem{
     protected void initDefaultCommand() {
         //setDefaultCommand(new MoveMastManual());
     }
+
+    public void kill() {
+        mastDriver.set(ControlMode.PercentOutput, 0);
+    }
 }

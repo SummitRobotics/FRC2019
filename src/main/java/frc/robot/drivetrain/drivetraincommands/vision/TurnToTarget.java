@@ -13,6 +13,7 @@ public class TurnToTarget extends Command {
     
     public TurnToTarget(){
         setInterruptible(true);
+        requires(drivetrain);
     }
 
     @Override
@@ -30,6 +31,11 @@ public class TurnToTarget extends Command {
     @Override
     protected boolean isFinished() {
         return lemonlight.isTarget();
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {

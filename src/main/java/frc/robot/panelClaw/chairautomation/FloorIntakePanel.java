@@ -9,12 +9,13 @@ import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.universalcommands.Wait;
 
 public class FloorIntakePanel extends CommandGroup{
-    private Peg peg = Peg.getInstance();
+
     private Claw claw = Claw.getInstance();
+
     public FloorIntakePanel(){
         setInterruptible(true);
+        requires(Peg.getInstance());
         requires(claw);
-        requires(peg);
         
         addSequential(new ActuatePeg().new SetPeg(Peg.PegState.DOWN));
         addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.OPEN));
@@ -25,5 +26,11 @@ public class FloorIntakePanel extends CommandGroup{
         addSequential(new RaiseClaw(Claw.ClawArmState.UP));
         addSequential(new ActuatePeg().new SetPeg(Peg.PegState.UP));
         addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.OPEN));
+    }
+
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        claw.kill();
     }
 }

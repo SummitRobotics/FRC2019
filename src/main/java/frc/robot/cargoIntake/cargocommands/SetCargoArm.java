@@ -14,6 +14,7 @@ public class SetCargoArm extends Command{
     public SetCargoArm(CargoIntake.IntakeArmState armPos){
         setInterruptible(true);
         requires(cargoIntake);
+
         this.armPos = armPos;
     }
     @Override
@@ -29,7 +30,11 @@ public class SetCargoArm extends Command{
     protected boolean isFinished() {
         return isDone;
     }
-    
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        cargoIntake.kill();
+    }
     @Override
     protected void end() {
         super.end();

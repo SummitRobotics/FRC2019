@@ -31,6 +31,7 @@ public class TargetDrive extends Command {
 
     public TargetDrive(){
         setInterruptible(true);
+        requires(drivetrain);
 
         fwdSource = new PIDSource(){
         
@@ -134,6 +135,11 @@ public class TargetDrive extends Command {
     @Override
     protected boolean isFinished() {
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {
