@@ -1,13 +1,12 @@
 package frc.robot.devices;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.robotcore.RobotConstants;
 
 public class Blinkin{
 
-    public enum BlinkinColors{
+    public enum BlinkinState{
 
         //Solid colors
         LIME(0.73),
@@ -27,34 +26,30 @@ public class Blinkin{
 
         public final double value;
 
-        BlinkinColors(double value){
+        BlinkinState(double value){
             this.value = value;
         }
     }
 
     private Spark blinkin;
-    private BlinkinColors CurrentColor;
+    private BlinkinState currentState;
 
     private static Blinkin instance;
 
     private Blinkin(){
         blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
+        currentState = BlinkinState.values()[0];
     }
 
-    public Blinkin getInstance(){
+    public static Blinkin getInstance(){
         if(instance == null){
             instance = new Blinkin();
         }
         return instance;
     }
-    
 
-    public void setLEDColor(BlinkinColors blinkinValue){
-        blinkin.set(blinkinValue.value);
-        CurrentColor = blinkinValue;
+    public void setLEDColor(BlinkinState blinkenValue) {
+        blinkin.set(blinkenValue.value);
+        currentState = blinkenValue;
     }
-
-    //For testing only - remove after done
-
-    
 }

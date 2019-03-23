@@ -24,7 +24,8 @@ import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.panelclaw.pegcommands.BopIt;
 import frc.robot.robotcore.RobotConstants;
-import frc.robot.robotcore.universalcommands.lifteject;
+import frc.robot.robotcore.universalcommands.IterateLEDStates;
+import frc.robot.robotcore.universalcommands.LiftEject;
 
 
 public class OI {
@@ -47,15 +48,14 @@ public class OI {
         dashboard.climb.whenPressed(new Climb());*/
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
-        driver1.BButtonCmd.whenPressed(new EjectPanel());
-        driver1.XButtonCmd.whenPressed(new PinPanel());
+        driver1.BButtonCmd.whenPressed(new IterateLEDStates(1));
+        driver1.XButtonCmd.whenPressed(new IterateLEDStates(-1));
         //driver1.YButtonCmd.whenPressed(new EjectCargo());
         //driver1.rightBumperCmd.whenPressed(new LoadCargoFromGround());
         //driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
         driver1.BackButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());  
-        //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());    
-           
+        //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());           
     }
 
     public static OI getInstance(){
