@@ -17,7 +17,7 @@ public class MoveMastManual extends Command{
     }
     @Override
     protected void execute() {
-        lift.runLiftManual(gamepad.driver1.getRightJoystickY());
+        lift.runLiftManual(gamepad.mastDrive());
     }
     @Override
     protected boolean isFinished() {

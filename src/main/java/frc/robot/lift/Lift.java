@@ -2,6 +2,9 @@ package frc.robot.lift;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,14 +23,17 @@ public class Lift extends Subsystem{
         }
     }
 
-    private TalonSRX mastDriver;
+    private CANSparkMax mastDriver;
+    private CANEncoder mastEncoder;
     private DigitalInput lowLimit;
 
     private static Lift instance;
 
     private Lift(){
-        mastDriver = new TalonSRX(RobotConstants.Ports.MAST_DRIVER);
-        LiftConfig.configTalon(mastDriver);  
+        mastDriver = new CANSparkMax(RobotConstants.Ports.MAST_DRIVER, MotorType.kBrushless);
+        //LiftConfig.configTalon(mastDriver);  
+
+        mastEncoder = new CANEncoder(mastDriver);
 
         lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);
     }
@@ -39,22 +45,22 @@ public class Lift extends Subsystem{
     }
 
     public double getEncoderPos(){
-        return mastDriver.getSelectedSensorPosition();
+        return mastEncoder.getPosition();
     }
 
     public void setEncoderPos(int pos){
-        mastDriver.setSelectedSensorPosition(pos);
+        mastEncoder.setPosition(pos);
     }
 
     public void runLiftManual(double power){
-        mastDriver.set(ControlMode.PercentOutput, power);
+        mastDriver.set(power);
     }
 
     public boolean setMast(LiftState liftPos){
-        double setpoint = RobotConstants.TALON_INCHES_TO_TICKS(liftPos.value);
+        /*double setpoint = RobotConstants.TALON_INCHES_TO_TICKS(liftPos.value);
         mastDriver.set(ControlMode.Position, setpoint);
-        return mastDriver.getClosedLoopError() == 0;
-    }
+        return mastDriver.getClosedLoopError() == 0;*/
+        return false;    }
 
     public boolean getLowLimit(){
         return !lowLimit.get();

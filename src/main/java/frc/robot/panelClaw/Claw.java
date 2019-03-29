@@ -60,7 +60,7 @@ public class Claw extends Subsystem{
         clawArmFollow = new VictorSPX(RobotConstants.Ports.CLAW_MOVEMENT_FOLLOW);
         clawArmFollow.follow(clawArm);
 
-        claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
+        claw = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
         limit = new DigitalInput(RobotConstants.Ports.CLAW_LIMIT_SWITCH);

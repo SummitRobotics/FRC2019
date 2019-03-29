@@ -50,10 +50,11 @@ public class RobotBuilder{
     public void matchInit(){
         peg.setPeg(Peg.PegState.UP);
         cargoIntake.setRollers(CargoIntake.RollerState.OFF);
+        claw.setArm(Claw.ClawArmState.UP.value);
         drivetrain.shiftGear(Drivetrain.GearState.HIGH);
         peg.setChair(Peg.PneumaticState.OUT);
         peg.setBop(Peg.PneumaticState.IN);
-        claw.setClaw(Claw.ClawState.OPEN);
+        claw.setClaw(Claw.ClawState.CLOSE);
         drivetrain.resetGyro();
         cargoIntake.setArmEncoder(0);
         claw.setArmEncoder(0);

@@ -54,7 +54,7 @@ public class RobotConstants {
     CARGO_BREAK_2 = 0,
 
     //PCM_1
-    PCM_1 = 0,
+    PCM_1 = 1,
     DRIVE_SOLENOID_OPEN = 1,
     DRIVE_SOLENOID_CLOSE = 0,
     BOP_SOLENOID_OPEN = 4,
@@ -84,9 +84,6 @@ public class RobotConstants {
     GYRO = 10,
 
     PRESSURE_READER = 0;
-
-    //PCM_1 = 1;
-    //PCM_2 = 2;
   }
   public class Cargo_PID{
     public static final double

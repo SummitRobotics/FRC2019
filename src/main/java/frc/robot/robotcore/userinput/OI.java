@@ -13,6 +13,10 @@ import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Shift;
+import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos1;
+import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos2;
+import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos3;
+import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos4;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift;
 import frc.robot.lift.Lift.LiftState;
@@ -29,7 +33,7 @@ import frc.robot.robotcore.universalcommands.lifteject;
 
 public class OI {
 
-    //ButtonDashboard dashboard = new ButtonDashboard();
+    ButtonDashboard dashboard = new ButtonDashboard();
     public DriverController driver1 = new DriverController(RobotConstants.Ports.DRIVER_1_PORT);
 
     private final double DEADZONE = 0.10;
@@ -37,25 +41,28 @@ public class OI {
 
     private OI(){
 
-        /*dashboard.CargoGround.whenPressed(new LoadCargoFromGround());
-        //dashboard.CargoLoadStation.whenPressed(new LoadFromCargoStation());
-        dashboard.MastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
-        dashboard.MastMid.whenPressed(new MoveMast(Lift.LiftState.MID));
-        dashboard.MastLow.whenPressed(new MoveMast(Lift.LiftState.LOW));
-        dashboard.PanelGround.whenPressed(new FloorIntakePanel());
-        dashboard.PanelLoad.whenPressed(new EjectPanel());
-        dashboard.climb.whenPressed(new Climb());*/
+        /*
+        dashboard.pos1.whenPressed(new DriveToPos1(dashboard.sideAndHeight.get()));
+        dashboard.pos2.whenPressed(new DriveToPos2(dashboard.sideAndHeight.get()));
+        dashboard.pos3.whenPressed(new DriveToPos3(dashboard.sideAndHeight.get()));
+        dashboard.pos4.whenPressed(new DriveToPos4(dashboard.sideAndHeight.get()));
+        */
+        dashboard.cargoGround.whenPressed(new LoadCargoFromGround());
+        dashboard.bop.whenPressed(new PunchCargo());
+        dashboard.mastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
+        dashboard.mastMid.whenPressed(new MoveMast(Lift.LiftState.MID));
+        dashboard.mastLow.whenPressed(new MoveMast(Lift.LiftState.LOW));
+        dashboard.panelGround.whenPressed(new FloorIntakePanel());
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());
         driver1.XButtonCmd.whenPressed(new PinPanel());
-        //driver1.YButtonCmd.whenPressed(new EjectCargo());
-        //driver1.rightBumperCmd.whenPressed(new LoadCargoFromGround());
-        //driver1.rightBumperCmd.whenPressed(new EnableRollers().new ToggleRollers());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
-        driver1.BackButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());  
+        driver1.backButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());  
         //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());    
-           
+
+        driver1.StartButtonCmd.whenPressed(new EnableRollers().new ToggleRollers());
+        driver1.backButtonCmd.whenPressed(new ActuateClaw().new ToggleClaw());                                                                                                                                                                                                                                                                                                                                      
     }
 
     public static OI getInstance(){
@@ -90,10 +97,10 @@ public class OI {
     }
     public double clawArmDrive(){
         double POWER = 0.35;
-        if(driver1.isDpadUp()){
+        if(driver1.isDpadRight()){
             return POWER;
         }
-        else if(driver1.isDpadDown()){
+        else if(driver1.isDpadLeft()){
             return -POWER;
         }
         else{

@@ -18,8 +18,7 @@ public class TrimCargoArm extends Command{
     }
     @Override
     protected void execute() {
-        //cargoIntake.moveIntakeArm(-0.8 * Math.signum(Math.pow(OI.getInstance().driver1.getRightJoystickY(), 2)));
-        cargoIntake.moveIntakeArm(-0.8 * Math.signum(OI.getInstance().driver1.getRightJoystickY()) * Math.pow(OI.getInstance().driver1.getRightJoystickY(), 2));
+        cargoIntake.moveIntakeArm(OI.getInstance().cargoArmDrive());
     }
     @Override
     protected boolean isFinished() {

@@ -19,7 +19,7 @@ public class DriverController{
             return controller.getRawButton(8);
         }
     };
-    Button BackButtonCmd = new Button(){
+    Button backButtonCmd = new Button(){
         @Override
         public boolean get(){
             return controller.getBackButton();
