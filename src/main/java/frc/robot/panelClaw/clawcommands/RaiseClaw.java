@@ -17,7 +17,7 @@ public class RaiseClaw extends Command{
     }
     @Override
     protected void initialize() {
-        //claw.setArmEncoder(0);
+        super.initialize();
     }
     @Override
     protected void execute() {
@@ -30,10 +30,5 @@ public class RaiseClaw extends Command{
     @Override
     protected void end() {
         super.end();
-        claw.runArm(0);
-        /*if((claw.getClawLimit()) && (claw.getClawArmState() == Claw.ClawArmState.UP)){
-            claw.setArmEncoder(0);
-        }*/
     }
-
 }

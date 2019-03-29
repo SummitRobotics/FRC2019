@@ -4,16 +4,17 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.drivetrain.Drivetrain;
 
 public class Shift{
+
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
     public Shift(){
 
     }
 
-    public class SetShift extends InstantCommand{
+    public class SetShift extends InstantCommand {
         private Drivetrain.GearState gearPos;
         
-        public SetShift(Drivetrain.GearState gearPos){
+        public SetShift(Drivetrain.GearState gearPos) {
             requires(drivetrain);
             this.gearPos = gearPos;
         }
@@ -30,7 +31,7 @@ public class Shift{
             super.end();
         }
     }
-    public class ToggleShift extends InstantCommand{
+    public class ToggleShift extends InstantCommand {
         private Drivetrain.GearState gearPos;
 
         public ToggleShift(){

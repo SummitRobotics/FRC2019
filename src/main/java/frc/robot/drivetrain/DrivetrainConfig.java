@@ -18,6 +18,7 @@ public class DrivetrainConfig{
         MAX_ACCEL = 1,
         CLOSED_LOOP_ERROR =0,
         STALL_CURRENT_LIMIT = 40,
+        RAMP_RATE_OPEN = 0.2,
         FREESPIN_CURRENT_LIMIT = 35;
 
     public DrivetrainConfig(){
@@ -53,5 +54,8 @@ public class DrivetrainConfig{
 
     public static void configCurrentLimits(CANSparkMax controller){
         controller.setSmartCurrentLimit((int)STALL_CURRENT_LIMIT, (int)FREESPIN_CURRENT_LIMIT);
+    }
+    public static void configOpenLoopRampRates(CANSparkMax controller){
+        controller.setOpenLoopRampRate(RAMP_RATE_OPEN);
     }
 }

@@ -23,7 +23,11 @@ public class SetCargoArm extends InstantCommand{
     protected void execute() {
         isDone = cargoIntake.setIntakeArm(armPos.value);
         SmartDashboard.putBoolean("Command Finished", isDone);
-
+    }
+    
+    @Override
+    protected boolean isFinished() {
+        return isDone;
     }
     
     @Override

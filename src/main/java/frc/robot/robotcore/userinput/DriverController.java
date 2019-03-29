@@ -7,16 +7,6 @@ import frc.robot.robotcore.RobotConstants;
 
 public class DriverController{
 
-    public enum Driver{
-        DRIVER_1(RobotConstants.Ports.DRIVER_1_PORT),
-        DRIVER_2(RobotConstants.Ports.DRIVER_2_PORT);
-
-        public final int value;
-        Driver(int value){
-            this.value = value;
-        }
-    }
-
     private XboxController controller;
 
     //Command Schedulers
@@ -47,7 +37,7 @@ public class DriverController{
     
         @Override
         public boolean get() {
-            return controller.getAButton();
+            return isButtonA();
         }
     };
 
@@ -83,8 +73,8 @@ public class DriverController{
         }
     };
 
-    public DriverController(Driver driver){
-        controller = new XboxController(driver.value);
+    public DriverController(int port){
+        controller = new XboxController(port);
     }
 
     //Joystick Getters
@@ -145,25 +135,16 @@ public class DriverController{
 
     //Math
     public double makeFwdCurve(double input){
-        return (Math.pow(2, input) -1);
+        return (Math.pow(2, OI.getInstance().truncatePower(input)) -1);
     }
     public double makeTurnCurve(double input){
-        return(Math.pow(input, 1.8));
+        return(Math.pow(OI.getInstance().truncatePower(input), 1.8));
     }
     public double getForwardPower(){
-        return livezone(makeFwdCurve(getLeftTrigger()) - makeFwdCurve(getRightTrigger()));
+        return makeFwdCurve(getLeftTrigger()) - makeFwdCurve(getRightTrigger());
     }
     //todo - power curving for rotation
     public double getRotationalPower(){
-        return livezone(Math.copySign(makeTurnCurve(Math.abs(getLeftJoystickX())), -getLeftJoystickX()));
-    }
-    public double livezone(double input){
-        /*if(input > 0.90){
-            input = 0.90;
-        }
-        else if(input < -0.90){
-            input = -0.90;
-        }*/
-        return input;
+        return Math.copySign(makeTurnCurve(Math.abs(getLeftJoystickX())), -getLeftJoystickX());
     }
 }

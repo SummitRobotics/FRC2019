@@ -137,9 +137,10 @@ public class Claw extends Subsystem{
     }*/
 
     public boolean setArm(double angle){
-        double target = (angle/360) * 4096;
+        final double THRESHOLD = 75;
+        double target = (angle/360) * RobotConstants.TALON_TICKS_PER_ROT;
         clawArm.set(ControlMode.Position, target);
-        return clawArm.getClosedLoopError() == 0;
+        return (clawArm.getClosedLoopError() > -THRESHOLD) && (clawArm.getClosedLoopError() < THRESHOLD);
     }
 
     public void setArmEncoder(int position){

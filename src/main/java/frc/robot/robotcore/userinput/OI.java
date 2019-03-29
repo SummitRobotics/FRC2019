@@ -8,12 +8,10 @@ import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargoautomation.EjectCargoToRocket;
 import frc.robot.cargointake.cargoautomation.IntakeCargo;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
-import frc.robot.cargointake.cargoautomation.LoadFromCargoStation;
 import frc.robot.cargointake.cargocommands.DetectCargo;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.panelclaw.chairautomation.*;
-import frc.robot.drivetrain.drivetraincommands.Climb;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift;
@@ -25,14 +23,14 @@ import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.panelclaw.pegcommands.BopIt;
+import frc.robot.robotcore.RobotConstants;
 import frc.robot.robotcore.universalcommands.lifteject;
 
 
 public class OI {
 
     //ButtonDashboard dashboard = new ButtonDashboard();
-    public DriverController driver1 = new DriverController(DriverController.Driver.DRIVER_1);
-    public DriverController driver2 = new DriverController(DriverController.Driver.DRIVER_2);
+    public DriverController driver1 = new DriverController(RobotConstants.Ports.DRIVER_1_PORT);
 
     private final double DEADZONE = 0.10;
     private static OI instance;
@@ -69,14 +67,15 @@ public class OI {
 
     //"Driver" methods
     public double mastDrive(){
-        return deadzone(driver1.getRightJoystickY());
+        return driver1.getRightJoystickY();
     }
     public double fwdDrive(){
-        return deadzone(driver1.getForwardPower());
+        return driver1.getForwardPower();
     }
     public double turnDrive(){
-        return deadzone(driver1.getRotationalPower());
+        return driver1.getRotationalPower();
     }
+
     public double cargoArmDrive(){
         double POWER = 0.35;
         if(driver1.isDpadUp()){
@@ -102,14 +101,27 @@ public class OI {
         }
     }
 
-
-    public double deadzone(double input){
-        if(input < DEADZONE){
-            return 0;
+    public double truncatePower(double input){
+        if(input > 0){
+            if(input < DEADZONE){
+                return 0;
+            }
+            else if(input >= 1){
+                return 1;
+            }
+            return input;
         }
-        else if(input > -DEADZONE){
-            return 0;
+        else if(input < 0){
+            if(input > -DEADZONE){
+                return 0;
+            }
+            else if(input <= -1){
+                return -1;
+            }
+            return input;
         }
-        return input;
+        else{
+            return input;
+        }
     }
 }

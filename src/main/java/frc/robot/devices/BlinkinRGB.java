@@ -40,6 +40,7 @@ public class BlinkinRGB{
         }
         return instance;
     }
+    
 
     public void setLEDColor(Blinkin blinkinValue){
         blinkin.set(blinkinValue.value);

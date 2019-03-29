@@ -20,7 +20,6 @@ import frc.robot.autonomous.RocketRight;
 import frc.robot.autonomous.Yeet;
 import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
-import frc.robot.teleop.TeleopArcade;
 import frc.robot.teleop.TestAllTheThings;
 
 
@@ -29,7 +28,6 @@ public class Robot extends TimedRobot {
   public static OI gamepad;
   private TestAllTheThings test;
 
-  //public static SendableChooser<OI.Driver_Profile> DriverProfileChooser = new SendableChooser<>();
   private Command auto;
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -59,7 +57,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     robot.run();
-    robot.dashboard();
+    //robot.dashboard();
+    //todo - fix dashboard outputs
   }
 
   @Override
@@ -68,7 +67,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    Scheduler.getInstance().run();
+    //todo - see if disabling scheduler breaks everything
   }
 
   @Override
@@ -84,8 +83,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    SmartDashboard.putNumber("Gyro Angle Yeet", robot.drivetrain.getYaw());
     Scheduler.getInstance().run();
-
   }
 
   @Override
