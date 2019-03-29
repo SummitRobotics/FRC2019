@@ -21,6 +21,14 @@ public class DriverController{
 
     //Command Schedulers
 
+    Button StartButtonCmd = new Button(){
+    
+        @Override
+        public boolean get() {
+            //return controller.getStartButton();
+            return controller.getRawButton(8);
+        }
+    };
     Button BackButtonCmd = new Button(){
         @Override
         public boolean get(){
@@ -140,7 +148,7 @@ public class DriverController{
         return (Math.pow(2, input) -1);
     }
     public double makeTurnCurve(double input){
-        return(Math.pow(input, 1.65));
+        return(Math.pow(input, 1.8));
     }
     public double getForwardPower(){
         return livezone(makeFwdCurve(getLeftTrigger()) - makeFwdCurve(getRightTrigger()));

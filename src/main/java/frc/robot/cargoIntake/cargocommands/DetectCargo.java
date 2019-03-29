@@ -1,6 +1,7 @@
 package frc.robot.cargointake.cargocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 
 public class DetectCargo extends Command{
@@ -17,7 +18,7 @@ public class DetectCargo extends Command{
     }
     @Override
     protected void execute() {
-        super.execute();
+        SmartDashboard.putBoolean("Is Finished ", cargoIntake.isBallDetected());
     }
     @Override
     protected boolean isFinished() {

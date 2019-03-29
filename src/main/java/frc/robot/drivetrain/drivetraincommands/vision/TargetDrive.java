@@ -8,23 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.devices.Limelight;
 import frc.robot.drivetrain.Drivetrain;
 
-//shoot me please and thank you
-//"me first bitch"
-//mate ive eaerned this
-
-/* no
-    u*/
-
-/***n
- * a
- * y
- * 
- * t
- * h
- * e
- * e
- */
-
 public class TargetDrive extends Command {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
@@ -83,12 +66,14 @@ public class TargetDrive extends Command {
             }
         };
         
+        fwdPID = new PIDController(FWD_P, FWD_I, FWD_D, FWD_F, fwdSource, fwdOutput);
+        turnPID = new PIDController(TURN_P, TURN_I, TURN_D, TURN_F, turnSource, turnOutput);
 
         fwdOutput = new PIDOutput(){
         
             @Override
             public void pidWrite(double output) {
-                
+                fwdPID.get();
             }
         };
 
@@ -96,11 +81,9 @@ public class TargetDrive extends Command {
         
             @Override
             public void pidWrite(double output) {
-                
+                output = turnPID.get();
             }
         };
-        fwdPID = new PIDController(FWD_P, FWD_I, FWD_D, FWD_F, fwdSource, fwdOutput);
-        turnPID = new PIDController(TURN_P, TURN_I, TURN_D, TURN_F, turnSource, turnOutput);
     }
 
     @Override
@@ -115,11 +98,13 @@ public class TargetDrive extends Command {
     }
     @Override
     protected void execute() {
-        double fwdAdjust, turnAdjust;
+        double fwdAdjust = 0, turnAdjust = 0;
         
         if(lemonlight.isTarget()){
-
+            fwdAdjust = fwdPID.getError();
+            turnAdjust = fwdPID.getError();
         }
+        drivetrain.robotDrive.arcadeDrive(fwdAdjust, turnAdjust);
     }
     /*@Override
     protected void usePIDOutput(double output) {

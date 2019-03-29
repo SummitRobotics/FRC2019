@@ -2,12 +2,14 @@ package frc.robot.cargointake.cargocommands;
 
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 
-public class SetCargoArm extends Command{
+public class SetCargoArm extends InstantCommand{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
     private CargoIntake.IntakeArmState armPos;
-    boolean isDone;
+    boolean isDone = false;
 
     public SetCargoArm(CargoIntake.IntakeArmState armPos){
         requires(cargoIntake);
@@ -19,16 +21,14 @@ public class SetCargoArm extends Command{
     }
     @Override
     protected void execute() {
-        isDone = cargoIntake.setIntakeArm(armPos);
+        isDone = cargoIntake.setIntakeArm(armPos.value);
+        SmartDashboard.putBoolean("Command Finished", isDone);
 
     }
-    @Override
-    protected boolean isFinished() {
-        return isDone;
-    }
+    
     @Override
     protected void end() {
         super.end();
-        cargoIntake.moveIntakeArm(0);
+        SmartDashboard.putBoolean("Is At Position", true);
     }
 }

@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.cargocommands.TrimCargoArm;
 import frc.robot.robotcore.RobotConstants;
 
@@ -14,8 +15,8 @@ public class CargoIntake extends Subsystem {
     //List of states intake arm can "servo" to. Values given in angle / 360
     public enum IntakeArmState {
         UP(0),
-        INTAKE_LOWER(-95),
-        DOWN(-115);
+        INTAKE_LOWER(-108),
+        DOWN(-120);
 
         public final double value;
         IntakeArmState(double value) {
@@ -25,10 +26,10 @@ public class CargoIntake extends Subsystem {
 
     //List of states for rollers. Values given in power [-1, 1]
     public enum RollerState{
-        ON(1),
-        SLOW(0.5),
+        ON(0.55),
+        SLOW(0.35),
         OFF(0),
-        REVERSE(-1);
+        REVERSE(-0.55);
 
         public final double value;
         RollerState(double value){
@@ -51,6 +52,7 @@ public class CargoIntake extends Subsystem {
 
     //Instance Members
     private TalonSRX arm;
+    private VictorSPX armFollow;
     private VictorSPX rollers;
 
     private IntakeArmState intakeArmState;
@@ -67,8 +69,12 @@ public class CargoIntake extends Subsystem {
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         CargoArmConfig.configTalon(arm);
         arm.setSelectedSensorPosition(0);
+        armFollow = new VictorSPX(RobotConstants.Ports.INTAKE_MOVEMENT_FOLLOW);
+        armFollow.follow(arm);
+        armFollow.setInverted(true);
 
         rollers = new VictorSPX(RobotConstants.Ports.INTAKE_ROLLER);
+        rollers.setInverted(true);
 
         isUp = new DigitalInput(RobotConstants.Ports.CARGO_LIMIT_SWITCH);
         break1 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_1);
@@ -115,11 +121,12 @@ public class CargoIntake extends Subsystem {
 
     /* ----- ROLLERS ----- */
 
-    public void intake(int power){
+    public void intake(double power){
         rollers.set(ControlMode.PercentOutput, power);
     }
     public void setRollers(RollerState intakeSpinPosition){
-        intake((int)intakeSpinPosition.value);
+        intake(intakeSpinPosition.value);
+        SmartDashboard.putNumber("current roller power", intakeSpinPosition.value);
         rollerState = intakeSpinPosition;
     }
 
@@ -160,9 +167,12 @@ public class CargoIntake extends Subsystem {
     }
 
     //Servos the intake arm to a given position
-    public boolean setIntakeArm(IntakeArmState intakePosition){
-            double target = (intakePosition.value/360) * RobotConstants.TALON_TICKS_PER_ROT;
+    public boolean setIntakeArm(double intakePosition){
+            double target = (intakePosition/360) * 4096;
+            double THRESHOLD = 15;
+            target *= 3;            
             arm.set(ControlMode.Position, target); 
-            return arm.getClosedLoopError() == 0;
+            SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
+            return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
     }
 }

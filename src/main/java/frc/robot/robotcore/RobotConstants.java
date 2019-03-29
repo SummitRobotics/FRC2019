@@ -43,7 +43,6 @@ public class RobotConstants {
     RIGHT_DRIVE_1 = 32,
 
     MAST_DRIVER = 60,
-    //MAST_FOLLOWER = 0,
 
     LOW_LIMIT_SWITCH = 5,
     //HIGH_LIMIT_SWITCH = 99,
@@ -64,9 +63,10 @@ public class RobotConstants {
     PANEL_SOLENOID_CLOSE = 3,
 
     CLAW_MOVEMENT = 50,
+    CLAW_MOVEMENT_FOLLOW = 51,
     INTAKE_MOVEMENT = 40,
-    INTAKE_ROLLER = 41,
-    UNUSED = 61,
+    INTAKE_ROLLER = 42,
+    INTAKE_MOVEMENT_FOLLOW = 41,
 
     PEG_SERVO = 1,
 
@@ -75,6 +75,9 @@ public class RobotConstants {
     GYRO = 10,
 
     PRESSURE_READER = 0;
+
+    //PCM_1 = 1;
+    //PCM_2 = 2;
   }
   public class Cargo_PID{
     public static final double

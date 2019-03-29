@@ -74,9 +74,9 @@ public class Drivetrain extends Subsystem{
         leftDrive0.setSmartCurrentLimit(30);
         leftDrive1.setSmartCurrentLimit(30);
         leftDrive2.setSmartCurrentLimit(30);
-        leftDrive0.setOpenLoopRampRate(0.35);
-        leftDrive1.setOpenLoopRampRate(0.35);
-        leftDrive2.setOpenLoopRampRate(0.35);
+        leftDrive0.setOpenLoopRampRate(0.2);
+        leftDrive1.setOpenLoopRampRate(0.2);
+        leftDrive2.setOpenLoopRampRate(0.2);
 
         leftEncoder = new CANEncoder(leftDrive1);
         leftPID = new CANPIDController(leftDrive1);
@@ -90,9 +90,9 @@ public class Drivetrain extends Subsystem{
         rightDrive0.setSmartCurrentLimit(30);
         rightDrive1.setSmartCurrentLimit(30);
         rightDrive2.setSmartCurrentLimit(30);
-        rightDrive0.setOpenLoopRampRate(0.35);
-        rightDrive1.setOpenLoopRampRate(0.35);
-        rightDrive2.setOpenLoopRampRate(0.35);
+        rightDrive0.setOpenLoopRampRate(0.2);
+        rightDrive1.setOpenLoopRampRate(0.2);
+        rightDrive2.setOpenLoopRampRate(0.2);
 
         rightEncoder = new CANEncoder(rightDrive1);
         rightPID = new CANPIDController(rightDrive1);
@@ -101,7 +101,7 @@ public class Drivetrain extends Subsystem{
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
-        robotDrive.setSafetyEnabled(true);
+        robotDrive.setSafetyEnabled(false);
         
 
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);

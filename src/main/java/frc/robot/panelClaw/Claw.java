@@ -3,6 +3,7 @@ package frc.robot.panelclaw;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.VictorSP;
 import frc.robot.panelclaw.clawcommands.MoveClawWrist;
 
 public class Claw extends Subsystem{
@@ -41,6 +43,7 @@ public class Claw extends Subsystem{
     public DoubleSolenoid claw;
 
     private TalonSRX clawArm;
+    private VictorSPX clawArmFollow;
 
     public ColorSensor panelSensor;
     private DigitalInput limit;
@@ -53,6 +56,9 @@ public class Claw extends Subsystem{
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_MOVEMENT);
         ClawArmConfig.configTalon(clawArm);
         clawArmState = ClawArmState.UP;
+
+        clawArmFollow = new VictorSPX(RobotConstants.Ports.CLAW_MOVEMENT_FOLLOW);
+        clawArmFollow.follow(clawArm);
 
         claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
