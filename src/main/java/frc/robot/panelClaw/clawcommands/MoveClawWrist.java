@@ -1,9 +1,7 @@
 package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Peg;
 import frc.robot.robotcore.userinput.OI;
 
 public class MoveClawWrist extends Command{

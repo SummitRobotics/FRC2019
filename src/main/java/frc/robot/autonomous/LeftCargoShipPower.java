@@ -2,6 +2,7 @@ package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.drivetrain.drivetraincommands.GyroTurn;
 import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.panelclaw.Claw;

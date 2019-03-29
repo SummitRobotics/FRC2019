@@ -1,7 +1,6 @@
 package frc.robot.drivetrain;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANPIDController.AccelStrategy;
 
 public class DrivetrainConfig{
 

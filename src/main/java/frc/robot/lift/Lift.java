@@ -1,15 +1,13 @@
 package frc.robot.lift;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.robotcore.RobotConstants;
-import frc.robot.lift.liftcommands.*;
 
 public class Lift extends Subsystem{
     public enum LiftState{
@@ -25,7 +23,10 @@ public class Lift extends Subsystem{
 
     private CANSparkMax mastDriver;
     private CANEncoder mastEncoder;
-    private DigitalInput lowLimit;
+
+    private DigitalInput liftLowLimit;
+
+    public Button liftLowLimitButton;
 
     private static Lift instance;
 
@@ -35,7 +36,15 @@ public class Lift extends Subsystem{
 
         mastEncoder = new CANEncoder(mastDriver);
 
-        lowLimit = new DigitalInput(RobotConstants.Ports.LOW_LIMIT_SWITCH);
+        liftLowLimit = new DigitalInput(RobotConstants.Ports.MAST_LIMIT_SWITCH);
+
+        liftLowLimitButton = new Button(){
+
+            @Override
+            public boolean get(){
+                return getLowLimit();
+            }
+        };
     }
     public static Lift getInstance(){
         if(instance == null){
@@ -53,6 +62,9 @@ public class Lift extends Subsystem{
     }
 
     public void runLiftManual(double power){
+        if (getLowLimit()){
+            Math.min(power,0);
+        }
         mastDriver.set(power);
     }
 
@@ -62,16 +74,16 @@ public class Lift extends Subsystem{
         return mastDriver.getClosedLoopError() == 0;*/
         return false;    }
 
-    public boolean getLowLimit(){
-        return !lowLimit.get();
-    }
-
     @Override
     protected void initDefaultCommand() {
         //setDefaultCommand(new MoveMastManual());
     }
 
+    public boolean getLowLimit() {
+        return !liftLowLimit.get();
+    }
+
     public void kill() {
-        mastDriver.set(ControlMode.PercentOutput, 0);
+        mastDriver.set(0);
     }
 }

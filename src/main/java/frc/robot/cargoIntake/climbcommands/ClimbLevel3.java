@@ -1,7 +1,6 @@
 package frc.robot.cargointake.climbcommands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.drivetrain.Drivetrain;

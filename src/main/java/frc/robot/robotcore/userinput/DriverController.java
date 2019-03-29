@@ -3,7 +3,6 @@ package frc.robot.robotcore.userinput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.GenericHID;
-import frc.robot.robotcore.RobotConstants;
 
 public class DriverController{
 

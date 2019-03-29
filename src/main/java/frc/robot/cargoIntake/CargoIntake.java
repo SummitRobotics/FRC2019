@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.cargocommands.TrimCargoArm;
@@ -62,6 +63,8 @@ public class CargoIntake extends Subsystem {
     private DigitalInput isUp;
     private DigitalInput break1, break2;
 
+    public Button isUpButton;
+
     private DoubleSolenoid gasStrutRelease;
     private DoubleSolenoid pistonRelease;
     
@@ -87,6 +90,14 @@ public class CargoIntake extends Subsystem {
 
         gasStrutRelease = new DoubleSolenoid(RobotConstants.Ports.PCM_2, RobotConstants.Ports.GASSTRUT_RELEASE_OPEN, RobotConstants.Ports.GASSTRUT_RELEASE_CLOSE);
         pistonRelease = new DoubleSolenoid(RobotConstants.Ports.PCM_2, RobotConstants.Ports.PNEUMATIC_RELEASE_OPEN, RobotConstants.Ports.PNEUMATIC_RELEASE_CLOSE);
+
+        isUpButton = new Button(){
+
+            @Override
+            public boolean get(){
+                return getCargoLimit();
+            }
+        };
     }
     public static CargoIntake getInstance(){
         if(instance == null){
@@ -163,7 +174,6 @@ public class CargoIntake extends Subsystem {
         }
     }
 
-
     /* ----- INTAKE ARM ----- */
     public void setArmEncoder(int position){
         arm.setSelectedSensorPosition(position);
@@ -171,18 +181,21 @@ public class CargoIntake extends Subsystem {
 
     //Open Loop Intake Arm control (do this better in the future)
     public void moveIntakeArm(double power){
+        if (getCargoLimit()) {
+            Math.min(power,0);
+        }
         arm.set(ControlMode.PercentOutput, power);
     }
 
     //Servos the intake arm to a given position
     public boolean setIntakeArm(double intakePosition){
-            double target = (intakePosition/360) * RobotConstants.TALON_TICKS_PER_ROT;
-            double THRESHOLD = 75;
-            //adjust for sprocket ratio
-            target *= 3;            
-            arm.set(ControlMode.Position, target); 
-            SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
-            return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
+        double target = (intakePosition/360) * RobotConstants.TALON_TICKS_PER_ROT;
+        double THRESHOLD = 75;
+        //adjust for sprocket ratio
+        target *= 3;            
+        arm.set(ControlMode.Position, target); 
+        SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
+        return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
     }
 
     /* ----- CLIMB ----- */

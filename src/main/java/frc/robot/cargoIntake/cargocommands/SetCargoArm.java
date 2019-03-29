@@ -2,11 +2,10 @@ package frc.robot.cargointake.cargocommands;
 
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 
-public class SetCargoArm extends InstantCommand{
+public class SetCargoArm extends Command{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
     private CargoIntake.IntakeArmState armPos;
     boolean isDone = false;

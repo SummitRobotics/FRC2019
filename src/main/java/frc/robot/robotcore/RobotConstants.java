@@ -44,8 +44,7 @@ public class RobotConstants {
 
     MAST_DRIVER = 60,
 
-    LOW_LIMIT_SWITCH = 5,
-    //HIGH_LIMIT_SWITCH = 99,
+    MAST_LIMIT_SWITCH = 5,
 
     CARGO_LIMIT_SWITCH = 2,
     CLAW_LIMIT_SWITCH = 6,

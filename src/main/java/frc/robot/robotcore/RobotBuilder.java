@@ -2,8 +2,6 @@ package frc.robot.robotcore;
 
 import frc.robot.panelclaw.Claw;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.devices.Limelight;
@@ -12,7 +10,6 @@ import frc.robot.devices.REVdisplay;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.lift.Lift;
 import frc.robot.panelclaw.Peg;
-import frc.robot.robotcore.userinput.OI;
 
 public class RobotBuilder{
     public Drivetrain drivetrain;

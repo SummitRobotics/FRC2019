@@ -3,8 +3,6 @@ package frc.robot.panelclaw.chairautomation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.PowerDrive;
-import frc.robot.lift.Lift.LiftState;
-import frc.robot.lift.liftcommands.MoveMast;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.Peg.PegState;

@@ -1,46 +1,38 @@
 package frc.robot.robotcore.userinput;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.cargointake.CargoIntake;
-import frc.robot.cargointake.cargoautomation.EjectCargoToRocket;
-import frc.robot.cargointake.cargoautomation.IntakeCargo;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
-import frc.robot.cargointake.cargocommands.DetectCargo;
 import frc.robot.cargointake.cargocommands.EnableRollers;
-import frc.robot.cargointake.cargocommands.SetCargoArm;
+import frc.robot.cargointake.cargocommands.ResetArmEncoder;
 import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Shift;
-import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos1;
-import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos2;
-import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos3;
-import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos4;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift;
-import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.liftcommands.MoveMast;
-import frc.robot.panelclaw.Claw;
+import frc.robot.lift.liftcommands.ResetMastEncoder;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
-import frc.robot.panelclaw.clawcommands.RaiseClaw;
-import frc.robot.panelclaw.pegcommands.ActuateChair;
+import frc.robot.panelclaw.clawcommands.ResetClawEncoder;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
-import frc.robot.panelclaw.pegcommands.BopIt;
+import frc.robot.robotcore.RobotBuilder;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.robotcore.universalcommands.KillCommands;
-import frc.robot.robotcore.universalcommands.LiftEject;
 
 
 public class OI {
 
-    ButtonDashboard dashboard = new ButtonDashboard();
+    private ButtonDashboard dashboard = new ButtonDashboard();
     public DriverController driver1 = new DriverController(RobotConstants.Ports.DRIVER_1_PORT);
+    private RobotBuilder robot;
 
     private final double DEADZONE = 0.10;
     private static OI instance;
 
     private OI(){
+
+        robot = RobotBuilder.getInstance();
+
+        robot.cargoIntake.isUpButton.whenPressed(new ResetArmEncoder());
+        robot.claw.isClawUpButton.whenPressed(new ResetClawEncoder());
+        robot.lift.liftLowLimitButton.whenPressed(new ResetMastEncoder());
 
         /*
         dashboard.pos1.whenPressed(new DriveToPos1(dashboard.sideAndHeight.get()));
@@ -60,11 +52,11 @@ public class OI {
         driver1.XButtonCmd.whenPressed(new PinPanel());
         driver1.YButtonCmd.whenPressed(new KillCommands());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
-        driver1.backButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());  
-        //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());    
+        driver1.backButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());
+        //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());
 
         driver1.StartButtonCmd.whenPressed(new EnableRollers().new ToggleRollers());
-        driver1.backButtonCmd.whenPressed(new ActuateClaw().new ToggleClaw());                                                                                                                                                                                                                                                                                                                                      
+        driver1.backButtonCmd.whenPressed(new ActuateClaw().new ToggleClaw());
     }
 
     public static OI getInstance(){
@@ -84,7 +76,6 @@ public class OI {
     public double turnDrive(){
         return driver1.getRotationalPower();
     }
-
     public double cargoArmDrive(){
         double POWER = 0.35;
         if(driver1.isDpadUp()){

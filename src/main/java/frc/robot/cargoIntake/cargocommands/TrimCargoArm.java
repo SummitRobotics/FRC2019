@@ -1,7 +1,6 @@
 package frc.robot.cargointake.cargocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.robotcore.userinput.OI;
 
