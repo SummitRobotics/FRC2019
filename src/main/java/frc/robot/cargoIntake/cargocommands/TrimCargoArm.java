@@ -10,6 +10,7 @@ public class TrimCargoArm extends Command{
     private final double POWER = 0.3;
 
     public TrimCargoArm(){
+        setInterruptible(true);
         requires(cargoIntake);
     }
     @Override
@@ -23,6 +24,11 @@ public class TrimCargoArm extends Command{
     @Override
     protected boolean isFinished() {
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        cargoIntake.kill();
     }
     @Override
     protected void end() {

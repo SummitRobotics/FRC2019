@@ -82,7 +82,7 @@ public class Drivetrain extends Subsystem{
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
         robotDrive.setSafetyEnabled(false);
-        
+
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
         gearShifter = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
@@ -194,5 +194,9 @@ public class Drivetrain extends Subsystem{
                 return gearPos;
             }
             return gearPos;
+    }
+
+    public void kill() {
+        robotDrive.tankDrive(0, 0);
     }
 }

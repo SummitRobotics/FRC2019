@@ -11,9 +11,13 @@ import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.DetectCargo;
 
 public class LoadCargoFromGround extends CommandGroup{
+
+    CargoIntake cargoIntake = CargoIntake.getInstance();
+
     public LoadCargoFromGround(){
-        
         setInterruptible(true);
+        requires(cargoIntake);
+
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.INTAKE_LOWER));
         addSequential(new Wait(1.0));
@@ -47,8 +51,10 @@ public class LoadCargoFromGround extends CommandGroup{
         **spin rollers again
         **stop rollers*/
     }
+
     @Override
     protected void interrupted() {
-        end();
+        super.interrupted();
+        cargoIntake.kill();
     }
 }

@@ -189,4 +189,9 @@ public class CargoIntake extends Subsystem {
     public void climbLevel2(){
         pistonRelease.set(DoubleSolenoid.Value.kReverse);
     }
+
+    public void kill() {
+        arm.set(ControlMode.PercentOutput, 0);
+        rollers.set(ControlMode.PercentOutput, 0);
+    }
 }

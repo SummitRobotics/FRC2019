@@ -9,6 +9,7 @@ public class MoveMastManual extends Command{
     private OI gamepad = OI.getInstance();
 
     public MoveMastManual(){
+        setInterruptible(true);
         requires(lift);
     }
     @Override
@@ -22,6 +23,11 @@ public class MoveMastManual extends Command{
     @Override
     protected boolean isFinished() {
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        lift.kill();
     }
     @Override
     protected void end() {

@@ -28,7 +28,8 @@ import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.panelclaw.pegcommands.BopIt;
 import frc.robot.robotcore.RobotConstants;
-import frc.robot.robotcore.universalcommands.lifteject;
+import frc.robot.robotcore.universalcommands.KillCommands;
+import frc.robot.robotcore.universalcommands.LiftEject;
 
 
 public class OI {
@@ -57,6 +58,7 @@ public class OI {
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());
         driver1.XButtonCmd.whenPressed(new PinPanel());
+        driver1.YButtonCmd.whenPressed(new KillCommands());
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
         driver1.backButtonCmd.whenPressed(new ActuatePeg().new TogglePeg());  
         //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());    

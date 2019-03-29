@@ -14,6 +14,7 @@ public class SetChair extends InstantCommand{
     private Peg.PneumaticState chairPos;
 
         public SetChair(Peg.PneumaticState chairPos){
+            setInterruptible(true);
             requires(peg);
             this.chairPos = chairPos;
         }
@@ -34,6 +35,7 @@ public class SetChair extends InstantCommand{
         private Peg.PneumaticState panelPosition;
         
         public ToggleChair(){
+            setInterruptible(true);
             requires(peg);
         }
         @Override

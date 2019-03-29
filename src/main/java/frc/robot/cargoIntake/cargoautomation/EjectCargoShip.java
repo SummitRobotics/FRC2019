@@ -15,6 +15,8 @@ public class EjectCargoShip extends CommandGroup{
 
     public EjectCargoShip(){
         requires(cargoIntake);
+        setInterruptible(true);
+
         addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 1.0));
         addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
         addSequential(new ActuatePeg().new SetPeg(Peg.PegState.UP));
@@ -22,5 +24,11 @@ public class EjectCargoShip extends CommandGroup{
         addSequential(new PowerDrive(-0.2, 1));
         addSequential(new PowerDrive(0.35, 0.75));
         addSequential(new PunchCargo());
+    }
+
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        cargoIntake.kill();
     }
 }

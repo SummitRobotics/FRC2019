@@ -12,7 +12,9 @@ public class SetCargoArm extends InstantCommand{
     boolean isDone = false;
 
     public SetCargoArm(CargoIntake.IntakeArmState armPos){
+        setInterruptible(true);
         requires(cargoIntake);
+
         this.armPos = armPos;
     }
     @Override
@@ -29,7 +31,11 @@ public class SetCargoArm extends InstantCommand{
     protected boolean isFinished() {
         return isDone;
     }
-    
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        cargoIntake.kill();
+    }
     @Override
     protected void end() {
         super.end();

@@ -11,6 +11,7 @@ public class EncoderDrive extends Command{
     private Drivetrain drivetrain = Drivetrain.getInstance();
 
     public EncoderDrive(double distance){
+        setInterruptible(true);
         requires(drivetrain);
         this.distance = distance;
     }
@@ -25,7 +26,11 @@ public class EncoderDrive extends Command{
     @Override
     protected boolean isFinished() {
         return isDone;
-        
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {

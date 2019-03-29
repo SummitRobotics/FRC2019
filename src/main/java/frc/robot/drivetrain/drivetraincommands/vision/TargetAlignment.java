@@ -21,6 +21,9 @@ public class TargetAlignment extends PIDCommand {
 
     public TargetAlignment(){
         super("TargetAlignment", P, I, D, Drivetrain.getInstance());
+        setInterruptible(true);
+        requires(drivetrain);
+
         setSetpoint(0);
         getPIDController().setPercentTolerance(5);
         this.power = POWER;
@@ -63,6 +66,11 @@ public class TargetAlignment extends PIDCommand {
     @Override
     protected boolean isFinished() {
         return (lemonlight.getY() <= 0) || (lemonlight.getTarget() == 0);
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {
