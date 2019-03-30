@@ -1,28 +1,33 @@
 package frc.robot.lift;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.lift.liftcommands.MoveMastManual;
 import frc.robot.robotcore.RobotConstants;
 
 public class Lift extends Subsystem{
     public enum LiftState{
         LOW(0),
-        MID(28),
-        HIGH(56);
+        MID(20),
+        HIGH(41);
 
-        public final int value;
-        LiftState(int value){
+        public final double value;
+        LiftState(double value){
             this.value = value;
         }
     }
 
     private CANSparkMax mastDriver;
     private CANEncoder mastEncoder;
+    private CANPIDController mastPID;
 
     private DigitalInput liftLowLimit;
 
@@ -35,6 +40,11 @@ public class Lift extends Subsystem{
         //LiftConfig.configTalon(mastDriver);  
 
         mastEncoder = new CANEncoder(mastDriver);
+        mastPID = new CANPIDController(mastDriver);
+        LiftConfig.configMotorController(mastPID);
+        mastDriver.setInverted(true);
+
+
 
         liftLowLimit = new DigitalInput(RobotConstants.Ports.MAST_LIMIT_SWITCH);
 
@@ -62,21 +72,21 @@ public class Lift extends Subsystem{
     }
 
     public void runLiftManual(double power){
-        if (getLowLimit()){
-            Math.min(power,0);
+        if(power != 0){
+            mastPID.setReference(power, ControlType.kDutyCycle);
+            SmartDashboard.putNumber("Power to lift", power);
         }
-        mastDriver.set(power);
     }
 
-    public boolean setMast(LiftState liftPos){
-        /*double setpoint = RobotConstants.TALON_INCHES_TO_TICKS(liftPos.value);
-        mastDriver.set(ControlMode.Position, setpoint);
-        return mastDriver.getClosedLoopError() == 0;*/
-        return false;    }
+    public void setMast(LiftState liftPos){
+        double setpoint = RobotConstants.NEO_INCHES_TO_TICKS(liftPos.value);
+        mastPID.setReference(liftPos.value, ControlType.kPosition);
+        SmartDashboard.putNumber("Setpoint for Lift", setpoint);
+    }
 
     @Override
     protected void initDefaultCommand() {
-        //setDefaultCommand(new MoveMastManual());
+        setDefaultCommand(new MoveMastManual());
     }
 
     public boolean getLowLimit() {

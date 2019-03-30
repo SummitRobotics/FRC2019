@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
@@ -31,7 +32,8 @@ public class Claw extends Subsystem{
         //values in degrees
         UP(0),
         CARGO_DOWN(10),
-        DOWN(50);
+        //TODO - Change cargo down to 20
+        DOWN(30);
 
         public final double value;
         ClawArmState(double value){
@@ -60,6 +62,7 @@ public class Claw extends Subsystem{
 
         clawArmFollow = new VictorSPX(RobotConstants.Ports.CLAW_MOVEMENT_FOLLOW);
         clawArmFollow.follow(clawArm);
+        clawArmFollow.setInverted(true);
 
         claw = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
@@ -148,9 +151,12 @@ public class Claw extends Subsystem{
     }*/
 
     public boolean setArm(double angle){
+        //TODO - test threshold
         final double THRESHOLD = 75;
         double target = (angle/360) * RobotConstants.TALON_TICKS_PER_ROT;
         clawArm.set(ControlMode.Position, target);
+        SmartDashboard.putNumber("Closed Loop Error", clawArm.getClosedLoopError());
+        SmartDashboard.putNumber("Arm Encoder Val", clawArm.getSelectedSensorPosition());
         return (clawArm.getClosedLoopError() > -THRESHOLD) && (clawArm.getClosedLoopError() < THRESHOLD);
     }
 

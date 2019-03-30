@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.drivetrain.Drivetrain;
 
-public class ClimbLevel2 extends InstantCommand{
+public class CancelClimb extends InstantCommand{
 
     private CargoIntake cargointake = CargoIntake.getInstance();
 
-    public ClimbLevel2(){
+    public CancelClimb(){
 
     }
 
@@ -18,7 +18,7 @@ public class ClimbLevel2 extends InstantCommand{
     }
     @Override
     protected void execute() {
-        cargointake.climbLevel2();
+        cargointake.dontClimbLevel2();
     }
     
     @Override

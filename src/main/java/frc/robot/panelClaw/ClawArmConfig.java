@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class ClawArmConfig{
 
     public static final double
-    P = 1,
+    P = 1.5,
     I = 0,
     D = 0,
     FEEDFWD = 0,
@@ -18,8 +18,8 @@ public class ClawArmConfig{
     PEAK_CURRENT = 30,
     //in ticks
     CLOSED_LOOP_ERROR = 25;
-    public static final boolean isInverted = true;
-    public static final boolean isPhaseInverted = true;
+    public static final boolean isInverted = false;
+    public static final boolean isPhaseInverted = false;
 
 
     public ClawArmConfig(){

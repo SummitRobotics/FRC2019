@@ -42,10 +42,10 @@ public class ButtonDashboardDriver extends GenericHID{
         return getRawButton(ButtonLayout.HIGH.value);
     }
     public boolean getMastMid(){
-        return getRawButton(ButtonLayout.HIGH.value);
+        return getRawButton(ButtonLayout.MID.value);
     }
     public boolean getMastLow(){
-        return getRawButton(ButtonLayout.HIGH.value);
+        return getRawButton(ButtonLayout.LOW.value);
     }
     public boolean getSideAndHeight(){
         return getRawButton(ButtonLayout.SIDE_AND_HEIGHT.value);
@@ -60,7 +60,7 @@ public class ButtonDashboardDriver extends GenericHID{
         return getRawButton(ButtonLayout.POS_3.value);
     }
     public boolean getPos4(){
-        return getRawButton(ButtonLayout.POS_4.value);
+        return !getRawButton(ButtonLayout.POS_4.value);
     }
     public boolean getCargoGround(){
         return getRawButton(ButtonLayout.CARGO_GROUND.value);

@@ -19,11 +19,11 @@ public class SetCargoArm extends Command{
     @Override
     protected void initialize() {
         super.initialize();
+        SmartDashboard.putBoolean("Cargo arm done", false);
     }
     @Override
     protected void execute() {
         isDone = cargoIntake.setIntakeArm(armPos.value);
-        SmartDashboard.putBoolean("Command Finished", isDone);
     }
     
     @Override
@@ -38,6 +38,6 @@ public class SetCargoArm extends Command{
     @Override
     protected void end() {
         super.end();
-        SmartDashboard.putBoolean("Is At Position", true);
+        SmartDashboard.putBoolean("Cargo arm done", true);
     }
 }

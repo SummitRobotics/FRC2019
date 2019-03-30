@@ -17,7 +17,7 @@ public class CargoIntake extends Subsystem {
     //List of states intake arm can "servo" to. Values given in angle / 360
     public enum IntakeArmState {
         UP(0),
-        INTAKE_LOWER(-108),
+        INTAKE_LOWER(-111),
         DOWN(-120);
 
         public final double value;
@@ -192,7 +192,7 @@ public class CargoIntake extends Subsystem {
         double target = (intakePosition/360) * RobotConstants.TALON_TICKS_PER_ROT;
         double THRESHOLD = 75;
         //adjust for sprocket ratio
-        target *= 3;            
+        target *= 3;
         arm.set(ControlMode.Position, target); 
         SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
         return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
@@ -200,10 +200,14 @@ public class CargoIntake extends Subsystem {
 
     /* ----- CLIMB ----- */
     public void climbLevel2(){
+        pistonRelease.set(DoubleSolenoid.Value.kForward);
+    }
+    public void dontClimbLevel2(){
         pistonRelease.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void kill() {
+        SmartDashboard.putBoolean("Cargo killed", true);
         arm.set(ControlMode.PercentOutput, 0);
         rollers.set(ControlMode.PercentOutput, 0);
     }

@@ -17,7 +17,7 @@ public class ResetClawEncoder extends InstantCommand {
     }
     @Override
     protected void execute(){
-        claw.setArmEncoder(0);
+        //claw.setArmEncoder(0);
     }
     @Override
     protected void end(){

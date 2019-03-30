@@ -1,73 +1,61 @@
 package frc.robot.lift;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.CANPIDController;
+import com.revrobotics.CANSparkMax;
 
 public class LiftConfig{
 
-    public static final double
-    P = 1,
-    I = 0,
-    D = 0,
-    FEEDFWD = 0,
-    OUTPUT_NOMINAL_FORWARD = 0,
-    OUTPUT_NOMINAL_REVERSE = 0,
-    OUTPUT_PEAK_FORWARD = 0.60,
-    OUTPUT_PEAK_REVERSE = -0.60,
-    CONST_CURRENT = 30,
-    PEAK_CURRENT = 30,
-    //in ticks
-    CLOSED_LOOP_ERROR = 25;
-    public static final boolean isInverted = false;
-    public static final boolean isPhaseInverted = false;
-
+    private static double
+        P = 0.2,
+        I = 0,
+        D = 0.01,
+        FEED_FWD = 0,
+        I_ZONE = 0,
+        OUTPUT_MIN = -0.45,
+        OUTPUT_MAX = 0.15,
+        MIN_VELOCITY = 0,
+        MAX_VELOCITY = 1,
+        MAX_ACCEL = 1,
+        CLOSED_LOOP_ERROR =0,
+        STALL_CURRENT_LIMIT = 40,
+        RAMP_RATE_OPEN = 0.2,
+        FREESPIN_CURRENT_LIMIT = 35;
 
     public LiftConfig(){
 
     }
 
-    public static void configTalon(TalonSRX talon){
-        talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-        configPIDF(talon);
-        configOutputs(talon);
-        configCurrentLimits(talon);
-        configInverts(talon);
-        configClosedLoop(talon);
-
-        //TODO - Zeroing
+    public static void configMotorController(CANPIDController controller){
+        setPIDF(controller);
+        setOutputs(controller);
+        //configMotionProfile(controller);
+        //configCurrentLimits(controller);
     }
 
-    private static void configPIDF(TalonSRX talon){
-        talon.config_kP(0, P);
-        talon.config_kI(0, I);
-        talon.config_kD(0, D);
-        talon.config_kF(0, FEEDFWD);
+    public static void setPIDF(CANPIDController controller){
+        controller.setP(P);
+        controller.setI(I);
+        controller.setD(D);
+        controller.setFF(FEED_FWD);
+        controller.setIZone(I_ZONE);
+    }
+    
+    public static void setOutputs(CANPIDController controller){
+        controller.setOutputRange(OUTPUT_MIN, OUTPUT_MAX);
     }
 
-    private static void configOutputs(TalonSRX talon){
-        talon.configNominalOutputForward(OUTPUT_NOMINAL_FORWARD);
-        talon.configNominalOutputReverse(OUTPUT_NOMINAL_REVERSE);
-        talon.configPeakOutputForward(OUTPUT_PEAK_FORWARD);
-        talon.configPeakOutputReverse(OUTPUT_PEAK_REVERSE);
-    }
+    /*public static void configMotionProfile(CANSparkMax controller){
+        controller.getPIDController().setSmartMotionMinOutputVelocity(MIN_VELOCITY, 0);
+        controller.getPIDController().setSmartMotionMaxVelocity(MAX_VELOCITY, 0);
+        controller.getPIDController().setSmartMotionAllowedClosedLoopError(CLOSED_LOOP_ERROR, 0);
+        controller.getPIDController().setSmartMotionMaxAccel(MAX_ACCEL, 0);
+        controller.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kSCurve, 0);
+    }*/
 
-    private static void configInverts(TalonSRX talon){
-        talon.setSensorPhase(isPhaseInverted);
-        talon.setInverted(isInverted);
+    public static void configCurrentLimits(CANSparkMax controller){
+        controller.setSmartCurrentLimit((int)STALL_CURRENT_LIMIT, (int)FREESPIN_CURRENT_LIMIT);
     }
-
-    private static void configCurrentLimits(TalonSRX talon){
-        talon.configPeakCurrentLimit((int)PEAK_CURRENT);
-        talon.configContinuousCurrentLimit((int)CONST_CURRENT);
+    public static void configOpenLoopRampRates(CANSparkMax controller){
+        controller.setOpenLoopRampRate(RAMP_RATE_OPEN);
     }
-
-    private static void configClosedLoop(TalonSRX talon){
-        talon.configAllowableClosedloopError(0, (int)CLOSED_LOOP_ERROR);
-    }
-
-    //TODO - Motion Profiling! Use Motion Magic.
-    private void configMotionProfile(){
-        
-    }
-
 }

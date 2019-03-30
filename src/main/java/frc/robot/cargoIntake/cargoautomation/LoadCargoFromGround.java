@@ -1,8 +1,14 @@
 package frc.robot.cargointake.cargoautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
+import frc.robot.panelclaw.Claw;
+import frc.robot.panelclaw.Claw.ClawArmState;
+import frc.robot.panelclaw.Claw.ClawState;
+import frc.robot.panelclaw.clawcommands.ActuateClaw;
+import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.robotcore.universalcommands.Wait;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.DetectCargo;
@@ -10,10 +16,14 @@ import frc.robot.cargointake.cargocommands.DetectCargo;
 public class LoadCargoFromGround extends CommandGroup{
 
     CargoIntake cargoIntake = CargoIntake.getInstance();
+    Claw claw = Claw.getInstance();
 
     public LoadCargoFromGround(){
         setInterruptible(true);
         requires(cargoIntake);
+        //requires(claw);
+
+        SmartDashboard.putBoolean("Cargo killed", false);
 
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.INTAKE_LOWER));
@@ -29,13 +39,13 @@ public class LoadCargoFromGround extends CommandGroup{
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.UP));
         addSequential(new Wait(3.0));
         //move claw down
-        //addSequential(new RaiseClaw(Claw.ClawArmState.CARGO_DOWN));
+        //addSequential(new RaiseClaw(ClawArmState.CARGO_DOWN));
         //close it
-        //addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.CLOSE));
+        //addSequential(new ActuateClaw().new SetClaw(ClawState.CLOSE));
         //addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
         //addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
         //move claw up
-        //addSequential(new RaiseClaw(Claw.ClawArmState.UP));
+        //addSequential(new RaiseClaw(ClawArmState.UP));
 
         /*spin rollers
         **lower cargo arm partways
@@ -53,5 +63,6 @@ public class LoadCargoFromGround extends CommandGroup{
     protected void interrupted() {
         super.interrupted();
         cargoIntake.kill();
+        claw.kill();
     }
 }

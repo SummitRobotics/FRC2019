@@ -18,7 +18,7 @@ public class TrimCargoArm extends Command{
     }
     @Override
     protected void execute() {
-        cargoIntake.moveIntakeArm(OI.getInstance().cargoArmDrive());
+        cargoIntake.moveIntakeArm(OI.getInstance().mastDrive());
     }
     @Override
     protected boolean isFinished() {

@@ -87,7 +87,7 @@ public class Drivetrain extends Subsystem{
 
         gearShifter = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
 
-        compressor = new Compressor(0);
+        compressor = new Compressor(RobotConstants.Ports.PCM_1);
         compressor.setClosedLoopControl(true);
 
     }

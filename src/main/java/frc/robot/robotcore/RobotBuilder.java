@@ -43,6 +43,8 @@ public class RobotBuilder{
         //todo - pwm absolute shit
         cargoIntake.setArmEncoder(0);
         lemonlight.enableLights();
+        claw.setArmEncoder(0);
+        lift.setEncoderPos(0);
     }
     public void matchInit(){
         peg.setPeg(Peg.PegState.UP);
@@ -54,7 +56,6 @@ public class RobotBuilder{
         claw.setClaw(Claw.ClawState.CLOSE);
         drivetrain.resetGyro();
         cargoIntake.setArmEncoder(0);
-        claw.setArmEncoder(0);
 
     }
     

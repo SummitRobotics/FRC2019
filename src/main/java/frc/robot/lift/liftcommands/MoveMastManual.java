@@ -18,7 +18,7 @@ public class MoveMastManual extends Command{
     }
     @Override
     protected void execute() {
-        lift.runLiftManual(gamepad.mastDrive());
+        //lift.runLiftManual(gamepad.mastDrive());
     }
     @Override
     protected boolean isFinished() {
