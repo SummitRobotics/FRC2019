@@ -41,6 +41,16 @@ public class Claw extends Subsystem{
         }
     }
 
+    public enum ClawSpeed{
+        FORWARD(.1),
+        REVERSE(-.1);
+
+        public final double value;
+        ClawSpeed(double value){
+            this.value = value;
+        }
+    }
+
     public DoubleSolenoid claw;
 
     private TalonSRX clawArm;

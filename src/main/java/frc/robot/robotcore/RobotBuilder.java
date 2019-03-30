@@ -56,7 +56,6 @@ public class RobotBuilder{
         claw.setClaw(Claw.ClawState.CLOSE);
         drivetrain.resetGyro();
         cargoIntake.setArmEncoder(0);
-
     }
     
     public void run(){

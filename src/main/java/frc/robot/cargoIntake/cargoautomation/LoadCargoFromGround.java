@@ -8,6 +8,7 @@ import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawArmState;
 import frc.robot.panelclaw.Claw.ClawState;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
+import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
 import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.robotcore.universalcommands.Wait;
 import frc.robot.cargointake.cargocommands.EnableRollers;
@@ -25,6 +26,7 @@ public class LoadCargoFromGround extends CommandGroup{
 
         SmartDashboard.putBoolean("Cargo killed", false);
 
+        //addSequential(new ActuateClaw().new SetClaw(ClawState.OPEN));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.INTAKE_LOWER));
         addSequential(new Wait(1.0));
@@ -37,15 +39,13 @@ public class LoadCargoFromGround extends CommandGroup{
         addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.UP));
+        //addParallel(new PowerMoveClawWrist(1.5, Claw.ClawSpeed.FORWARD));
         addSequential(new Wait(3.0));
-        //move claw down
-        //addSequential(new RaiseClaw(ClawArmState.CARGO_DOWN));
-        //close it
-        //addSequential(new ActuateClaw().new SetClaw(ClawState.CLOSE));
-        //addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
-        //addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
+        addSequential(new ActuateClaw().new SetClaw(ClawState.CLOSE));
+        addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
+        addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
         //move claw up
-        //addSequential(new RaiseClaw(ClawArmState.UP));
+        //addSequential(new PowerMoveClawWrist(.5, Claw.ClawSpeed.REVERSE));
 
         /*spin rollers
         **lower cargo arm partways

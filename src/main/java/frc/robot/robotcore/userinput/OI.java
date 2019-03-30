@@ -6,6 +6,7 @@ import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.ResetArmEncoder;
 import frc.robot.cargointake.climbcommands.CancelClimb;
 import frc.robot.cargointake.climbcommands.ClimbLevel2;
+import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawArmState;
 import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Shift;
@@ -14,6 +15,7 @@ import frc.robot.lift.Lift;
 import frc.robot.lift.liftcommands.MoveMast;
 import frc.robot.lift.liftcommands.ResetMastEncoder;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
+import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
 import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.clawcommands.ResetClawEncoder;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
@@ -45,8 +47,8 @@ public class OI {
         dashboard.pos3.whenPressed(new DriveToPos3(dashboard.sideAndHeight.get()));
         dashboard.pos4.whenPressed(new DriveToPos4(dashboard.sideAndHeight.get()));
         */
-        dashboard.pos1.whenPressed(new RaiseClaw(ClawArmState.DOWN));
-        dashboard.pos2.whenPressed(new RaiseClaw(ClawArmState.UP));
+        //dashboard.pos1.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.FORWARD));
+        //dashboard.pos2.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.REVERSE));
         dashboard.cargoGround.whenPressed(new LoadCargoFromGround());
         dashboard.bop.whenPressed(new PunchCargo());
         dashboard.mastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
