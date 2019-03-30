@@ -7,9 +7,13 @@ import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawArmState;
 import frc.robot.panelclaw.Claw.ClawState;
+import frc.robot.panelclaw.Peg.PegState;
+import frc.robot.panelclaw.Peg.PneumaticState;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
 import frc.robot.panelclaw.clawcommands.RaiseClaw;
+import frc.robot.panelclaw.pegcommands.ActuateChair;
+import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.universalcommands.Wait;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.DetectCargo;
@@ -26,8 +30,11 @@ public class LoadCargoFromGround extends CommandGroup{
 
         SmartDashboard.putBoolean("Cargo killed", false);
 
-        //addSequential(new ActuateClaw().new SetClaw(ClawState.OPEN));
+        addSequential(new ActuateClaw().new SetClaw(ClawState.CLOSE));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
+        addSequential(new ActuateChair().new SetChair(PneumaticState.IN));
+        addSequential(new ActuatePeg().new SetPeg(PegState.UP));
+        addParallel(new PowerMoveClawWrist(1.5, Claw.ClawSpeed.FORWARD));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.INTAKE_LOWER));
         addSequential(new Wait(1.0));
         addSequential(new DetectCargo(CargoIntake.CargoPosition.DETECTED));
@@ -39,13 +46,11 @@ public class LoadCargoFromGround extends CommandGroup{
         addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.UP));
-        //addParallel(new PowerMoveClawWrist(1.5, Claw.ClawSpeed.FORWARD));
-        addSequential(new Wait(3.0));
-        addSequential(new ActuateClaw().new SetClaw(ClawState.CLOSE));
+        addSequential(new Wait(1));
         addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
         //move claw up
-        //addSequential(new PowerMoveClawWrist(.5, Claw.ClawSpeed.REVERSE));
+        addSequential(new PowerMoveClawWrist(.25, Claw.ClawSpeed.REVERSE));
 
         /*spin rollers
         **lower cargo arm partways

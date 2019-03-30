@@ -8,10 +8,10 @@ public class DriverController{
 
     private XboxController controller;
 
-    final double SPEED_DEADZONE = 0.1;
+    final double SPEED_DEADZONE = 0.05;
     final double SPEED_EXPONENT = 2.0;
 
-    final double TURN_DEADZONE = 0.1;
+    final double TURN_DEADZONE = 0.05;
     final double TURN_EXPONENT = 2.0;
 
     //Command Schedulers

@@ -16,8 +16,8 @@ import frc.robot.robotcore.RobotConstants;
 public class Lift extends Subsystem{
     public enum LiftState{
         LOW(0),
-        MID(20),
-        HIGH(41);
+        MID(21),
+        HIGH(43);
 
         public final double value;
         LiftState(double value){
@@ -94,6 +94,6 @@ public class Lift extends Subsystem{
     }
 
     public void kill() {
-        mastDriver.set(0);
+        //mastDriver.set(0);
     }
 }

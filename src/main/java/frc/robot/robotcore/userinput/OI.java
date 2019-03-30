@@ -12,6 +12,7 @@ import frc.robot.panelclaw.chairautomation.*;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift;
+import frc.robot.lift.liftcommands.MastAutomation;
 import frc.robot.lift.liftcommands.MoveMast;
 import frc.robot.lift.liftcommands.ResetMastEncoder;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
@@ -51,12 +52,15 @@ public class OI {
         //dashboard.pos2.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.REVERSE));
         dashboard.cargoGround.whenPressed(new LoadCargoFromGround());
         dashboard.bop.whenPressed(new PunchCargo());
-        dashboard.mastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
+        /*dashboard.mastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
         dashboard.mastMid.whenPressed(new MoveMast(Lift.LiftState.MID));
-        dashboard.mastLow.whenPressed(new MoveMast(Lift.LiftState.LOW));
+        dashboard.mastLow.whenPressed(new MoveMast(Lift.LiftState.LOW));*/
+        dashboard.mastHigh.whenPressed(new MastAutomation(Lift.LiftState.HIGH));
+        dashboard.mastMid.whenPressed(new MastAutomation(Lift.LiftState.MID));
+        dashboard.mastLow.whenPressed(new MastAutomation(Lift.LiftState.LOW));
         dashboard.panelGround.whenPressed(new FloorIntakePanel());
-        dashboard.climb.whenPressed(new ClimbLevel2());
-        dashboard.climb.whenReleased(new CancelClimb());
+        //dashboard.climb.whenPressed(new ClimbLevel2());
+        //dashboard.climb.whenReleased(new CancelClimb());
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());

@@ -28,6 +28,10 @@ public class PowerMoveClawWrist extends Command {
         return isTimedOut();
     }
     @Override
+    protected void end() {
+        claw.runArm(0);
+    }
+    @Override
     protected void interrupted() {
         super.interrupted();
         claw.kill();

@@ -12,7 +12,6 @@ public class MoveMast extends InstantCommand{
     private boolean isDone = false;
 
     public MoveMast (LiftState position){
-        setInterruptible(true);
         requires(lift);
         this.position = position;
     }
@@ -23,16 +22,6 @@ public class MoveMast extends InstantCommand{
     @Override
     protected void execute() {
         lift.setMast(position);
-    }
-    
-    @Override
-    protected boolean isFinished() {
-        return false;
-    }
-    @Override
-    protected void interrupted() {
-        super.interrupted();
-        lift.kill();
     }
     @Override
     protected void end() {
