@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.drivetraincommands.ArcadeDrive;
 import frc.robot.robotcore.RobotConstants;
 
@@ -49,6 +50,8 @@ public class Drivetrain extends Subsystem{
 
     private double[] ypr;
 
+    private final double THRESHOLD = 10;
+
 /* ----- INSTANTIATION METHODS ----- */
 
     private static Drivetrain instance;
@@ -64,7 +67,7 @@ public class Drivetrain extends Subsystem{
 
         leftEncoder = new CANEncoder(leftDrive1);
         leftPID = new CANPIDController(leftDrive1);
-        DrivetrainConfig.configMotorController(leftDrive1);
+        DrivetrainConfig.configMotorController(leftDrive1.getPIDController());
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
@@ -76,7 +79,7 @@ public class Drivetrain extends Subsystem{
 
         rightEncoder = new CANEncoder(rightDrive1);
         rightPID = new CANPIDController(rightDrive1);
-        DrivetrainConfig.configMotorController(rightDrive1);
+        DrivetrainConfig.configMotorController(rightDrive1.getPIDController());
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
@@ -142,10 +145,17 @@ public class Drivetrain extends Subsystem{
     }*/
 
     //Feedback Config
-    /*public void setDrivetrainEncoders(double value){
+    public void setDrivetrainEncoders(double value){
         leftEncoder.setPosition(value);
         rightEncoder.setPosition(value);
-    }*/
+    }
+
+    public double getLeftEncoder(){
+        return leftEncoder.getPosition();
+    }
+    public double getRightEncoder(){
+        return rightEncoder.getPosition();
+    }
     public void resetGyro(){
         gyro.setYaw(0);
         gyro.setAccumZAngle(0);
@@ -167,13 +177,21 @@ public class Drivetrain extends Subsystem{
         rightPID.setReference(setpoint, ControlType.kSmartVelocity);
     }*/
     
-    public boolean toPosition(double setpoint){
+    public void toPosition(double leftSetpoint, double rightSetpoint){
         //SETPOINTS MUST BE IN TICKS+
-        double threshold = RobotConstants.EPSILON;
-        leftPID.setReference(setpoint, ControlType.kPosition);
-        rightPID.setReference(setpoint, ControlType.kPosition);
-        //return (setpoint - leftEncoder.getPosition() == 0) || (setpoint - rightEncoder.getPosition() == 0);
-        return (Math.abs(setpoint - leftEncoder.getPosition()) <= threshold) || (Math.abs(setpoint - rightEncoder.getPosition()) <= threshold);
+        SmartDashboard.putNumber("Left Drivetrain Setpoint", leftSetpoint);
+        SmartDashboard.putNumber("Right Drivetrain Setpoint", rightSetpoint);
+        leftDrive1.getPIDController().setReference(leftSetpoint, ControlType.kPosition);
+        rightDrive1.getPIDController().setReference(rightSetpoint, ControlType.kPosition);
+    }
+    public boolean isInThreshold(double target){
+        double leftError = target - getLeftEncoder();
+        double rightError = target - getRightEncoder();
+        
+        boolean isLeftDone = (leftError > -THRESHOLD) && (leftError < THRESHOLD);
+        boolean isRightDone = (rightError > -THRESHOLD) && (rightError < THRESHOLD);
+
+        return isLeftDone && isRightDone;
     }
 
 /* ----- GEAR SHIFTING ----- */

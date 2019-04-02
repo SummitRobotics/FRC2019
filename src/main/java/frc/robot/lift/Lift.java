@@ -93,6 +93,16 @@ public class Lift extends Subsystem{
         return !liftLowLimit.get();
     }
 
+    public boolean withinThreshold(double threshold, double target) {
+        /*double error = Math.abs(target - getEncoderPos());
+        return threshold > error;*/
+
+        double error = target - getEncoderPos();
+        SmartDashboard.putNumber("Error for Mast", error);
+        return (error > -threshold) && (error < threshold);
+        
+    }
+
     public void kill() {
         //mastDriver.set(0);
     }

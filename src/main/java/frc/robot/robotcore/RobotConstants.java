@@ -1,11 +1,8 @@
 package frc.robot.robotcore;
 
 public class RobotConstants {
-  public static final double WHEEL_DIAMETER = 4.0;
   public static final double TALON_TICKS_PER_ROT = 4096;
   public static final double NEO_TICKS_PER_REV = 42;
-
-  public static final double EPSILON = 1;
 
   public static final double MAX_DRIVETRAIN_RPM = 5700;
   
@@ -26,6 +23,15 @@ public class RobotConstants {
   public static double NEO_TICKS_TO_INCHES(double tick){
     return (tick / NEO_TICKS_PER_REV * (WHEEL_DIAMETER * Math.PI));
   }
+
+  public static final double DRIVETRAIN_GEAR_RATIO = 5.1;
+  public static final double WHEEL_DIAMETER = 4.0;
+
+  public static double DRIVETRAIN_INCHES_TO_TICKS(double inch){
+    double rev = (inch * NEO_TICKS_PER_REV * DRIVETRAIN_GEAR_RATIO) / (WHEEL_DIAMETER * Math.PI);
+    return rev * NEO_TICKS_PER_REV;
+  }
+
   
   public class Ports{
 

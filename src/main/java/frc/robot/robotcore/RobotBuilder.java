@@ -40,6 +40,7 @@ public class RobotBuilder{
     }
     public void init(){
         drivetrain.resetGyro();
+        drivetrain.setDrivetrainEncoders(0);
         //todo - pwm absolute shit
         cargoIntake.setArmEncoder(0);
         lemonlight.enableLights();

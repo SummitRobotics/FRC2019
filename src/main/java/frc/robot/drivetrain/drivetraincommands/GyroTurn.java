@@ -11,9 +11,9 @@ public class GyroTurn extends PIDCommand{
     private double angle, target;
     private final double THRESHOLD = 1;
     private static final double
-    P = 0.045,
+    P = 0.04,
     I = 0.00,
-    D = 0.1;
+    D = 0.4;
 
     public GyroTurn(double angle){
         super(P, I, D, Drivetrain.getInstance());
@@ -36,11 +36,12 @@ public class GyroTurn extends PIDCommand{
     @Override
     protected void usePIDOutput(double output) {
         SmartDashboard.putNumber("Gyro", drivetrain.getYaw());
-        drivetrain.robotDrive.tankDrive(-output/1.4, output/1.4);
+        drivetrain.robotDrive.tankDrive(-output, output);
     }
     @Override
     protected boolean isFinished() {
         double error = getPIDController().getError();
+        SmartDashboard.putNumber("gyro error", error);
         return (error < THRESHOLD) && (error > -THRESHOLD);
     }
     @Override

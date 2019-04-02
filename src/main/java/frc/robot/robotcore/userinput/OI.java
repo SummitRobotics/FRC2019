@@ -9,7 +9,10 @@ import frc.robot.cargointake.climbcommands.ClimbLevel2;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawArmState;
 import frc.robot.panelclaw.chairautomation.*;
+import frc.robot.drivetrain.drivetraincommands.EncoderDrive;
+import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.drivetrain.drivetraincommands.Shift;
+import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos1;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.lift.Lift;
 import frc.robot.lift.liftcommands.MastAutomation;
@@ -42,13 +45,14 @@ public class OI {
         //robot.claw.isClawUpButton.whenPressed(new ResetClawEncoder());
         robot.lift.liftLowLimitButton.whenPressed(new ResetMastEncoder());
 
-        /*
+        
         dashboard.pos1.whenPressed(new DriveToPos1(dashboard.sideAndHeight.get()));
-        dashboard.pos2.whenPressed(new DriveToPos2(dashboard.sideAndHeight.get()));
+        /*dashboard.pos2.whenPressed(new DriveToPos2(dashboard.sideAndHeight.get()));
         dashboard.pos3.whenPressed(new DriveToPos3(dashboard.sideAndHeight.get()));
         dashboard.pos4.whenPressed(new DriveToPos4(dashboard.sideAndHeight.get()));
         */
-        //dashboard.pos1.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.FORWARD));
+        //dashboard.pos1.whenPressed(new EncoderDrive(10));
+        //dashboard.pos1.whenPressed(new PowerDrive(-0.7, false, 2));
         //dashboard.pos2.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.REVERSE));
         dashboard.cargoGround.whenPressed(new LoadCargoFromGround());
         dashboard.bop.whenPressed(new PunchCargo());
