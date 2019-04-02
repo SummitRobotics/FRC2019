@@ -5,15 +5,18 @@ import frc.robot.robotcore.RobotConstants;
 
 public class ButtonDashboardDriver extends GenericHID{
     public enum ButtonLayout{
-        HIGH_MAST(3),
-        MID_MAST(2),
-        LOW_MAST(1),
-        CARGO_LOAD(5),
-        CARGO_GROUND(4),
-        PANEL_LOAD(7),
+        BOP(1),
+        LOW(2),
+        MID(3),
+        HIGH(4),
+        CARGO_GROUND(5),
         PANEL_GROUND(6),
-        CLIMB(9),
-        CANCEL(8);
+        CLIMB(7),
+        POS_3(8),
+        POS_4(9),
+        POS_1(10),
+        POS_2(11),
+        SIDE_AND_HEIGHT(12);
 
         public final int value;
         ButtonLayout(int value){
@@ -25,6 +28,7 @@ public class ButtonDashboardDriver extends GenericHID{
         super(RobotConstants.Ports.DASHBOARD_PORT);
     }
 
+
     @Override
     public double getY(Hand hand) {
         return 0;
@@ -35,34 +39,40 @@ public class ButtonDashboardDriver extends GenericHID{
     }
 
     public boolean getMastHigh(){
-        return getRawButton(ButtonLayout.HIGH_MAST.value);
+        return getRawButton(ButtonLayout.HIGH.value);
     }
     public boolean getMastMid(){
-        return getRawButton(ButtonLayout.MID_MAST.value);
+        return getRawButton(ButtonLayout.MID.value);
     }
     public boolean getMastLow(){
-        return getRawButton(ButtonLayout.LOW_MAST.value);
+        return getRawButton(ButtonLayout.LOW.value);
     }
-    
-    public boolean getCargoLoad(){
-        return getRawButton(ButtonLayout.CARGO_LOAD.value);
+    public boolean getSideAndHeight(){
+        return getRawButton(ButtonLayout.SIDE_AND_HEIGHT.value);
+    }
+    public boolean getPos1(){
+        return getRawButton(ButtonLayout.POS_1.value);
+    }
+    public boolean getPos2(){
+        return getRawButton(ButtonLayout.POS_2.value);
+    }
+    public boolean getPos3(){
+        return getRawButton(ButtonLayout.POS_3.value);
+    }
+    public boolean getPos4(){
+        return !getRawButton(ButtonLayout.POS_4.value);
     }
     public boolean getCargoGround(){
         return getRawButton(ButtonLayout.CARGO_GROUND.value);
     }
-    
-    public boolean getPanelLoad(){
-        return getRawButton(ButtonLayout.PANEL_LOAD.value);
-    }
     public boolean getPanelGround(){
         return getRawButton(ButtonLayout.PANEL_GROUND.value);
     }
-
     public boolean getClimb(){
         return getRawButton(ButtonLayout.CLIMB.value);
     }
-    public boolean getCancel(){
-        return getRawButton(ButtonLayout.CANCEL.value);
+    public boolean getBop(){
+        return getRawButton(ButtonLayout.BOP.value);
     }
 
 }

@@ -1,9 +1,7 @@
 package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Peg;
 import frc.robot.robotcore.userinput.OI;
 
 public class MoveClawWrist extends Command{
@@ -12,6 +10,7 @@ public class MoveClawWrist extends Command{
     private final double POWER = 0.30;
 
     public MoveClawWrist(){
+        setInterruptible(true);
         requires(claw);
     }
 
@@ -27,6 +26,11 @@ public class MoveClawWrist extends Command{
     protected boolean isFinished() {
         //return claw.getClawLimit();
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        claw.kill();
     }
     @Override
     protected void end() {

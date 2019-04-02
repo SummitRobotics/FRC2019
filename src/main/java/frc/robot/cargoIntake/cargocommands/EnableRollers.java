@@ -15,8 +15,10 @@ public class EnableRollers{
         private CargoIntake.RollerState rollerSpin;
 
         public IntakeForTime(CargoIntake.RollerState rollerSpin, double timeout){
+            setInterruptible(true);
             requires(cargoIntake);
             setTimeout(timeout);
+
             this.rollerSpin = rollerSpin;
         }
         @Override
@@ -31,6 +33,11 @@ public class EnableRollers{
         protected boolean isFinished() {
             return isTimedOut();
         }
+        @Override
+        protected void interrupted() {
+            super.interrupted();
+            cargoIntake.kill();
+        }    
         @Override
         protected void end() {
             super.end();
@@ -63,6 +70,7 @@ public class EnableRollers{
         private CargoIntake.RollerState rollerSpin;
     
         public ToggleRollers(){
+            setInterruptible(true);
             requires(cargoIntake);
         }
     

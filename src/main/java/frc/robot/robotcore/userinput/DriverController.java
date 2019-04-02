@@ -3,25 +3,28 @@ package frc.robot.robotcore.userinput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.GenericHID;
-import frc.robot.robotcore.RobotConstants;
 
 public class DriverController{
 
-    public enum Driver{
-        DRIVER_1(RobotConstants.Ports.DRIVER_1_PORT),
-        DRIVER_2(RobotConstants.Ports.DRIVER_2_PORT);
-
-        public final int value;
-        Driver(int value){
-            this.value = value;
-        }
-    }
-
     private XboxController controller;
+
+    final double SPEED_DEADZONE = 0.05;
+    final double SPEED_EXPONENT = 2.0;
+
+    final double TURN_DEADZONE = 0.05;
+    final double TURN_EXPONENT = 2.0;
 
     //Command Schedulers
 
-    Button BackButtonCmd = new Button(){
+    Button StartButtonCmd = new Button(){
+    
+        @Override
+        public boolean get() {
+            //return controller.getStartButton();
+            return controller.getRawButton(8);
+        }
+    };
+    Button backButtonCmd = new Button(){
         @Override
         public boolean get(){
             return controller.getBackButton();
@@ -39,7 +42,7 @@ public class DriverController{
     
         @Override
         public boolean get() {
-            return controller.getAButton();
+            return isButtonA();
         }
     };
 
@@ -75,8 +78,8 @@ public class DriverController{
         }
     };
 
-    public DriverController(Driver driver){
-        controller = new XboxController(driver.value);
+    public DriverController(int port){
+        controller = new XboxController(port);
     }
 
     //Joystick Getters
@@ -134,28 +137,72 @@ public class DriverController{
         return controller.getPOV() == 180;
     }
 
-
     //Math
+    /*
     public double makeFwdCurve(double input){
-        return (Math.pow(2, input) -1);
+        return (Math.pow(OI.truncatePower(input), 1.5) -1);
     }
     public double makeTurnCurve(double input){
-        return(Math.pow(input, 1.65));
+        return(Math.pow(OI.truncatePower(input), 1.8));
     }
     public double getForwardPower(){
-        return livezone(makeFwdCurve(getLeftTrigger()) - makeFwdCurve(getRightTrigger()));
+        return makeFwdCurve(getLeftTrigger()) - makeFwdCurve(getRightTrigger());
     }
     //todo - power curving for rotation
     public double getRotationalPower(){
-        return livezone(Math.copySign(makeTurnCurve(Math.abs(getLeftJoystickX())), -getLeftJoystickX()));
+        return Math.copySign(makeTurnCurve(Math.abs(getLeftJoystickX())), -getLeftJoystickX());
     }
-    public double livezone(double input){
-        /*if(input > 0.90){
-            input = 0.90;
+    */
+
+    public double makeFwdCurve(double input){
+        //makes sure input is within bounds, adjusts linear slope to start at deadzone and end at 1, applies exponent to adjust sensitivity
+        //because of how the deadzone and exponents are being calculated, the value will never exceed 1 if it starts equal to or less than 1,
+        //which is why the clamp is the inner most method
+        return -toExponential(deadzone(clamp(input, -1, 1), SPEED_DEADZONE), SPEED_EXPONENT);
+    }
+    
+    public double makeTurnCurve(double input){
+        return -toExponential(deadzone(clamp(input, -1, 1), TURN_DEADZONE), TURN_EXPONENT);
+    }
+    
+    //it will probably drive backwards with this, but humor me and lets test it before adjusting?
+    public double getForwardPower(){
+        return (makeFwdCurve(getRightTrigger()) - makeFwdCurve(getLeftTrigger()));
+    }
+    
+    public double getRotationalPower(){
+        return makeTurnCurve(getLeftJoystickX());
+    }    
+
+    public double getRightJoystickPower(){
+        return deadzone(getRightJoystickY(),.15);
+    }
+
+    //just general clamp function, useful for other things as well besides drive is why i make it flexible
+    //ex: say you want to limit the speed that the elevator motor decends, but not raises (with manual control). bam clamp
+    public static double clamp(double value, double min, double max){
+        if (value < min){
+            value = min;
         }
-        else if(input < -0.90){
-            input = -0.90;
-        }*/
-        return input;
+
+        if (value > max){
+            value = max;
+        }
+
+        return value;
+    }
+
+    //this makes it so that if your deadzone is say 0.2, you can still input a value of say 0.15 with the controller, just further from center
+    //the way I was taught and the way we've been doing it sorta sucks (TIL), because the value will jump from 0 straight to whatever your deadzone is
+    public static double deadzone(double value, double deadzone){
+        if (Math.abs(value) < deadzone){
+            return 0.0;
+        }
+        return (Math.abs(value) - deadzone) / (1 - deadzone) * Math.signum(value); //adjusts slope to go through the points: (deadzone, 0) & (1,1)
+    }
+
+    //cleeeeaaaan math :insert ok hand: i just learned this too and feel stupid for not thinking of it
+    public static double toExponential(double value, double power){
+        return Math.abs(Math.pow(value, power - 1)) * value; //this is just fancy math that makes it so you don't need signum() or copysign(), also learned that
     }
 }

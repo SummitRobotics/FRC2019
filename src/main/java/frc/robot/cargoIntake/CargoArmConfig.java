@@ -8,18 +8,18 @@ public class CargoArmConfig{
     public static final double
     P = 1,
     I = 0,
-    D = 0,
+    D = 0.01,
     FEEDFWD = 0,
     OUTPUT_NOMINAL_FORWARD = 0,
     OUTPUT_NOMINAL_REVERSE = 0,
-    OUTPUT_PEAK_FORWARD = 0.40,
-    OUTPUT_PEAK_REVERSE = -0.40,
+    OUTPUT_PEAK_FORWARD = 0.80,
+    OUTPUT_PEAK_REVERSE = -0.70,
     CONST_CURRENT = 30,
     PEAK_CURRENT = 30,
     //in ticks
     CLOSED_LOOP_ERROR = 25;
     public static final boolean isInverted = false;
-    public static final boolean isPhaseInverted = false;
+    public static final boolean isPhaseInverted = true;
 
 
     public CargoArmConfig(){
@@ -30,7 +30,7 @@ public class CargoArmConfig{
         talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
         configPIDF(talon);
         configOutputs(talon);
-        configCurrentLimits(talon);
+        //configCurrentLimits(talon);
         configInverts(talon);
         configClosedLoop(talon);
 

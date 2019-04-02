@@ -6,7 +6,7 @@ public class ButtonDashboard{
 
     private ButtonDashboardDriver dashboard;
     
-    protected Button MastHigh = new Button(){
+    protected Button mastHigh = new Button(){
     
         @Override
         public boolean get() {
@@ -14,7 +14,7 @@ public class ButtonDashboard{
         }
     };
 
-    protected Button MastMid = new Button(){
+    protected Button mastMid = new Button(){
     
         @Override
         public boolean get() {
@@ -22,7 +22,7 @@ public class ButtonDashboard{
         }
     };
 
-    protected Button MastLow = new Button(){
+    protected Button mastLow = new Button(){
     
         @Override
         public boolean get() {
@@ -30,15 +30,7 @@ public class ButtonDashboard{
         }
     };
     
-    protected Button CargoLoadStation = new Button(){
-    
-        @Override
-        public boolean get() {
-            return dashboard.getCargoLoad();
-        }
-    };
-
-    protected Button CargoGround = new Button(){
+    protected Button cargoGround = new Button(){
     
         @Override
         public boolean get() {
@@ -46,15 +38,7 @@ public class ButtonDashboard{
         }
     };
 
-    protected Button PanelLoad = new Button(){
-    
-        @Override
-        public boolean get() {
-            return dashboard.getPanelLoad();
-        }
-    };
-
-    protected Button PanelGround = new Button(){
+    protected Button panelGround = new Button(){
     
         @Override
         public boolean get() {
@@ -62,11 +46,11 @@ public class ButtonDashboard{
         }
     };
 
-    protected Button cancelAutomation = new Button(){
+    protected Button bop = new Button(){
     
         @Override
         public boolean get() {
-            return dashboard.getCancel();
+            return dashboard.getBop();
         }
     };
 
@@ -75,6 +59,46 @@ public class ButtonDashboard{
         @Override
         public boolean get() {
             return dashboard.getClimb();
+        }
+    };
+
+    protected Button pos1 = new Button(){
+
+        @Override
+        public boolean get() {
+            return dashboard.getPos1();
+        }
+    };
+
+    protected Button pos2 = new Button(){
+
+        @Override
+        public boolean get() {
+            return dashboard.getPos2();
+        }
+    };
+
+    protected Button pos3 = new Button(){
+
+        @Override
+        public boolean get() {
+            return dashboard.getPos3();
+        }
+    };
+
+    protected Button pos4 = new Button(){
+
+        @Override
+        public boolean get() {
+            return dashboard.getPos4();
+        }
+    };
+
+    protected Button sideAndHeight = new Button() {
+
+        @Override
+        public boolean get() {
+            return dashboard.getSideAndHeight();
         }
     };
 

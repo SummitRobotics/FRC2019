@@ -13,12 +13,13 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.drivetraincommands.ArcadeDrive;
 import frc.robot.robotcore.RobotConstants;
 
 public class Drivetrain extends Subsystem{
 
-    //Enum which indicatese wether we're in high gear or low. Mainly for readability. 
+    //Enum which indicatese whether we're in high gear or low. Mainly for readability. 
     public enum GearState{
         LOW(Value.kForward),
         HIGH(Value.kReverse);
@@ -28,18 +29,6 @@ public class Drivetrain extends Subsystem{
             this.value = value;
         }
     }
-
-    //Indicates wether PTO is engaged or not. Mainly for readability. 
-    /*public enum PTOState{
-        ENGAGED(Value.kForward),
-        DISENGAGED(Value.kReverse);
-
-        public final Value value;
-        PTOState(Value value){
-            this.value = value;
-        }
-    }*/
-
 
 /* ----- Instance Members ----- */
 
@@ -61,6 +50,8 @@ public class Drivetrain extends Subsystem{
 
     private double[] ypr;
 
+    private final double THRESHOLD = 10;
+
 /* ----- INSTANTIATION METHODS ----- */
 
     private static Drivetrain instance;
@@ -71,42 +62,37 @@ public class Drivetrain extends Subsystem{
         leftDrive1.follow(leftDrive0);
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
         leftDrive2.follow(leftDrive0);
-        leftDrive0.setSmartCurrentLimit(30);
-        leftDrive1.setSmartCurrentLimit(30);
-        leftDrive2.setSmartCurrentLimit(30);
+        setCurrentLimits(leftDrive0, leftDrive1, leftDrive2, 30);
+        setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.20);
 
-        leftEncoder = new CANEncoder(leftDrive0);
-        //leftPID = new CANPIDController(leftDrive1);
-        //DrivetrainConfig.configMotorController(leftDrive1);
+        leftEncoder = new CANEncoder(leftDrive1);
+        leftPID = new CANPIDController(leftDrive1);
+        DrivetrainConfig.configMotorController(leftDrive1.getPIDController());
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
         rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
         rightDrive2.follow(rightDrive0);
+        setCurrentLimits(rightDrive0, rightDrive1, rightDrive2, 30);
+        setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.20);
 
-        rightDrive0.setSmartCurrentLimit(30);
-        rightDrive1.setSmartCurrentLimit(30);
-        rightDrive2.setSmartCurrentLimit(30);
-
-        rightEncoder = new CANEncoder(rightDrive0);
-        //rightPID = new CANPIDController(rightDrive1);
-        //DrivetrainConfig.configMotorController(rightDrive1);
+        rightEncoder = new CANEncoder(rightDrive1);
+        rightPID = new CANPIDController(rightDrive1);
+        DrivetrainConfig.configMotorController(rightDrive1.getPIDController());
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
-        robotDrive.setSafetyEnabled(true);
-        
+        robotDrive.setSafetyEnabled(false);
 
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
-        gearShifter = new DoubleSolenoid(RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
+        gearShifter = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.DRIVE_SOLENOID_OPEN, RobotConstants.Ports.DRIVE_SOLENOID_CLOSE);
 
-        compressor = new Compressor(0);
+        compressor = new Compressor(RobotConstants.Ports.PCM_1);
         compressor.setClosedLoopControl(true);
 
-        //PTOshifter = new DoubleSolenoid(RobotConstants.Ports.PTO_SOLENOID_OPEN, RobotConstants.Ports.PTO_SOLENOID_CLOSE);
     }
 
     public static Drivetrain getInstance(){
@@ -121,26 +107,38 @@ public class Drivetrain extends Subsystem{
        setDefaultCommand(new ArcadeDrive());
     }
 
+    private void setOpenRampRates(CANSparkMax controller1, CANSparkMax controller2, CANSparkMax controller3, double rampRate){
+        controller1.setOpenLoopRampRate(rampRate);
+        controller2.setOpenLoopRampRate(rampRate);
+        controller3.setOpenLoopRampRate(rampRate);
+    }
+   
+    private void setCurrentLimits(CANSparkMax controller1, CANSparkMax controller2, CANSparkMax controller3, int currentLimit){
+        controller1.setSmartCurrentLimit(currentLimit);
+        controller2.setSmartCurrentLimit(currentLimit);
+        controller3.setSmartCurrentLimit(currentLimit);
+    }
+
 /* ----- FEEDBACK DEVICES ----- */
 
-    public double getLeftEncoderPos(){
+    /*public double getLeftEncoderPos(){
         return leftEncoder.getPosition();
     }
     public double getRightEncoderPos(){
         return rightEncoder.getPosition();
-    }
+    }*/
 
     public double getYaw(){
         ypr = new double[3];
         gyro.getYawPitchRoll(ypr);
         return -ypr[0];
     }
-    /*public double getPitch(){
+    public double getPitch(){
         ypr = new double[2];
         gyro.getYawPitchRoll(ypr);
         return ypr[1];
     }
-    public double getRoll(){
+    /*public double getRoll(){
         double[] ypr = new double[2];
         gyro.getYawPitchRoll(ypr);
         return ypr[2];
@@ -150,6 +148,13 @@ public class Drivetrain extends Subsystem{
     public void setDrivetrainEncoders(double value){
         leftEncoder.setPosition(value);
         rightEncoder.setPosition(value);
+    }
+
+    public double getLeftEncoder(){
+        return leftEncoder.getPosition();
+    }
+    public double getRightEncoder(){
+        return rightEncoder.getPosition();
     }
     public void resetGyro(){
         gyro.setYaw(0);
@@ -161,7 +166,7 @@ public class Drivetrain extends Subsystem{
         robotDrive.tankDrive(0, 0);
     }
 
-    public void leftClosedLoop(double input){
+    /*public void leftClosedLoop(double input){
         //In RPM
         double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
         leftPID.setReference(setpoint, ControlType.kSmartVelocity);
@@ -170,26 +175,24 @@ public class Drivetrain extends Subsystem{
         //In RPM
         double setpoint = input * RobotConstants.MAX_DRIVETRAIN_RPM;
         rightPID.setReference(setpoint, ControlType.kSmartVelocity);
-    }
-    
-    public boolean toPosition(double setpoint){
-        //SETPOINTS MUST BE IN TICKS+
-        double threshold = RobotConstants.EPSILON;
-        leftPID.setReference(setpoint, ControlType.kPosition);
-        rightPID.setReference(setpoint, ControlType.kPosition);
-        //return (setpoint - leftEncoder.getPosition() == 0) || (setpoint - rightEncoder.getPosition() == 0);
-        return (Math.abs(setpoint - leftEncoder.getPosition()) <= threshold) || (Math.abs(setpoint - rightEncoder.getPosition()) <= threshold);
-    }
-
-
-
-/* ----- CLIMB PTO ----- */
-
-    /*public void setPTO(PTOState ptoValue){
-        PTOshifter.set(ptoValue.value);
-        ptoState = ptoValue;
     }*/
+    
+    public void toPosition(double leftSetpoint, double rightSetpoint){
+        //SETPOINTS MUST BE IN TICKS+
+        SmartDashboard.putNumber("Left Drivetrain Setpoint", leftSetpoint);
+        SmartDashboard.putNumber("Right Drivetrain Setpoint", rightSetpoint);
+        leftDrive1.getPIDController().setReference(leftSetpoint, ControlType.kPosition);
+        rightDrive1.getPIDController().setReference(rightSetpoint, ControlType.kPosition);
+    }
+    public boolean isInThreshold(double target){
+        double leftError = target - getLeftEncoder();
+        double rightError = target - getRightEncoder();
+        
+        boolean isLeftDone = (leftError > -THRESHOLD) && (leftError < THRESHOLD);
+        boolean isRightDone = (rightError > -THRESHOLD) && (rightError < THRESHOLD);
 
+        return isLeftDone && isRightDone;
+    }
 
 /* ----- GEAR SHIFTING ----- */
 
@@ -209,5 +212,9 @@ public class Drivetrain extends Subsystem{
                 return gearPos;
             }
             return gearPos;
+    }
+
+    public void kill() {
+        robotDrive.tankDrive(0, 0);
     }
 }

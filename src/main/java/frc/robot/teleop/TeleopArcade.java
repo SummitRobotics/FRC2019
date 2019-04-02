@@ -1,7 +1,5 @@
 package frc.robot.teleop;
 
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotBuilder;
 import frc.robot.robotcore.userinput.OI;
 

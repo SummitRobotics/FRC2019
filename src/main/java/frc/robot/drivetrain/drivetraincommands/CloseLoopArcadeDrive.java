@@ -10,6 +10,7 @@ public class CloseLoopArcadeDrive extends Command{
     OI gamepad = OI.getInstance();
 
     public CloseLoopArcadeDrive(){
+        setInterruptible(true);
         requires(drivetrain);
     }
     @Override
@@ -19,8 +20,8 @@ public class CloseLoopArcadeDrive extends Command{
     @Override
     protected void execute() {
         double[] inputs = getOutputs(gamepad.fwdDrive(), gamepad.turnDrive());
-        drivetrain.leftClosedLoop(inputs[0]);
-        drivetrain.rightClosedLoop(inputs[1]);
+        //drivetrain.leftClosedLoop(inputs[0]);
+        //drivetrain.rightClosedLoop(inputs[1]);
     }
     protected double[] getOutputs(double xSpeed, double zRotation){
         //where array[0] is left, and array[1] is right.
@@ -58,6 +59,11 @@ public class CloseLoopArcadeDrive extends Command{
     @Override
     protected boolean isFinished() {
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {
