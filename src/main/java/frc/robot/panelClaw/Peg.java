@@ -42,8 +42,8 @@ public class Peg extends Subsystem{
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
         pegServo.setBounds(2.2, 0, 1.5, 0, 0.8);
 
-        chairOuttake = new DoubleSolenoid(RobotConstants.Ports.PANEL_SOLENOID_OPEN, RobotConstants.Ports.PANEL_SOLENOID_CLOSE);
-        bopCargo = new DoubleSolenoid(RobotConstants.Ports.PTO_SOLENOID_CLOSE, RobotConstants.Ports.PTO_SOLENOID_OPEN);
+        chairOuttake = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.PANEL_SOLENOID_OPEN, RobotConstants.Ports.PANEL_SOLENOID_CLOSE);
+        bopCargo = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.BOP_SOLENOID_CLOSE, RobotConstants.Ports.BOP_SOLENOID_OPEN);
     }
     public static Peg getInstance(){
         if(instance == null){

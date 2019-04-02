@@ -2,8 +2,6 @@ package frc.robot.robotcore;
 
 import frc.robot.panelclaw.Claw;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.devices.Limelight;
@@ -12,7 +10,6 @@ import frc.robot.devices.REVdisplay;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.lift.Lift;
 import frc.robot.panelclaw.Peg;
-import frc.robot.robotcore.userinput.OI;
 
 public class RobotBuilder{
     public Drivetrain drivetrain;
@@ -46,18 +43,19 @@ public class RobotBuilder{
         //todo - pwm absolute shit
         cargoIntake.setArmEncoder(0);
         lemonlight.enableLights();
+        claw.setArmEncoder(0);
+        lift.setEncoderPos(0);
     }
     public void matchInit(){
         peg.setPeg(Peg.PegState.UP);
         cargoIntake.setRollers(CargoIntake.RollerState.OFF);
+        claw.setArm(Claw.ClawArmState.UP.value);
         drivetrain.shiftGear(Drivetrain.GearState.HIGH);
         peg.setChair(Peg.PneumaticState.OUT);
         peg.setBop(Peg.PneumaticState.IN);
-        claw.setClaw(Claw.ClawState.OPEN);
+        claw.setClaw(Claw.ClawState.CLOSE);
         drivetrain.resetGyro();
         cargoIntake.setArmEncoder(0);
-        claw.setArmEncoder(0);
-
     }
     
     public void run(){

@@ -44,8 +44,7 @@ public class RobotConstants {
 
     MAST_DRIVER = 60,
 
-    LOW_LIMIT_SWITCH = 5,
-    //HIGH_LIMIT_SWITCH = 99,
+    MAST_LIMIT_SWITCH = 5,
 
     CARGO_LIMIT_SWITCH = 2,
     CLAW_LIMIT_SWITCH = 6,
@@ -53,14 +52,23 @@ public class RobotConstants {
     CARGO_BREAK_1 = 1,
     CARGO_BREAK_2 = 0,
 
+    //PCM_1
+    PCM_1 = 1,
     DRIVE_SOLENOID_OPEN = 1,
     DRIVE_SOLENOID_CLOSE = 0,
-    PTO_SOLENOID_OPEN = 4,
-    PTO_SOLENOID_CLOSE = 5, 
+    BOP_SOLENOID_OPEN = 4,
+    BOP_SOLENOID_CLOSE = 5, 
     CLAW_SOLENOID_OPEN = 7, 
     CLAW_SOLENOID_CLOSE = 6,
     PANEL_SOLENOID_OPEN = 2,
     PANEL_SOLENOID_CLOSE = 3,
+
+    //PCM_2
+    PCM_2 = 2,
+    PNEUMATIC_RELEASE_OPEN = 0,
+    PNEUMATIC_RELEASE_CLOSE = 1,
+    GASSTRUT_RELEASE_OPEN = 2,
+    GASSTRUT_RELEASE_CLOSE = 3,
 
     CLAW_MOVEMENT = 50,
     CLAW_MOVEMENT_FOLLOW = 51,
@@ -75,9 +83,6 @@ public class RobotConstants {
     GYRO = 10,
 
     PRESSURE_READER = 0;
-
-    //PCM_1 = 1;
-    //PCM_2 = 2;
   }
   public class Cargo_PID{
     public static final double

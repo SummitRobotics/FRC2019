@@ -9,8 +9,8 @@ public class ArcadeDrive extends Command{
     OI gamepad = OI.getInstance();
 
     public ArcadeDrive(){
-        requires(drivetrain);
         setInterruptible(true);
+        requires(drivetrain);
     }
     @Override
     protected void initialize() {
@@ -25,6 +25,11 @@ public class ArcadeDrive extends Command{
     @Override
     protected boolean isFinished() {
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {

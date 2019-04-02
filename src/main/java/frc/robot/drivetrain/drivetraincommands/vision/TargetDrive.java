@@ -30,6 +30,9 @@ public class TargetDrive extends Command {
 
 
     public TargetDrive(){
+        setInterruptible(true);
+        requires(drivetrain);
+
         fwdSource = new PIDSource(){
         
             @Override
@@ -90,9 +93,6 @@ public class TargetDrive extends Command {
     protected void initialize() {
         super.initialize();
         lemonlight.enableLights();
-        fwdPID.setPercentTolerance(5);
-        turnPID.setPercentTolerance(5);
-
         fwdPID.setSetpoint(0);
         turnPID.setSetpoint(0);
     }
@@ -135,6 +135,11 @@ public class TargetDrive extends Command {
     @Override
     protected boolean isFinished() {
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {

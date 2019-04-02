@@ -10,6 +10,7 @@ public class CloseLoopArcadeDrive extends Command{
     OI gamepad = OI.getInstance();
 
     public CloseLoopArcadeDrive(){
+        setInterruptible(true);
         requires(drivetrain);
     }
     @Override
@@ -58,6 +59,11 @@ public class CloseLoopArcadeDrive extends Command{
     @Override
     protected boolean isFinished() {
         return false;
+    }
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+        drivetrain.kill();
     }
     @Override
     protected void end() {

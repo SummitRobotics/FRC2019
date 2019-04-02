@@ -1,18 +1,18 @@
 package frc.robot.panelclaw;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.devices.ColorSensor;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.VictorSP;
 import frc.robot.panelclaw.clawcommands.MoveClawWrist;
 
 public class Claw extends Subsystem{
@@ -32,10 +32,21 @@ public class Claw extends Subsystem{
         //values in degrees
         UP(0),
         CARGO_DOWN(10),
-        DOWN(50);
+        //TODO - Change cargo down to 20
+        DOWN(30);
 
         public final double value;
         ClawArmState(double value){
+            this.value = value;
+        }
+    }
+
+    public enum ClawSpeed{
+        FORWARD(.1),
+        REVERSE(-.1);
+
+        public final double value;
+        ClawSpeed(double value){
             this.value = value;
         }
     }
@@ -46,11 +57,13 @@ public class Claw extends Subsystem{
     private VictorSPX clawArmFollow;
 
     public ColorSensor panelSensor;
-    private DigitalInput limit;
+    private DigitalInput isClawUp;
 
     private static Claw instance;
     private ClawState clawState;
     private ClawArmState clawArmState;
+
+    public Button isClawUpButton;
 
     private Claw() {
         clawArm = new TalonSRX(RobotConstants.Ports.CLAW_MOVEMENT);
@@ -59,12 +72,20 @@ public class Claw extends Subsystem{
 
         clawArmFollow = new VictorSPX(RobotConstants.Ports.CLAW_MOVEMENT_FOLLOW);
         clawArmFollow.follow(clawArm);
+        clawArmFollow.setInverted(true);
 
-        claw = new DoubleSolenoid(RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
+        claw = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.CLAW_SOLENOID_OPEN, RobotConstants.Ports.CLAW_SOLENOID_CLOSE);
 
         panelSensor = new ColorSensor(I2C.Port.kOnboard);
-        limit = new DigitalInput(RobotConstants.Ports.CLAW_LIMIT_SWITCH);
+        isClawUp = new DigitalInput(RobotConstants.Ports.CLAW_LIMIT_SWITCH);
 
+        isClawUpButton = new Button(){
+
+            @Override
+            public boolean get(){
+                return !isClawUp.get();
+            }
+        };
     }
     public static Claw getInstance(){
         if(instance == null){
@@ -120,12 +141,15 @@ public class Claw extends Subsystem{
         return clawArmState;
     }
     public boolean getClawLimit(){
-        return !limit.get();
+        return !isClawUp.get();
     }
     public boolean isPanelPresent(){
         return panelSensor.isActive();
     }
     public void runArm(double power){
+        if (getClawLimit()){
+            Math.min(power,0);
+        }
         clawArm.set(ControlMode.PercentOutput, power);
     }
     /*public boolean setArm(ClawArmState clawArmPos){
@@ -137,12 +161,20 @@ public class Claw extends Subsystem{
     }*/
 
     public boolean setArm(double angle){
-        double target = (angle/360) * 4096;
+        //TODO - test threshold
+        final double THRESHOLD = 75;
+        double target = (angle/360) * RobotConstants.TALON_TICKS_PER_ROT;
         clawArm.set(ControlMode.Position, target);
-        return clawArm.getClosedLoopError() == 0;
+        SmartDashboard.putNumber("Closed Loop Error", clawArm.getClosedLoopError());
+        SmartDashboard.putNumber("Arm Encoder Val", clawArm.getSelectedSensorPosition());
+        return (clawArm.getClosedLoopError() > -THRESHOLD) && (clawArm.getClosedLoopError() < THRESHOLD);
     }
 
     public void setArmEncoder(int position){
         clawArm.setSelectedSensorPosition(position);
+    }
+
+    public void kill(){
+        clawArm.set(ControlMode.PercentOutput, 0);
     }
 }

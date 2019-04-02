@@ -2,8 +2,6 @@ package frc.robot.cargointake.cargoautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.cargointake.CargoIntake;
-import frc.robot.cargointake.cargocommands.DetectCargo;
-import frc.robot.cargointake.cargocommands.EnableRollers;
 
 public class NewIntakeCargo extends CommandGroup{
     private CargoIntake cargoIntake = CargoIntake.getInstance();

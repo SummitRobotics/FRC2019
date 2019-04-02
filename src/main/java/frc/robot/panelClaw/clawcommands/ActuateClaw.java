@@ -16,19 +16,23 @@ public class ActuateClaw{
     public class SetClaw extends InstantCommand{
 
         private ClawState clawPosition;
-
-        public SetClaw(ClawState clawPosition){
+    
+    
+        public SetClaw(Claw.ClawState clawPosition){
             requires(claw);
             this.clawPosition = clawPosition;
         }
         @Override
         protected void initialize() {
-
+            super.initialize();
         }
         @Override
         protected void execute() {
-            //claw.claw.set(clawPosition.value);
             claw.setClaw(clawPosition);
+        }
+        @Override
+        protected void interrupted() {
+            super.interrupted();
         }
         @Override
         protected void end() {

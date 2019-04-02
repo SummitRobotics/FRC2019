@@ -14,6 +14,7 @@ public class ActuatePeg{
         private Peg.PegState pegPosition;
 
         public SetPeg(Peg.PegState pegPosition){
+            setInterruptible(true);
             requires(peg);
             this.pegPosition = pegPosition;
         }
@@ -35,6 +36,7 @@ public class ActuatePeg{
         private Peg.PegState pegPosition;
 
         public TogglePeg(){
+            setInterruptible(true);
             requires(peg);
         }
         @Override

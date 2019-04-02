@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.cargocommands.TrimCargoArm;
@@ -15,7 +17,7 @@ public class CargoIntake extends Subsystem {
     //List of states intake arm can "servo" to. Values given in angle / 360
     public enum IntakeArmState {
         UP(0),
-        INTAKE_LOWER(-108),
+        INTAKE_LOWER(-111),
         DOWN(-120);
 
         public final double value;
@@ -27,7 +29,7 @@ public class CargoIntake extends Subsystem {
     //List of states for rollers. Values given in power [-1, 1]
     public enum RollerState{
         ON(0.55),
-        SLOW(0.35),
+        SLOW(0.25),
         OFF(0),
         REVERSE(-0.55);
 
@@ -60,12 +62,18 @@ public class CargoIntake extends Subsystem {
 
     private DigitalInput isUp;
     private DigitalInput break1, break2;
+
+    public Button isUpButton;
+
+    private DoubleSolenoid gasStrutRelease;
+    private DoubleSolenoid pistonRelease;
     
     /* ---- INITIALIZATION METHODS ----- */
 
     private static CargoIntake instance;
 
     private CargoIntake(){
+
         arm = new TalonSRX(RobotConstants.Ports.INTAKE_MOVEMENT);
         CargoArmConfig.configTalon(arm);
         arm.setSelectedSensorPosition(0);
@@ -79,6 +87,17 @@ public class CargoIntake extends Subsystem {
         isUp = new DigitalInput(RobotConstants.Ports.CARGO_LIMIT_SWITCH);
         break1 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_1);
         break2 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_2);
+
+        gasStrutRelease = new DoubleSolenoid(RobotConstants.Ports.PCM_2, RobotConstants.Ports.GASSTRUT_RELEASE_OPEN, RobotConstants.Ports.GASSTRUT_RELEASE_CLOSE);
+        pistonRelease = new DoubleSolenoid(RobotConstants.Ports.PCM_2, RobotConstants.Ports.PNEUMATIC_RELEASE_OPEN, RobotConstants.Ports.PNEUMATIC_RELEASE_CLOSE);
+
+        isUpButton = new Button(){
+
+            @Override
+            public boolean get(){
+                return getCargoLimit();
+            }
+        };
     }
     public static CargoIntake getInstance(){
         if(instance == null){
@@ -155,7 +174,6 @@ public class CargoIntake extends Subsystem {
         }
     }
 
-
     /* ----- INTAKE ARM ----- */
     public void setArmEncoder(int position){
         arm.setSelectedSensorPosition(position);
@@ -163,16 +181,34 @@ public class CargoIntake extends Subsystem {
 
     //Open Loop Intake Arm control (do this better in the future)
     public void moveIntakeArm(double power){
+        if (getCargoLimit()) {
+            Math.min(power,0);
+        }
         arm.set(ControlMode.PercentOutput, power);
     }
 
     //Servos the intake arm to a given position
     public boolean setIntakeArm(double intakePosition){
-            double target = (intakePosition/360) * 4096;
-            double THRESHOLD = 15;
-            target *= 3;            
-            arm.set(ControlMode.Position, target); 
-            SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
-            return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
+        double target = (intakePosition/360) * RobotConstants.TALON_TICKS_PER_ROT;
+        double THRESHOLD = 75;
+        //adjust for sprocket ratio
+        target *= 3;
+        arm.set(ControlMode.Position, target); 
+        SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
+        return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
+    }
+
+    /* ----- CLIMB ----- */
+    public void climbLevel2(){
+        pistonRelease.set(DoubleSolenoid.Value.kForward);
+    }
+    public void dontClimbLevel2(){
+        pistonRelease.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void kill() {
+        SmartDashboard.putBoolean("Cargo killed", true);
+        arm.set(ControlMode.PercentOutput, 0);
+        rollers.set(ControlMode.PercentOutput, 0);
     }
 }

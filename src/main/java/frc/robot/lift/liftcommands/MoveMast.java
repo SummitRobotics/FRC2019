@@ -1,10 +1,11 @@
 package frc.robot.lift.liftcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import frc.robot.lift.Lift.LiftState;
 import frc.robot.lift.Lift;
 
-public class MoveMast extends Command{
+public class MoveMast extends InstantCommand{
     private Lift lift = Lift.getInstance();
     private LiftState position;
 
@@ -20,12 +21,7 @@ public class MoveMast extends Command{
     }
     @Override
     protected void execute() {
-        isDone = lift.setMast(position);
-    }
-    
-    @Override
-    protected boolean isFinished() {
-        return isDone;
+        lift.setMast(position);
     }
     @Override
     protected void end() {

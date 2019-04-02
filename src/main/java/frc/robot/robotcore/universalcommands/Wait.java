@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Wait extends Command{
 
     public Wait(double timeout){
-        setInterruptible(false);
+        setInterruptible(true);
         setTimeout(timeout);
     }
     
