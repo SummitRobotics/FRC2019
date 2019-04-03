@@ -64,9 +64,6 @@ public class CargoIntake extends Subsystem {
     private DigitalInput break1, break2;
 
     public Button isUpButton;
-
-    private DoubleSolenoid gasStrutRelease;
-    private DoubleSolenoid pistonRelease;
     
     /* ---- INITIALIZATION METHODS ----- */
 
@@ -87,9 +84,6 @@ public class CargoIntake extends Subsystem {
         isUp = new DigitalInput(RobotConstants.Ports.CARGO_LIMIT_SWITCH);
         break1 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_1);
         break2 = new DigitalInput(RobotConstants.Ports.CARGO_BREAK_2);
-
-        gasStrutRelease = new DoubleSolenoid(RobotConstants.Ports.PCM_2, RobotConstants.Ports.GASSTRUT_RELEASE_OPEN, RobotConstants.Ports.GASSTRUT_RELEASE_CLOSE);
-        pistonRelease = new DoubleSolenoid(RobotConstants.Ports.PCM_2, RobotConstants.Ports.PNEUMATIC_RELEASE_OPEN, RobotConstants.Ports.PNEUMATIC_RELEASE_CLOSE);
 
         isUpButton = new Button(){
 
@@ -197,15 +191,7 @@ public class CargoIntake extends Subsystem {
         SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
         return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
     }
-
-    /* ----- CLIMB ----- */
-    public void climbLevel2(){
-        pistonRelease.set(DoubleSolenoid.Value.kForward);
-    }
-    public void dontClimbLevel2(){
-        pistonRelease.set(DoubleSolenoid.Value.kReverse);
-    }
-
+    
     public void kill() {
         SmartDashboard.putBoolean("Cargo killed", true);
         arm.set(ControlMode.PercentOutput, 0);

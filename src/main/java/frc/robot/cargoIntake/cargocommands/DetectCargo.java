@@ -20,7 +20,7 @@ public class DetectCargo extends Command{
     }
     @Override
     protected void execute() {
-        SmartDashboard.putBoolean("Is Finished ", cargoIntake.isBallDetected());
+
     }
     @Override
     protected boolean isFinished() {

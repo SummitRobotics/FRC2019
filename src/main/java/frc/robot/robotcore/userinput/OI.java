@@ -5,8 +5,7 @@ import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.ResetCargoArm;
-import frc.robot.cargointake.climbcommands.CancelClimb;
-import frc.robot.cargointake.climbcommands.ClimbLevel2;
+import frc.robot.climber.climbcommands.EngageClimb;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawArmState;
 import frc.robot.panelclaw.chairautomation.*;
@@ -53,15 +52,11 @@ public class OI {
         //dashboard.pos2.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.REVERSE));
         dashboard.cargoGround.whenPressed(new LoadCargoFromGround());
         dashboard.bop.whenPressed(new PunchCargo());
-        /*dashboard.mastHigh.whenPressed(new MoveMast(Lift.LiftState.HIGH));
-        dashboard.mastMid.whenPressed(new MoveMast(Lift.LiftState.MID));
-        dashboard.mastLow.whenPressed(new MoveMast(Lift.LiftState.LOW));*/
         dashboard.mastHigh.whenPressed(new MastAutomation(Lift.LiftState.HIGH));
         dashboard.mastMid.whenPressed(new MastAutomation(Lift.LiftState.MID));
         dashboard.mastLow.whenPressed(new MastAutomation(Lift.LiftState.LOW));
         dashboard.panelGround.whenPressed(new FloorIntakePanel());
-        //dashboard.climb.whenPressed(new ClimbLevel2());
-        //dashboard.climb.whenReleased(new CancelClimb());
+        dashboard.climb.whileHeld(new EngageClimb());
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());

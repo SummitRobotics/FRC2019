@@ -23,40 +23,47 @@ public class LoadCargoFromGround extends CommandGroup{
         requires(CargoIntake.getInstance());
         //requires(claw);
 
-        SmartDashboard.putBoolean("Cargo killed", false);
-
+        //Initialize with the claw closed, the rollers on, the peg up, and the chair in.
         addSequential(new ActuateClaw().new SetClaw(ClawState.CLOSE));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new ActuateChair().new SetChair(PneumaticState.IN));
         addSequential(new ActuatePeg().new SetPeg(PegState.UP));
+
+        //While initializing, move the claw wrist downwards. 
+        //TODO - Make this command positional
         addParallel(new PowerMoveClawWrist(1.5, Claw.ClawSpeed.FORWARD));
+
+        //Lower the cargo arm and wait to execute new commands.
+        //TODO - Make SetCargoArm non-instant, remove waits
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.INTAKE_LOWER));
         addSequential(new Wait(1.0));
+
+        //Wait until first break beam is broken (meaning cargo is in roller's grasp)
         addSequential(new DetectCargo(CargoIntake.CargoPosition.DETECTED));
         addSequential(new Wait(0.01));
+        //Slow down the rollers
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.SLOW));
         addSequential(new Wait(0.01));
+        //Lower the cargo arm more to fully intake ball
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.DOWN));
         addSequential(new Wait(0.01));
+        //Wait until second break beam is broken (meaning cargo has been fully sucked in)
         addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));
+        //Disable the rollers to hold the ball
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
+
+        //Bring the cargo arm up, wait until arm is up to execute more commands.
+        //TODO - Make SetCargoArm non-instant, remove waits
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.UP));
         addSequential(new Wait(1));
+
+        //Eject Ball into Chair
         addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
+        
         //move claw up
         addSequential(new PowerMoveClawWrist(.25, Claw.ClawSpeed.REVERSE));
 
-        /*spin rollers
-        **lower cargo arm partways
-        **wait until cargo detected
-        **spin rollers slower
-        **lowers cargo arm fullways
-        **wait until cargo present
-        **stop after 0.25 sec
-        **raise arm back up (until limit switch)
-        **spin rollers again
-        **stop rollers*/
     }
 
     @Override

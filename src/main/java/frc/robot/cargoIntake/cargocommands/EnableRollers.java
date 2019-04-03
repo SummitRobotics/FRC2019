@@ -35,8 +35,8 @@ public class EnableRollers{
         }
         @Override
         protected void interrupted() {
-            super.interrupted();
             cargoIntake.kill();
+            super.interrupted();
         }    
         @Override
         protected void end() {
