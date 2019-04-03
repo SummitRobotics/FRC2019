@@ -12,13 +12,10 @@ import frc.robot.robotcore.universalcommands.Wait;
 
 public class LeftCargoShip extends CommandGroup{
 
-    Drivetrain drivetrain = Drivetrain.getInstance();
-    Claw claw = Claw.getInstance();
-
     public LeftCargoShip(){
         setInterruptible(true);
-        requires(drivetrain);
-        requires(claw);
+        requires(Drivetrain.getInstance());
+        requires(Claw.getInstance());
         requires(Peg.getInstance());
 
         addSequential(new EncoderDrive(100));
@@ -49,7 +46,7 @@ public class LeftCargoShip extends CommandGroup{
     @Override
     protected void interrupted() {
         super.interrupted();
-        drivetrain.kill();
-        claw.kill();
+        Drivetrain.getInstance().kill();
+        Claw.getInstance().kill();
     }
 }

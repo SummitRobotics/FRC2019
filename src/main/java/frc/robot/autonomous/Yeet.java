@@ -6,11 +6,9 @@ import frc.robot.drivetrain.drivetraincommands.GyroTurn;
 
 public class Yeet extends CommandGroup{
 
-    Drivetrain drivetrain = Drivetrain.getInstance();
-
     public Yeet(){
         setInterruptible(true);
-        requires(drivetrain);
+        requires(Drivetrain.getInstance());
 
         //addSequential(new PowerDrive(1, 4.5));
         //addSequential(new EncoderDrive(15));
@@ -20,6 +18,6 @@ public class Yeet extends CommandGroup{
     @Override
     protected void interrupted() {
         super.interrupted();
-        drivetrain.kill();
+        Drivetrain.getInstance().kill();
     }
 }

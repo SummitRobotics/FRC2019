@@ -12,13 +12,10 @@ import frc.robot.panelclaw.chairautomation.PinPanel;
 
 public class LeftCargoShipPower extends CommandGroup{
 
-    Drivetrain drivetrain = Drivetrain.getInstance();
-    Claw claw = Claw.getInstance();
-
     public LeftCargoShipPower(){
         setInterruptible(true);
-        requires(drivetrain);
-        requires(claw);
+        requires(Drivetrain.getInstance());
+        requires(Claw.getInstance());
         requires(Peg.getInstance());
 
         addSequential(new PowerDrive(0.35, false, 2.0));
@@ -40,7 +37,7 @@ public class LeftCargoShipPower extends CommandGroup{
     @Override
     protected void interrupted() {
         super.interrupted();
-        drivetrain.kill();
-        claw.kill();
+        Drivetrain.getInstance().kill();
+        Claw.getInstance().kill();
     }
 }
