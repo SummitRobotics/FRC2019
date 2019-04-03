@@ -77,7 +77,7 @@ public class TargetDrive extends Command {
         
             @Override
             public void pidWrite(double output) {
-                fwdPID.get();
+                output = fwdPID.get();
             }
         };
 
@@ -102,8 +102,8 @@ public class TargetDrive extends Command {
         double fwdAdjust = 0, turnAdjust = 0;
         
         if(lemonlight.isTarget()){
-            fwdAdjust = fwdPID.getError();
-            turnAdjust = fwdPID.getError();
+            fwdAdjust = fwdPID.get();
+            turnAdjust = turnPID.get();
         }
         drivetrain.robotDrive.arcadeDrive(fwdAdjust, turnAdjust);
     }

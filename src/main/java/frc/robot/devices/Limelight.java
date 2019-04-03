@@ -7,6 +7,15 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class Limelight implements PIDSource{
+    public enum Target{
+        CARGO_SHIP(0),
+        ROCKET_CARGO(1);
+
+        private final int value;
+        Target(int value){
+            this.value = value;
+        }
+    }
     private NetworkTable table;
     private NetworkTableEntry tx, ty, ta, ts, tv;
 

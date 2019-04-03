@@ -67,7 +67,7 @@ public class Drivetrain extends Subsystem{
 
         leftEncoder = new CANEncoder(leftDrive0);
         leftPID = new CANPIDController(leftDrive0);
-        DrivetrainConfig.configMotorController(leftDrive0.getPIDController());
+        DrivetrainConfig.configMotorController(leftPID);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
@@ -79,7 +79,7 @@ public class Drivetrain extends Subsystem{
 
         rightEncoder = new CANEncoder(rightDrive0);
         rightPID = new CANPIDController(rightDrive0);
-        DrivetrainConfig.configMotorController(rightDrive0.getPIDController());
+        DrivetrainConfig.configMotorController(rightPID);
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
@@ -120,13 +120,6 @@ public class Drivetrain extends Subsystem{
     }
 
 /* ----- FEEDBACK DEVICES ----- */
-
-    /*public double getLeftEncoderPos(){
-        return leftEncoder.getPosition();
-    }
-    public double getRightEncoderPos(){
-        return rightEncoder.getPosition();
-    }*/
 
     public double getYaw(){
         ypr = new double[3];
@@ -178,8 +171,8 @@ public class Drivetrain extends Subsystem{
         //SETPOINTS MUST BE IN TICKS+
         SmartDashboard.putNumber("Left Drivetrain Setpoint", leftSetpoint);
         SmartDashboard.putNumber("Right Drivetrain Setpoint", rightSetpoint);
-        leftDrive1.getPIDController().setReference(leftSetpoint, ControlType.kPosition);
-        rightDrive1.getPIDController().setReference(rightSetpoint, ControlType.kPosition);
+        leftPID.setReference(leftSetpoint, ControlType.kPosition);
+        rightPID.setReference(rightSetpoint, ControlType.kPosition);
     }
     public boolean isInThreshold(double target){
         double leftError = target - getLeftEncoder();
@@ -211,6 +204,7 @@ public class Drivetrain extends Subsystem{
             return gearPos;
     }
 
+    /* ----- INTERRUPT ------ */
     public void kill() {
         robotDrive.tankDrive(0, 0);
     }
