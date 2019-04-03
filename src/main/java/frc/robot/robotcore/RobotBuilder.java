@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.devices.Limelight;
 import frc.robot.devices.PressureSensor;
+import frc.robot.devices.USBDriverCamera;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.mast.Mast;
 import frc.robot.panelclaw.Peg;
@@ -19,6 +20,7 @@ public class RobotBuilder{
 
     public Limelight lemonlight;
     public PressureSensor pressureSensor;
+    public USBDriverCamera driverFeed;
 
     private static RobotBuilder instance;
     private RobotBuilder(){
@@ -28,6 +30,7 @@ public class RobotBuilder{
         cargoIntake = CargoIntake.getInstance();
         mast = Mast.getInstance();
 
+        driverFeed = new USBDriverCamera();
         lemonlight = new Limelight();
         pressureSensor = new PressureSensor();
     }
@@ -38,6 +41,7 @@ public class RobotBuilder{
         return instance;
     }
     public void init(){
+        driverFeed.init();
         drivetrain.resetGyro();
         drivetrain.setDrivetrainEncoders(0);
         cargoIntake.setArmEncoder(0);
