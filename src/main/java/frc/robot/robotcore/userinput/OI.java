@@ -85,7 +85,6 @@ public class OI {
 
     //"Driver" methods
     public double mastDrive(){
-        SmartDashboard.putNumber("mast power joystick", -driver1.getRightJoystickPower());
         return -driver1.getRightJoystickPower();
     }
     public double fwdDrive(){

@@ -9,11 +9,9 @@ import frc.robot.robotcore.universalcommands.Wait;
 
 public class IntakeCargo extends CommandGroup{
 
-    CargoIntake cargoIntake = CargoIntake.getInstance();
-
     public IntakeCargo(){
         setInterruptible(true);
-        requires(cargoIntake);
+        requires(CargoIntake.getInstance());
 
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
         addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));
@@ -27,6 +25,6 @@ public class IntakeCargo extends CommandGroup{
     @Override
     protected void interrupted() {
         super.interrupted();
-        cargoIntake.kill();
+        CargoIntake.getInstance().kill();
     }
 }
