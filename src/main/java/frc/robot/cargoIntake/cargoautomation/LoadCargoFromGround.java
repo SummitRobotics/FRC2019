@@ -5,13 +5,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Claw.ClawArmState;
 import frc.robot.panelclaw.Claw.ClawState;
 import frc.robot.panelclaw.Peg.PegState;
 import frc.robot.panelclaw.Peg.PneumaticState;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
-import frc.robot.panelclaw.clawcommands.RaiseClaw;
 import frc.robot.panelclaw.pegcommands.ActuateChair;
 import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.universalcommands.Wait;
@@ -20,12 +18,9 @@ import frc.robot.cargointake.cargocommands.DetectCargo;
 
 public class LoadCargoFromGround extends CommandGroup{
 
-    CargoIntake cargoIntake = CargoIntake.getInstance();
-    Claw claw = Claw.getInstance();
-
     public LoadCargoFromGround(){
         setInterruptible(true);
-        requires(cargoIntake);
+        requires(CargoIntake.getInstance());
         //requires(claw);
 
         SmartDashboard.putBoolean("Cargo killed", false);
@@ -67,7 +62,7 @@ public class LoadCargoFromGround extends CommandGroup{
     @Override
     protected void interrupted() {
         super.interrupted();
-        cargoIntake.kill();
-        claw.kill();
+        CargoIntake.getInstance().kill();
+        Claw.getInstance().kill();
     }
 }

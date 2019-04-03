@@ -1,9 +1,10 @@
 package frc.robot.robotcore.userinput;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
 import frc.robot.cargointake.cargocommands.EnableRollers;
-import frc.robot.cargointake.cargocommands.ResetArmEncoder;
+import frc.robot.cargointake.cargocommands.ResetCargoArm;
 import frc.robot.cargointake.climbcommands.CancelClimb;
 import frc.robot.cargointake.climbcommands.ClimbLevel2;
 import frc.robot.panelclaw.Claw;
@@ -32,20 +33,16 @@ public class OI {
 
     private ButtonDashboard dashboard = new ButtonDashboard();
     public DriverController driver1 = new DriverController(RobotConstants.Ports.DRIVER_1_PORT);
-    private RobotBuilder robot;
 
-    private final static double DEADZONE = 0.10;
     private static OI instance;
 
     private OI(){
 
-        robot = RobotBuilder.getInstance();
 
-        robot.cargoIntake.isUpButton.whenPressed(new ResetArmEncoder());
+        CargoIntake.getInstance().isUpButton.whenPressed(new ResetCargoArm());
         //robot.claw.isClawUpButton.whenPressed(new ResetClawEncoder());
-        robot.lift.liftLowLimitButton.whenPressed(new ResetMastEncoder());
+        Lift.getInstance().liftLowLimitButton.whenPressed(new ResetMastEncoder());
 
-        
         dashboard.pos1.whenPressed(new DriveToPos1(dashboard.sideAndHeight.get()));
         /*dashboard.pos2.whenPressed(new DriveToPos2(dashboard.sideAndHeight.get()));
         dashboard.pos3.whenPressed(new DriveToPos3(dashboard.sideAndHeight.get()));
