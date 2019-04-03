@@ -7,11 +7,12 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.devices.Limelight;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.robotcore.RobotBuilder;
 
 public class TargetDrive extends Command {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
-    private Limelight lemonlight = Limelight.getInstance();
+    private Limelight lemonlight = RobotBuilder.getInstance().lemonlight;
 
     private static final double
         TURN_P = 0.01,

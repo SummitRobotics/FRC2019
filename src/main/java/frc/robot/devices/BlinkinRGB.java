@@ -28,19 +28,9 @@ public class BlinkinRGB{
     private Spark blinkin;
     private Blinkin RGBState;
 
-    private static BlinkinRGB instance;
-
-    private BlinkinRGB(){
+    public BlinkinRGB(){
         blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
-    }
-
-    public BlinkinRGB getInstance(){
-        if(instance == null){
-            instance = new BlinkinRGB();
-        }
-        return instance;
-    }
-    
+    }    
 
     public void setLEDColor(Blinkin blinkinValue){
         blinkin.set(blinkinValue.value);

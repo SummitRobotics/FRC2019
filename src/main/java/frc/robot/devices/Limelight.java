@@ -17,9 +17,7 @@ public class Limelight implements PIDSource{
 
     private PIDSourceType pidSource = PIDSourceType.kDisplacement;
 
-    private static Limelight instance;
-
-    private Limelight(){
+    public Limelight(){
         table = NetworkTableInstance.getDefault().getTable("limelight");
         //Target Displacement: X-axis
         tx = table.getEntry("tx");
@@ -33,12 +31,6 @@ public class Limelight implements PIDSource{
         tv = table.getEntry("tv");
     }
 
-    public static Limelight getInstance(){
-        if(instance == null){
-            instance = new Limelight();
-        }
-        return instance; 
-    }
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {
         pidSource = this.pidSource;

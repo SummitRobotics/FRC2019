@@ -7,7 +7,6 @@ import frc.robot.drivetrain.drivetraincommands.EncoderDrive;
 
 public class NewTargetAlignment extends CommandGroup{
     Drivetrain drivetrain = Drivetrain.getInstance();
-    Limelight limelight = Limelight.getInstance();
 
     public NewTargetAlignment(){
         setInterruptible(true);

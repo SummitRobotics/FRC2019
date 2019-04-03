@@ -4,11 +4,12 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.devices.Limelight;
 import frc.robot.drivetrain.Drivetrain;
+import frc.robot.robotcore.RobotBuilder;
 
 public class TargetAlignment extends PIDCommand {
 
     private Drivetrain drivetrain = Drivetrain.getInstance();
-    private Limelight lemonlight = Limelight.getInstance();
+    private Limelight lemonlight = RobotBuilder.getInstance().lemonlight;
 
     private static final double
         P = 0.010,

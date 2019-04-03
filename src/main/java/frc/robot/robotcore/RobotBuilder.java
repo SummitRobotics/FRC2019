@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.devices.Limelight;
 import frc.robot.devices.PressureSensor;
-import frc.robot.devices.REVdisplay;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.mast.Mast;
 import frc.robot.panelclaw.Peg;
@@ -17,20 +16,20 @@ public class RobotBuilder{
     public Peg peg;
     public Mast mast;
     public CargoIntake cargoIntake;
-    public Limelight lemonlight;
-    public REVdisplay display;
-    public PressureSensor pressureSensor;
-    private static RobotBuilder instance;
 
+    public Limelight lemonlight;
+    public PressureSensor pressureSensor;
+
+    private static RobotBuilder instance;
     private RobotBuilder(){
         drivetrain = Drivetrain.getInstance();
         claw = Claw.getInstance();
         peg = Peg.getInstance();
         cargoIntake = CargoIntake.getInstance();
         mast = Mast.getInstance();
-        lemonlight = Limelight.getInstance();
-        //display = REVdisplay.getInstance();
-        pressureSensor = PressureSensor.getInstance();
+
+        lemonlight = new Limelight();
+        pressureSensor = new PressureSensor();
     }
     public static RobotBuilder getInstance() {
         if (instance == null) {
@@ -41,7 +40,6 @@ public class RobotBuilder{
     public void init(){
         drivetrain.resetGyro();
         drivetrain.setDrivetrainEncoders(0);
-        //todo - pwm absolute shit
         cargoIntake.setArmEncoder(0);
         lemonlight.enableLights();
         claw.setArmEncoder(0);
@@ -60,7 +58,7 @@ public class RobotBuilder{
     }
     
     public void run(){
-        //display.run();
+
     }
     public void dashboard(){
         SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());

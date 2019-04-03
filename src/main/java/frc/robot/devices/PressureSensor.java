@@ -6,16 +6,10 @@ import frc.robot.robotcore.RobotConstants;
 public class PressureSensor{
     AnalogInput pressureSensor;
 
-    private static PressureSensor instance;
-    private PressureSensor(){
+    public PressureSensor(){
         pressureSensor = new AnalogInput(RobotConstants.Ports.PRESSURE_READER);
     }
-    public static PressureSensor getInstance(){
-        if(instance == null){
-            instance = new PressureSensor();
-        }
-        return instance;
-    }
+
     public double getPressure(){
         return (250 * (pressureSensor.getAverageVoltage() / 5)) - 25;
     }
