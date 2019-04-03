@@ -65,9 +65,9 @@ public class Drivetrain extends Subsystem{
         setCurrentLimits(leftDrive0, leftDrive1, leftDrive2, 30);
         setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.20);
 
-        leftEncoder = new CANEncoder(leftDrive1);
-        leftPID = new CANPIDController(leftDrive1);
-        DrivetrainConfig.configMotorController(leftDrive1.getPIDController());
+        leftEncoder = new CANEncoder(leftDrive0);
+        leftPID = new CANPIDController(leftDrive0);
+        DrivetrainConfig.configMotorController(leftDrive0.getPIDController());
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
@@ -77,9 +77,9 @@ public class Drivetrain extends Subsystem{
         setCurrentLimits(rightDrive0, rightDrive1, rightDrive2, 30);
         setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.20);
 
-        rightEncoder = new CANEncoder(rightDrive1);
-        rightPID = new CANPIDController(rightDrive1);
-        DrivetrainConfig.configMotorController(rightDrive1.getPIDController());
+        rightEncoder = new CANEncoder(rightDrive0);
+        rightPID = new CANPIDController(rightDrive0);
+        DrivetrainConfig.configMotorController(rightDrive0.getPIDController());
 
         leftDrive = new SpeedControllerGroup(leftDrive0, leftDrive1, leftDrive2);
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
@@ -181,8 +181,8 @@ public class Drivetrain extends Subsystem{
         //SETPOINTS MUST BE IN TICKS+
         SmartDashboard.putNumber("Left Drivetrain Setpoint", leftSetpoint);
         SmartDashboard.putNumber("Right Drivetrain Setpoint", rightSetpoint);
-        leftDrive1.getPIDController().setReference(leftSetpoint, ControlType.kPosition);
-        rightDrive1.getPIDController().setReference(rightSetpoint, ControlType.kPosition);
+        leftPID.setReference(leftSetpoint, ControlType.kPosition);
+        rightPID.setReference(rightSetpoint, ControlType.kPosition);
     }
     public boolean isInThreshold(double target){
         double leftError = target - getLeftEncoder();
