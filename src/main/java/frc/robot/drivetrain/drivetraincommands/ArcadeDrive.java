@@ -18,8 +18,10 @@ public class ArcadeDrive extends Command{
     }
     @Override
     protected void execute() {
-        double xSpeed = gamepad.driver1.getForwardPower();
-        double zRotation = gamepad.driver1.getRotationalPower();
+        /*double xSpeed = gamepad.driver1.getForwardPower();
+        double zRotation = gamepad.driver1.getRotationalPower();*/
+        double xSpeed = gamepad.fwdDrive();
+        double zRotation = gamepad.turnDrive();
         drivetrain.robotDrive.arcadeDrive(xSpeed, zRotation);
     }
     @Override

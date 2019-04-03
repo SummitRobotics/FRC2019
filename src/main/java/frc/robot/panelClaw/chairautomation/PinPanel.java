@@ -21,7 +21,7 @@ public class PinPanel extends CommandGroup{
         requires(Peg.getInstance());
 
         addSequential(new ActuatePeg().new TogglePeg());
-        addSequential(new PowerDrive(-0.3, false, 0.5));
+        addSequential(new PowerDrive(-0.3, 0.5));
         addSequential(new Wait(0.5));
         addSequential(new ActuateChair().new ToggleChair());
     }

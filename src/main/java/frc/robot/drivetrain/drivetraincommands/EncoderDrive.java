@@ -42,7 +42,7 @@ public class EncoderDrive extends Command{
     }
     @Override
     protected void end() {
-        drivetrain.stopRobot();
+        drivetrain.kill();
         SmartDashboard.putBoolean("Encoder command finished", true);
     }
 }

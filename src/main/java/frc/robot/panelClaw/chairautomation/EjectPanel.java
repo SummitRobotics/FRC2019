@@ -21,7 +21,7 @@ public class EjectPanel extends CommandGroup{
         
         addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
         addSequential(new ActuatePeg().new SetPeg(PegState.DOWN));
-        addSequential(new PowerDrive(0.25, false, 0.25));
+        addSequential(new PowerDrive(0.25, 0.25));
         addSequential(new Wait(0.1)); 
         addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.OUT));
         addSequential(new Wait(0.2));

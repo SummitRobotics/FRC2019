@@ -10,6 +10,8 @@ public class GyroTurn extends PIDCommand{
 
     private double angle, target;
     private final double THRESHOLD = 1;
+    
+    //TODO - Tuning
     private static final double
     P = 0.04,
     I = 0.00,

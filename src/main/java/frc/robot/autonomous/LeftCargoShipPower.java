@@ -18,17 +18,17 @@ public class LeftCargoShipPower extends CommandGroup{
         requires(Claw.getInstance());
         requires(Peg.getInstance());
 
-        addSequential(new PowerDrive(0.35, false, 2.0));
+        addSequential(new PowerDrive(0.35, 2.0));
         addSequential(new TargetAlignment());
         addSequential(new EjectPanel());
-        addSequential(new PowerDrive(-0.45, false, 0.5));
+        addSequential(new PowerDrive(-0.45, 0.5));
         addSequential(new GyroTurn(-45));
-        addSequential(new PowerDrive(-0.40, false, 2));
+        addSequential(new PowerDrive(-0.40, 2));
         addSequential(new GyroTurn(-135));
         addSequential(new TargetAlignment());
         addSequential(new PinPanel());
         addSequential(new GyroTurn(-30));
-        addSequential(new PowerDrive(0.45, false, 2));
+        addSequential(new PowerDrive(0.45, 2));
         addSequential(new GyroTurn(120));
         addSequential(new TargetAlignment());
         addSequential(new EjectPanel());

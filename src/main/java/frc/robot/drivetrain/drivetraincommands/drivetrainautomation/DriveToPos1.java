@@ -8,7 +8,7 @@ import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 public class DriveToPos1 extends CommandGroup {
 
     public DriveToPos1(boolean isRight){
-        addSequential(new PowerDrive(-0.35, false, 2.0));
+        addSequential(new PowerDrive(-0.35, 2.0));
         addSequential(new GyroTurn(30));
         //addSequential(new PowerDrive(-0.70, false, 2.0));
         //addSequential(new GyroTurn(-45));

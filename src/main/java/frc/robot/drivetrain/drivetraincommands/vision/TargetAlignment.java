@@ -75,7 +75,7 @@ public class TargetAlignment extends PIDCommand {
     @Override
     protected void end() {
         super.end();
-        drivetrain.stopRobot();
+        drivetrain.kill();
     }
     @Override
     protected double returnPIDInput() {

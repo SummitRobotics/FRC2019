@@ -41,6 +41,6 @@ public class TurnToTarget extends Command {
     @Override
     protected void end() {
         super.end();
-        drivetrain.stopRobot();
+        drivetrain.kill();
     }
 }
