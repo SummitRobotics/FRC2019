@@ -14,10 +14,10 @@ import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos1;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
-import frc.robot.lift.Lift;
-import frc.robot.lift.liftcommands.MastAutomation;
-import frc.robot.lift.liftcommands.MoveMast;
-import frc.robot.lift.liftcommands.ResetMastEncoder;
+import frc.robot.mast.Mast;
+import frc.robot.mast.mastcommands.MastAutomation;
+import frc.robot.mast.mastcommands.MoveMast;
+import frc.robot.mast.mastcommands.ResetMastEncoder;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
 import frc.robot.panelclaw.clawcommands.RaiseClaw;
@@ -40,7 +40,7 @@ public class OI {
 
         CargoIntake.getInstance().isUpButton.whenPressed(new ResetCargoArm());
         //robot.claw.isClawUpButton.whenPressed(new ResetClawEncoder());
-        Lift.getInstance().liftLowLimitButton.whenPressed(new ResetMastEncoder());
+        Mast.getInstance().mastLowLimitButton.whenPressed(new ResetMastEncoder());
 
         dashboard.pos1.whenPressed(new DriveToPos1(dashboard.sideAndHeight.get()));
         /*dashboard.pos2.whenPressed(new DriveToPos2(dashboard.sideAndHeight.get()));
@@ -52,9 +52,9 @@ public class OI {
         //dashboard.pos2.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.REVERSE));
         dashboard.cargoGround.whenPressed(new LoadCargoFromGround());
         dashboard.bop.whenPressed(new PunchCargo());
-        dashboard.mastHigh.whenPressed(new MastAutomation(Lift.LiftState.HIGH));
-        dashboard.mastMid.whenPressed(new MastAutomation(Lift.LiftState.MID));
-        dashboard.mastLow.whenPressed(new MastAutomation(Lift.LiftState.LOW));
+        dashboard.mastHigh.whenPressed(new MastAutomation(Mast.MastState.HIGH));
+        dashboard.mastMid.whenPressed(new MastAutomation(Mast.MastState.MID));
+        dashboard.mastLow.whenPressed(new MastAutomation(Mast.MastState.LOW));
         dashboard.panelGround.whenPressed(new FloorIntakePanel());
         dashboard.climb.whileHeld(new EngageClimb());
 

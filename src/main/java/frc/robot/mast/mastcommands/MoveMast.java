@@ -1,27 +1,22 @@
-package frc.robot.lift.liftcommands;
+package frc.robot.mast.mastcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.lift.Lift.LiftState;
-import frc.robot.lift.Lift;
+import frc.robot.mast.Mast;
 
 public class MoveMast extends Command{
-    private Lift lift = Lift.getInstance();
-    private LiftState position;
+    private Mast mast = Mast.getInstance();
+    private Mast.MastState position;
 
-    private static final double THRESHOLD = 1;
-
-    private boolean isDone = false;
-
-    public MoveMast (LiftState position){
-        requires(lift);
+    public MoveMast (Mast.MastState position){
+        requires(mast);
         this.position = position;
     }
     @Override
     protected void initialize() {
         super.initialize();
-        lift.setMast(position);
+        mast.setMast(position);
     }
     @Override
     protected void execute() {
@@ -29,7 +24,7 @@ public class MoveMast extends Command{
     }
     @Override
     protected boolean isFinished() {
-        return lift.withinThreshold(THRESHOLD, position.value);
+        return mast.withinThreshold(position.value);
     }
     @Override
     protected void end() {

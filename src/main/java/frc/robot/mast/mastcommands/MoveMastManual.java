@@ -1,16 +1,16 @@
-package frc.robot.lift.liftcommands;
+package frc.robot.mast.mastcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.robotcore.userinput.OI;
-import frc.robot.lift.Lift;
+import frc.robot.mast.Mast;
 
 public class MoveMastManual extends Command{
-    private Lift lift = Lift.getInstance();
+    private Mast mast = Mast.getInstance();
     private OI gamepad = OI.getInstance();
 
     public MoveMastManual(){
         setInterruptible(true);
-        requires(lift);
+        requires(mast);
     }
     @Override
     protected void initialize() {
@@ -18,7 +18,7 @@ public class MoveMastManual extends Command{
     }
     @Override
     protected void execute() {
-        //lift.runLiftManual(gamepad.mastDrive());
+        mast.runMastManual(gamepad.mastDrive());
     }
     @Override
     protected boolean isFinished() {
@@ -27,7 +27,7 @@ public class MoveMastManual extends Command{
     @Override
     protected void interrupted() {
         super.interrupted();
-        lift.kill();
+        mast.kill();
     }
     @Override
     protected void end() {

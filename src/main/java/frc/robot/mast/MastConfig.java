@@ -1,9 +1,9 @@
-package frc.robot.lift;
+package frc.robot.mast;
 
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 
-public class LiftConfig{
+public class MastConfig{
 
     private static double
         P = 0.2,
@@ -21,7 +21,7 @@ public class LiftConfig{
         RAMP_RATE_OPEN = 0.2,
         FREESPIN_CURRENT_LIMIT = 35;
 
-    public LiftConfig(){
+    public MastConfig(){
 
     }
 

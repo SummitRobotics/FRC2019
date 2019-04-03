@@ -5,8 +5,8 @@ import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.EncoderDrive;
 import frc.robot.drivetrain.drivetraincommands.GyroTurn;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
-import frc.robot.lift.Lift;
-import frc.robot.lift.liftcommands.MoveMast;
+import frc.robot.mast.Mast;
+import frc.robot.mast.mastcommands.MoveMast;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Peg;
 import frc.robot.panelclaw.chairautomation.EjectPanel;
@@ -26,7 +26,7 @@ public class RocketRight extends CommandGroup{
         addSequential(new EncoderDrive(100));
         addSequential(new GyroTurn(90));
         addSequential(new TargetAlignment());
-        addSequential(new MoveMast(Lift.LiftState.HIGH));
+        addSequential(new MoveMast(Mast.MastState.HIGH));
         addSequential(new EjectPanel());
         addSequential(new EncoderDrive(-30));
         addSequential(new GyroTurn(30));
@@ -43,7 +43,7 @@ public class RocketRight extends CommandGroup{
         addSequential(new EncoderDrive(-30));
         addSequential(new GyroTurn(-30));
         addSequential(new TargetAlignment());
-        addSequential(new MoveMast(Lift.LiftState.MID));
+        addSequential(new MoveMast(Mast.MastState.MID));
         addSequential(new EjectPanel());
     }
 
