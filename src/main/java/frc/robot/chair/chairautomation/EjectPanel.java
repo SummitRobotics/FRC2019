@@ -1,31 +1,28 @@
-package frc.robot.panelclaw.chairautomation;
+package frc.robot.chair.chairautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.chair.Chair;
+import frc.robot.chair.chaircommands.ActuateChair;
+import frc.robot.chair.chaircommands.ActuatePeg;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Peg;
-import frc.robot.panelclaw.Peg.PegState;
-import frc.robot.panelclaw.pegcommands.ActuateChair;
-import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.universalcommands.Wait;
 
 public class EjectPanel extends CommandGroup{
 
-    private Claw claw = Claw.getInstance();
-
     public EjectPanel(){
         setInterruptible(true);
-        requires(Peg.getInstance());
-        requires(claw);
+        requires(Chair.getInstance());
+        requires(Claw.getInstance());
         
-        addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
-        addSequential(new ActuatePeg().new SetPeg(PegState.DOWN));
+        addSequential(new ActuateChair().new SetChair(Chair.PneumaticState.IN));
+        addSequential(new ActuatePeg().new SetPeg(Chair.PegState.DOWN));
         addSequential(new PowerDrive(0.25, 0.25));
         addSequential(new Wait(0.1)); 
-        addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.OUT));
+        addSequential(new ActuateChair().new SetChair(Chair.PneumaticState.OUT));
         addSequential(new Wait(0.2));
-        addSequential(new ActuateChair().new SetChair(Peg.PneumaticState.IN));
+        addSequential(new ActuateChair().new SetChair(Chair.PneumaticState.IN));
         addSequential(new Wait(0.25));
         //addSequential(new ActuatePeg().new SetPeg(PegState.UP));
         //addSequential(new MoveMast(LiftState.LOW));
@@ -35,6 +32,6 @@ public class EjectPanel extends CommandGroup{
     protected void interrupted() {
         super.interrupted();
         Drivetrain.getInstance().kill();
-        claw.kill();
+        Claw.getInstance().kill();
     }
 }

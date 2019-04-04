@@ -58,9 +58,12 @@ public class Drivetrain extends Subsystem{
     
     private Drivetrain(){
         leftDrive0 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_0, MotorType.kBrushless);
+        leftDrive0.setInverted(true);
         leftDrive1 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_MAIN, MotorType.kBrushless);
+        leftDrive1.setInverted(true);
         leftDrive1.follow(leftDrive0);
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
+        leftDrive2.setInverted(true);
         leftDrive2.follow(leftDrive0);
         setCurrentLimits(leftDrive0, leftDrive1, leftDrive2, 30);
         setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.20);
@@ -70,9 +73,12 @@ public class Drivetrain extends Subsystem{
         DrivetrainConfig.configMotorController(leftPID);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
+        rightDrive0.setInverted(true);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
+        rightDrive1.setInverted(true);
         rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
+        rightDrive2.setInverted(true);
         rightDrive2.follow(rightDrive0);
         setCurrentLimits(rightDrive0, rightDrive1, rightDrive2, 30);
         setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.20);
@@ -171,9 +177,10 @@ public class Drivetrain extends Subsystem{
         //SETPOINTS MUST BE IN TICKS+
         SmartDashboard.putNumber("Left Drivetrain Setpoint", leftSetpoint);
         SmartDashboard.putNumber("Right Drivetrain Setpoint", rightSetpoint);
-        leftPID.setReference(leftSetpoint, ControlType.kPosition);
+        //leftPID.setReference(leftSetpoint, ControlType.kPosition);
         rightPID.setReference(rightSetpoint, ControlType.kPosition);
     }
+
     public boolean isInThreshold(double target){
         double leftError = target - getLeftEncoder();
         double rightError = target - getRightEncoder();

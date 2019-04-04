@@ -1,29 +1,21 @@
 package frc.robot.robotcore.userinput;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.ResetCargoArm;
+import frc.robot.chair.chairautomation.EjectPanel;
+import frc.robot.chair.chairautomation.FloorIntakePanel;
+import frc.robot.chair.chairautomation.PinPanel;
+import frc.robot.chair.chairautomation.PunchCargo;
 import frc.robot.climber.climbcommands.EngageClimb;
-import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Claw.ClawArmState;
-import frc.robot.panelclaw.chairautomation.*;
-import frc.robot.drivetrain.drivetraincommands.EncoderDrive;
-import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos1;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.mast.Mast;
 import frc.robot.mast.mastcommands.MastAutomation;
-import frc.robot.mast.mastcommands.MoveMast;
 import frc.robot.mast.mastcommands.ResetMastEncoder;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
-import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
-import frc.robot.panelclaw.clawcommands.RaiseClaw;
-import frc.robot.panelclaw.clawcommands.ResetClawEncoder;
-import frc.robot.panelclaw.pegcommands.ActuatePeg;
-import frc.robot.robotcore.RobotBuilder;
 import frc.robot.robotcore.RobotConstants;
 import frc.robot.robotcore.universalcommands.KillCommands;
 
@@ -88,6 +80,7 @@ public class OI {
     public double turnDrive(){
         return driver1.getRotationalPower();
     }
+
     public double cargoArmDrive(){
         double POWER = 0.35;
         if(driver1.isDpadUp()){

@@ -19,10 +19,10 @@ public class EncoderDrive extends Command{
     @Override
     protected void initialize() {
         SmartDashboard.putBoolean("Encoder command finished", false);
-        leftTarget = drivetrain.getLeftEncoder() + RobotConstants.DRIVETRAIN_INCHES_TO_TICKS(distance);
+        /*leftTarget = drivetrain.getLeftEncoder() + RobotConstants.DRIVETRAIN_INCHES_TO_TICKS(distance);
         rightTarget = drivetrain.getRightEncoder() + RobotConstants.DRIVETRAIN_INCHES_TO_TICKS(distance);
         SmartDashboard.putNumber("Left Target for Drivetrain", leftTarget);
-        SmartDashboard.putNumber("right target for drivetrain", rightTarget);
+        SmartDashboard.putNumber("right target for drivetrain", rightTarget);*/
         drivetrain.toPosition(170, 170);
 
     }

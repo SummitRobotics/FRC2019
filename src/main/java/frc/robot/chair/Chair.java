@@ -1,4 +1,4 @@
-package frc.robot.panelclaw;
+package frc.robot.chair;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.robotcore.RobotConstants;
 
-public class Peg extends Subsystem{
+public class Chair extends Subsystem{
     public enum PegState{
         UP(1),
         DOWN(0);
@@ -36,18 +36,18 @@ public class Peg extends Subsystem{
     private DoubleSolenoid bopCargo;
     private PneumaticState bopState;
 
-    private static Peg instance;
+    private static Chair instance;
 
-    private Peg(){
+    private Chair(){
         pegServo = new Servo(RobotConstants.Ports.PEG_SERVO);
         pegServo.setBounds(2.2, 0, 1.5, 0, 0.8);
 
         chairOuttake = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.PANEL_SOLENOID_OPEN, RobotConstants.Ports.PANEL_SOLENOID_CLOSE);
         bopCargo = new DoubleSolenoid(RobotConstants.Ports.PCM_1, RobotConstants.Ports.BOP_SOLENOID_CLOSE, RobotConstants.Ports.BOP_SOLENOID_OPEN);
     }
-    public static Peg getInstance(){
+    public static Chair getInstance(){
         if(instance == null){
-            instance = new Peg();
+            instance = new Chair();
         }
         return instance;
     }

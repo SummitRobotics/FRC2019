@@ -73,6 +73,8 @@ public class RobotConstants {
     PCM_2 = 2,
     CLIMB_RELEASE_OPEN = 0,
     CLIMB_RELEASE_CLOSE = 1,
+    CLIMB_RELEASE_BACK_OPEN = 3,
+    CLIMB_RELEASE_BACK_CLOSE = 4, 
 
     CLAW_MOVEMENT = 50,
     CLAW_MOVEMENT_FOLLOW = 51,

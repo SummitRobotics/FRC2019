@@ -1,24 +1,21 @@
-package frc.robot.panelclaw.chairautomation;
+package frc.robot.chair.chairautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.chair.Chair;
+import frc.robot.chair.chaircommands.ActuateChair;
+import frc.robot.chair.chaircommands.ActuatePeg;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Peg;
-import frc.robot.panelclaw.pegcommands.ActuateChair;
-import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.universalcommands.Wait;
 
 public class PinPanel extends CommandGroup{
 
-    private Drivetrain drivetrain = Drivetrain.getInstance();
-    private Claw claw = Claw.getInstance();
-
     public PinPanel(){
         setInterruptible(true);
-        requires(drivetrain);
-        requires(claw);
-        requires(Peg.getInstance());
+        requires(Drivetrain.getInstance());
+        requires(Claw.getInstance());
+        requires(Chair.getInstance());
 
         addSequential(new ActuatePeg().new TogglePeg());
         addSequential(new PowerDrive(-0.3, 0.5));
@@ -29,7 +26,7 @@ public class PinPanel extends CommandGroup{
     @Override
     protected void interrupted() {
         super.interrupted();
-        drivetrain.kill();
-        claw.kill();
+        Drivetrain.getInstance().kill();
+        Claw.getInstance().kill();
     }
 }

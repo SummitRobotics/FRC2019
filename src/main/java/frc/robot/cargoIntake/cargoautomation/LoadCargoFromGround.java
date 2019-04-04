@@ -4,14 +4,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
+import frc.robot.chair.Chair;
+import frc.robot.chair.chaircommands.ActuateChair;
+import frc.robot.chair.chaircommands.ActuatePeg;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawState;
-import frc.robot.panelclaw.Peg.PegState;
-import frc.robot.panelclaw.Peg.PneumaticState;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
-import frc.robot.panelclaw.pegcommands.ActuateChair;
-import frc.robot.panelclaw.pegcommands.ActuatePeg;
 import frc.robot.robotcore.universalcommands.Wait;
 import frc.robot.cargointake.cargocommands.EnableRollers;
 import frc.robot.cargointake.cargocommands.DetectCargo;
@@ -26,8 +25,8 @@ public class LoadCargoFromGround extends CommandGroup{
         //Initialize with the claw closed, the rollers on, the peg up, and the chair in.
         addSequential(new ActuateClaw().new SetClaw(ClawState.CLOSE));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
-        addSequential(new ActuateChair().new SetChair(PneumaticState.IN));
-        addSequential(new ActuatePeg().new SetPeg(PegState.UP));
+        addSequential(new ActuateChair().new SetChair(Chair.PneumaticState.IN));
+        addSequential(new ActuatePeg().new SetPeg(Chair.PegState.UP));
 
         //While initializing, move the claw wrist downwards. 
         //TODO - Make this command positional

@@ -16,8 +16,8 @@ import frc.robot.robotcore.RobotConstants;
 public class Mast extends Subsystem{
     public enum MastState{
         LOW(0),
-        MID(21),
-        HIGH(43);
+        MID(20.2),
+        HIGH(38);
 
         public final double value;
         MastState(double value){

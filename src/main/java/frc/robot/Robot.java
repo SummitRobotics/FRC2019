@@ -20,13 +20,11 @@ import frc.robot.autonomous.RocketRight;
 import frc.robot.autonomous.Yeet;
 import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
-import frc.robot.teleop.TestAllTheThings;
 
 
 public class Robot extends TimedRobot {
   public RobotBuilder robot;
   public static OI gamepad;
-  private TestAllTheThings test;
 
   private Command auto;
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
@@ -93,8 +91,8 @@ public class Robot extends TimedRobot {
     }
 
     /* ----- COMMENT THIS OUT WHEN ON FIELD: ***ONLY USE WHEN IN PRACTICE*** ----- */
-    robot.init();
-    robot.matchInit();
+    /*robot.init();
+    robot.matchInit();*/
   }
 
   @Override
@@ -105,12 +103,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    test = new TestAllTheThings();
-    test.init();
+
   }
 
   @Override
   public void testPeriodic() {
-    test.run();
+
   }
 }

@@ -1,22 +1,22 @@
-package frc.robot.panelclaw.pegcommands;
+package frc.robot.chair.chaircommands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.panelclaw.Peg;
+import frc.robot.chair.Chair;
 
-public class ActuatePeg{
-    private Peg peg = Peg.getInstance();
-
-    public ActuatePeg(){
+public class BopIt{
+    private Chair chair = Chair.getInstance();
+    
+    public BopIt(){
 
     }
 
-    public class SetPeg extends InstantCommand{
-        private Peg.PegState pegPosition;
+    public class SetBop extends InstantCommand{
+        private Chair.PneumaticState bopPos;
 
-        public SetPeg(Peg.PegState pegPosition){
+        public SetBop(Chair.PneumaticState bopPos){
             setInterruptible(true);
-            requires(peg);
-            this.pegPosition = pegPosition;
+            requires(chair);
+            this.bopPos = bopPos;
         }
         @Override
         protected void initialize() {
@@ -24,20 +24,19 @@ public class ActuatePeg{
         }
         @Override
         protected void execute() {
-            peg.setPeg(pegPosition);
+            chair.setBop(bopPos);
         }
         @Override
         protected void end() {
             super.end();
         }
     }
-
-    public class TogglePeg extends InstantCommand{
-        private Peg.PegState pegPosition;
-
-        public TogglePeg(){
+    public class ToggleBop extends InstantCommand{
+        private Chair.PneumaticState bopPos;
+        
+        public ToggleBop(){
             setInterruptible(true);
-            requires(peg);
+            requires(chair);
         }
         @Override
         protected void initialize() {
@@ -45,13 +44,12 @@ public class ActuatePeg{
         }
         @Override
         protected void execute() {
-            this.pegPosition = peg.togglePeg();
-            peg.setPeg(pegPosition);
+            this.bopPos = chair.toggleBop();
+            chair.setBop(bopPos);
         }
         @Override
         protected void end() {
             super.end();
         }
     }
-
 }

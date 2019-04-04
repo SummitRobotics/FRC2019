@@ -12,6 +12,7 @@ public class USBDriverCamera{
     }
 
     public void init(){
-
+        //driverCamera.setResolution(640, 360);
+        //driverCamera.setFPS(30);
     }
 }

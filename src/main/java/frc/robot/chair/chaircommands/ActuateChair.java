@@ -1,21 +1,21 @@
-package frc.robot.panelclaw.pegcommands;
+package frc.robot.chair.chaircommands;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
-import frc.robot.panelclaw.Peg;
+import frc.robot.chair.Chair;
 
 public class ActuateChair{
-    private Peg peg = Peg.getInstance();
+    private Chair chair = Chair.getInstance();
 
     public ActuateChair(){
         
     }
 
 public class SetChair extends InstantCommand{
-    private Peg.PneumaticState chairPos;
+    private Chair.PneumaticState chairPos;
 
-        public SetChair(Peg.PneumaticState chairPos){
+        public SetChair(Chair.PneumaticState chairPos){
             setInterruptible(true);
-            requires(peg);
+            requires(chair);
             this.chairPos = chairPos;
         }
         @Override
@@ -24,7 +24,7 @@ public class SetChair extends InstantCommand{
         }
         @Override
         protected void execute() {
-            peg.setChair(chairPos);
+            chair.setChair(chairPos);
         }
         @Override
         protected void end() {
@@ -32,11 +32,11 @@ public class SetChair extends InstantCommand{
         }
     }
     public class ToggleChair extends InstantCommand{
-        private Peg.PneumaticState panelPosition;
+        private Chair.PneumaticState panelPosition;
         
         public ToggleChair(){
             setInterruptible(true);
-            requires(peg);
+            requires(chair);
         }
         @Override
         protected void initialize() {
@@ -44,8 +44,8 @@ public class SetChair extends InstantCommand{
         }
         @Override
         protected void execute() {
-            this.panelPosition = peg.toggleChair();
-            peg.setChair(panelPosition);
+            this.panelPosition = chair.toggleChair();
+            chair.setChair(panelPosition);
         }
         @Override
         protected void end() {

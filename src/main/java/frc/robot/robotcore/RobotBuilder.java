@@ -4,17 +4,17 @@ import frc.robot.panelclaw.Claw;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
+import frc.robot.chair.Chair;
 import frc.robot.devices.Limelight;
 import frc.robot.devices.PressureSensor;
 import frc.robot.devices.USBDriverCamera;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.mast.Mast;
-import frc.robot.panelclaw.Peg;
 
 public class RobotBuilder{
     public Drivetrain drivetrain;
     public Claw claw;
-    public Peg peg;
+    public Chair chair;
     public Mast mast;
     public CargoIntake cargoIntake;
 
@@ -26,7 +26,7 @@ public class RobotBuilder{
     private RobotBuilder(){
         drivetrain = Drivetrain.getInstance();
         claw = Claw.getInstance();
-        peg = Peg.getInstance();
+        chair = Chair.getInstance();
         cargoIntake = CargoIntake.getInstance();
         mast = Mast.getInstance();
 
@@ -50,12 +50,12 @@ public class RobotBuilder{
         mast.setEncoderPos(0);
     }
     public void matchInit(){
-        peg.setPeg(Peg.PegState.UP);
+        chair.setPeg(Chair.PegState.UP);
         cargoIntake.setRollers(CargoIntake.RollerState.OFF);
         claw.setArm(Claw.ClawArmState.UP.value);
         drivetrain.shiftGear(Drivetrain.GearState.HIGH);
-        peg.setChair(Peg.PneumaticState.OUT);
-        peg.setBop(Peg.PneumaticState.IN);
+        chair.setChair(Chair.PneumaticState.OUT);
+        chair.setBop(Chair.PneumaticState.IN);
         claw.setClaw(Claw.ClawState.CLOSE);
         drivetrain.resetGyro();
         cargoIntake.setArmEncoder(0);

@@ -1,14 +1,14 @@
 package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.chair.Chair;
+import frc.robot.chair.chairautomation.EjectPanel;
+import frc.robot.chair.chairautomation.PinPanel;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.GyroTurn;
 import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.panelclaw.Claw;
-import frc.robot.panelclaw.Peg;
-import frc.robot.panelclaw.chairautomation.EjectPanel;
-import frc.robot.panelclaw.chairautomation.PinPanel;
 
 public class LeftCargoShipPower extends CommandGroup{
 
@@ -16,7 +16,7 @@ public class LeftCargoShipPower extends CommandGroup{
         setInterruptible(true);
         requires(Drivetrain.getInstance());
         requires(Claw.getInstance());
-        requires(Peg.getInstance());
+        requires(Chair.getInstance());
 
         addSequential(new PowerDrive(0.35, 2.0));
         addSequential(new TargetAlignment());
