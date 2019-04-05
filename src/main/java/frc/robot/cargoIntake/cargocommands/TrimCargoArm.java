@@ -6,7 +6,6 @@ import frc.robot.robotcore.userinput.OI;
 
 public class TrimCargoArm extends Command{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
-    private final double POWER = 0.3;
 
     public TrimCargoArm(){
         setInterruptible(true);

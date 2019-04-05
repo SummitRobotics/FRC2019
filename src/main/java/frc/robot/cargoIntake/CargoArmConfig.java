@@ -34,7 +34,6 @@ public class CargoArmConfig{
         configInverts(talon);
         configClosedLoop(talon);
 
-        //TODO - Zeroing
     }
 
     private static void configPIDF(TalonSRX talon){
@@ -56,18 +55,17 @@ public class CargoArmConfig{
         talon.setInverted(isInverted);
     }
 
-    private static void configCurrentLimits(TalonSRX talon){
+    /*private static void configCurrentLimits(TalonSRX talon){
         talon.configPeakCurrentLimit((int)PEAK_CURRENT);
         talon.configContinuousCurrentLimit((int)CONST_CURRENT);
-    }
+    }*/
 
     private static void configClosedLoop(TalonSRX talon){
         talon.configAllowableClosedloopError(0, (int)CLOSED_LOOP_ERROR);
     }
 
-    //TODO - Motion Profiling! Use Motion Magic.
+    /*TODO - Motion Profiling! Use Motion Magic.
     private void configMotionProfile(){
         
-    }
-
+    }*/
 }

@@ -1,13 +1,12 @@
 package frc.robot.robotcore;
 
 import frc.robot.panelclaw.Claw;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.chair.Chair;
+import frc.robot.climber.Climb;
 import frc.robot.devices.Limelight;
 import frc.robot.devices.PressureSensor;
-import frc.robot.devices.USBDriverCamera;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.mast.Mast;
 
@@ -17,10 +16,11 @@ public class RobotBuilder{
     public Chair chair;
     public Mast mast;
     public CargoIntake cargoIntake;
+    public Climb climb;
 
     public Limelight lemonlight;
     public PressureSensor pressureSensor;
-    public USBDriverCamera driverFeed;
+    //public USBDriverCamera driverFeed;
 
     private static RobotBuilder instance;
     private RobotBuilder(){
@@ -29,8 +29,9 @@ public class RobotBuilder{
         chair = Chair.getInstance();
         cargoIntake = CargoIntake.getInstance();
         mast = Mast.getInstance();
+        climb = Climb.getInstance();
 
-        driverFeed = new USBDriverCamera();
+        //driverFeed = new USBDriverCamera();
         lemonlight = new Limelight();
         pressureSensor = new PressureSensor();
     }
@@ -41,7 +42,7 @@ public class RobotBuilder{
         return instance;
     }
     public void init(){
-        driverFeed.init();
+       // driverFeed.init();
         drivetrain.resetGyro();
         drivetrain.setDrivetrainEncoders(0);
         cargoIntake.setArmEncoder(0);
@@ -59,13 +60,16 @@ public class RobotBuilder{
         claw.setClaw(Claw.ClawState.CLOSE);
         drivetrain.resetGyro();
         cargoIntake.setArmEncoder(0);
+        climb.engageFrontPistons(Value.kReverse);
+        climb.engageRearPiston(Value.kReverse);
+
     }
     
     public void run(){
 
     }
     public void dashboard(){
-        SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
+        /*SmartDashboard.putNumber("Current PSI", pressureSensor.getPressure());
         SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
         SmartDashboard.putNumber("Intake Arm Encoder",cargoIntake.getIntakeArmEncoder());
         SmartDashboard.putBoolean("Break 1", cargoIntake.isBallDetected());
@@ -75,7 +79,7 @@ public class RobotBuilder{
         SmartDashboard.putBoolean("Mast Limit", mast.getMastLowLimit());
         SmartDashboard.putBoolean("Panel Detector", claw.isPanelPresent());
         SmartDashboard.putNumber("Claw Arm Encoder", claw.getArmEncoder());
-        SmartDashboard.putNumber("Target", lemonlight.getTarget());
+        SmartDashboard.putNumber("Target", lemonlight.getTarget());*/
 
         /*claw.panelSensor.read();
         SmartDashboard.putNumber("Red", claw.panelSensor.red);

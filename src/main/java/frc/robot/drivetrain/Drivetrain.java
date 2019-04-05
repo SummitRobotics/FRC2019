@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.drivetraincommands.ArcadeDrive;
 import frc.robot.robotcore.RobotConstants;
 
@@ -50,7 +49,7 @@ public class Drivetrain extends Subsystem{
 
     private double[] ypr;
 
-    private final double THRESHOLD = 10;
+    private final double THRESHOLD = 2;
 
 /* ----- INSTANTIATION METHODS ----- */
 
@@ -60,28 +59,29 @@ public class Drivetrain extends Subsystem{
         leftDrive0 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_0, MotorType.kBrushless);
         leftDrive0.setInverted(true);
         leftDrive1 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_MAIN, MotorType.kBrushless);
-        leftDrive1.setInverted(true);
+        //leftDrive1.setInverted(true);
         leftDrive1.follow(leftDrive0);
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
-        leftDrive2.setInverted(true);
+        //leftDrive2.setInverted(true);
         leftDrive2.follow(leftDrive0);
         setCurrentLimits(leftDrive0, leftDrive1, leftDrive2, 30);
-        setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.20);
+        setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.15);
 
         leftEncoder = new CANEncoder(leftDrive0);
         leftPID = new CANPIDController(leftDrive0);
         DrivetrainConfig.configMotorController(leftPID);
 
         rightDrive0 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_0, MotorType.kBrushless);
-        rightDrive0.setInverted(true);
+       //rightDrive0.setInverted(true);
         rightDrive1 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_MAIN, MotorType.kBrushless);
-        rightDrive1.setInverted(true);
+
+        //rightDrive1.setInverted(true);
         rightDrive1.follow(rightDrive0);
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
-        rightDrive2.setInverted(true);
+        //rightDrive2.setInverted(true);
         rightDrive2.follow(rightDrive0);
         setCurrentLimits(rightDrive0, rightDrive1, rightDrive2, 30);
-        setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.20);
+        setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.15);
 
         rightEncoder = new CANEncoder(rightDrive0);
         rightPID = new CANPIDController(rightDrive0);
@@ -91,6 +91,7 @@ public class Drivetrain extends Subsystem{
         rightDrive = new SpeedControllerGroup(rightDrive0, rightDrive1, rightDrive2);
         robotDrive = new DifferentialDrive(leftDrive, rightDrive);
         robotDrive.setSafetyEnabled(false);
+        robotDrive.setRightSideInverted(false);
 
         gyro = new PigeonIMU(RobotConstants.Ports.GYRO);
 
@@ -175,15 +176,14 @@ public class Drivetrain extends Subsystem{
     
     public void toPosition(double leftSetpoint, double rightSetpoint){
         //SETPOINTS MUST BE IN TICKS+
-        SmartDashboard.putNumber("Left Drivetrain Setpoint", leftSetpoint);
-        SmartDashboard.putNumber("Right Drivetrain Setpoint", rightSetpoint);
-        //leftPID.setReference(leftSetpoint, ControlType.kPosition);
-        rightPID.setReference(rightSetpoint, ControlType.kPosition);
+        leftPID.setReference(-leftSetpoint, ControlType.kPosition);
+        rightPID.setReference(-rightSetpoint, ControlType.kPosition);
     }
 
     public boolean isInThreshold(double target){
         double leftError = target - getLeftEncoder();
         double rightError = target - getRightEncoder();
+
         
         boolean isLeftDone = (leftError > -THRESHOLD) && (leftError < THRESHOLD);
         boolean isRightDone = (rightError > -THRESHOLD) && (rightError < THRESHOLD);

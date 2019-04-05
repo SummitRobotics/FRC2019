@@ -1,7 +1,6 @@
 package frc.robot.panelclaw.clawcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.panelclaw.Claw;
 
 public class RaiseClaw extends Command{
@@ -17,7 +16,6 @@ public class RaiseClaw extends Command{
     @Override
     protected void initialize() {
         super.initialize();
-        SmartDashboard.putBoolean("Claw Command Done", false);
     }
     @Override
     protected void execute() {
@@ -35,6 +33,5 @@ public class RaiseClaw extends Command{
     @Override
     protected void end() {
         super.end();
-        SmartDashboard.putBoolean("Claw Command Done", true);
     }
 }

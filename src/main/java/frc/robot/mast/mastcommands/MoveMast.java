@@ -1,8 +1,6 @@
 package frc.robot.mast.mastcommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.InstantCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.mast.Mast;
 
 public class MoveMast extends Command{
@@ -29,6 +27,5 @@ public class MoveMast extends Command{
     @Override
     protected void end() {
         super.end();
-        SmartDashboard.putBoolean("Move mast done", true);
     }
 }

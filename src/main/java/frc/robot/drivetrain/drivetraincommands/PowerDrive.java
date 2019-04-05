@@ -11,7 +11,7 @@ public class PowerDrive extends Command{
         setInterruptible(true);
         requires(drivetrain);
 
-        this.power = -power;
+        this.power = power;
         setTimeout(timeout);
     }
 

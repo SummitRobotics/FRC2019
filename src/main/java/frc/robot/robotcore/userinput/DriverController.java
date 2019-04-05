@@ -9,7 +9,7 @@ public class DriverController{
     private XboxController controller;
 
     final double SPEED_DEADZONE = 0.05;
-    final double SPEED_EXPONENT = 2.0;
+    final double SPEED_EXPONENT = 1.85;
 
     final double TURN_DEADZONE = 0.05;
     final double TURN_EXPONENT = 2.0;
@@ -158,11 +158,11 @@ public class DriverController{
         //makes sure input is within bounds, adjusts linear slope to start at deadzone and end at 1, applies exponent to adjust sensitivity
         //because of how the deadzone and exponents are being calculated, the value will never exceed 1 if it starts equal to or less than 1,
         //which is why the clamp is the inner most method
-        return -toExponential(deadzone(clamp(input, -1, 1), SPEED_DEADZONE), SPEED_EXPONENT);
+        return toExponential(deadzone(clamp(input, -1, 1), SPEED_DEADZONE), SPEED_EXPONENT);
     }
     
     public double makeTurnCurve(double input){
-        return -toExponential(deadzone(clamp(input, -1, 1), TURN_DEADZONE), TURN_EXPONENT);
+        return toExponential(deadzone(clamp(input, -1, 1), TURN_DEADZONE), TURN_EXPONENT);
     }
     
     //it will probably drive backwards with this, but humor me and lets test it before adjusting?
@@ -203,6 +203,9 @@ public class DriverController{
 
     //cleeeeaaaan math :insert ok hand: i just learned this too and feel stupid for not thinking of it
     public static double toExponential(double value, double power){
-        return Math.abs(Math.pow(value, power - 1)) * value; //this is just fancy math that makes it so you don't need signum() or copysign(), also learned that
+        //return Math.abs(Math.pow(value, power - 1)) * value; //this is just fancy math that makes it so you don't need signum() or copysign(), also learned that
+        value = Math.pow(Math.abs(value), power) * Math.signum(value);
+        return value;
+
     }
 }

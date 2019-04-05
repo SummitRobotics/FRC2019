@@ -9,8 +9,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.mast.mastcommands.MoveMastManual;
 import frc.robot.robotcore.RobotConstants;
 
 public class Mast extends Subsystem{

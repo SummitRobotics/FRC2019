@@ -8,7 +8,7 @@ import frc.robot.chair.chairautomation.EjectPanel;
 import frc.robot.chair.chairautomation.FloorIntakePanel;
 import frc.robot.chair.chairautomation.PinPanel;
 import frc.robot.chair.chairautomation.PunchCargo;
-import frc.robot.climber.climbcommands.EngageClimb;
+import frc.robot.climber.climbautomation.Level2Climb;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos1;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
@@ -48,7 +48,7 @@ public class OI {
         dashboard.mastMid.whenPressed(new MastAutomation(Mast.MastState.MID));
         dashboard.mastLow.whenPressed(new MastAutomation(Mast.MastState.LOW));
         dashboard.panelGround.whenPressed(new FloorIntakePanel());
-        dashboard.climb.whileHeld(new EngageClimb());
+        dashboard.climb.whenPressed(new Level2Climb());
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());

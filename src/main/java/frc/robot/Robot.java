@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.autonomous.LeftCargoShip;
 import frc.robot.autonomous.LeftCargoShipPower;
 import frc.robot.autonomous.RightCargoShip;
-import frc.robot.autonomous.RocketLeft;
-import frc.robot.autonomous.RocketRight;
+import frc.robot.autonomous.RocketLeftBackLow;
+import frc.robot.autonomous.RocketRightBackLow;
 import frc.robot.autonomous.Yeet;
 import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
@@ -43,9 +43,9 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("Yeet", new Yeet());
     autoChooser.addOption("Left Cargo Ship", new LeftCargoShip());
     autoChooser.addOption("Right Cargo Ship", new RightCargoShip());
-    autoChooser.addOption("Left Rocket", new RocketLeft());
-    autoChooser.addOption("Power Cargo", new LeftCargoShipPower());
-    autoChooser.addOption("Right Rocket", new RocketRight());
+    autoChooser.addOption("Left Rocket, Back, Low", new RocketLeftBackLow());
+    autoChooser.addOption("Power Cargo, Back, Low", new LeftCargoShipPower());
+    autoChooser.addOption("Right Rocket", new RocketRightBackLow());
     SmartDashboard.putData("Select Auto", autoChooser);
 
     //THIS MUST OCCUR AFTER ROBOT INIT
@@ -80,7 +80,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    SmartDashboard.putNumber("Gyro Angle Yeet", robot.drivetrain.getYaw());
     Scheduler.getInstance().run();
   }
 

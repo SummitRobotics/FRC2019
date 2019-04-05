@@ -1,8 +1,8 @@
 package frc.robot.cargointake.cargocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
+import frc.robot.robotcore.userinput.OI;
 
 public class DetectCargo extends Command{
     private CargoIntake cargoIntake = CargoIntake.getInstance();
@@ -17,10 +17,13 @@ public class DetectCargo extends Command{
     @Override
     protected void initialize() {
         super.initialize();
+
     }
     @Override
     protected void execute() {
-
+        if(detectionLevel == CargoIntake.CargoPosition.DETECTED){
+            cargoIntake.moveIntakeArm(OI.getInstance().mastDrive());
+        }
     }
     @Override
     protected boolean isFinished() {

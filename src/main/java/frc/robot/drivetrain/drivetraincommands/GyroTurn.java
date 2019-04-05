@@ -1,7 +1,6 @@
 package frc.robot.drivetrain.drivetraincommands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.drivetrain.Drivetrain;
 
 public class GyroTurn extends PIDCommand{
@@ -37,13 +36,11 @@ public class GyroTurn extends PIDCommand{
     }
     @Override
     protected void usePIDOutput(double output) {
-        SmartDashboard.putNumber("Gyro", drivetrain.getYaw());
-        drivetrain.robotDrive.tankDrive(-output, output);
+        drivetrain.robotDrive.tankDrive(output, -output);
     }
     @Override
     protected boolean isFinished() {
         double error = getPIDController().getError();
-        SmartDashboard.putNumber("gyro error", error);
         return (error < THRESHOLD) && (error > -THRESHOLD);
     }
     @Override

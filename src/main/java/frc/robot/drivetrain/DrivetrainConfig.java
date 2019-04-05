@@ -6,13 +6,13 @@ import com.revrobotics.CANSparkMax;
 public class DrivetrainConfig{
 
     private static double
-        P = 0.9,
+        P = 0.2,
         I = 0,
         D = 0.01,
         FEED_FWD = 0,
         I_ZONE = 0,
         OUTPUT_MIN = 0.5,
-        OUTPUT_MAX = -0.5,
+        OUTPUT_MAX = 0.5,
         MIN_VELOCITY = 0,
         MAX_VELOCITY = 1,
         MAX_ACCEL = 1,

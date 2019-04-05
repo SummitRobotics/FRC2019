@@ -5,10 +5,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.cargocommands.TrimCargoArm;
 import frc.robot.robotcore.RobotConstants;
 
@@ -17,8 +15,9 @@ public class CargoIntake extends Subsystem {
     //List of states intake arm can "servo" to. Values given in angle / 360
     public enum IntakeArmState {
         UP(0),
-        INTAKE_LOWER(-111),
-        DOWN(-120);
+        INTAKE_LOWER(-113),
+        DOWN(-120),
+        CLIMB(-120);
 
         public final double value;
         IntakeArmState(double value) {
@@ -139,7 +138,6 @@ public class CargoIntake extends Subsystem {
     }
     public void setRollers(RollerState intakeSpinPosition){
         intake(intakeSpinPosition.value);
-        SmartDashboard.putNumber("current roller power", intakeSpinPosition.value);
         rollerState = intakeSpinPosition;
     }
 
@@ -188,12 +186,10 @@ public class CargoIntake extends Subsystem {
         //adjust for sprocket ratio
         target *= 3;
         arm.set(ControlMode.Position, target); 
-        SmartDashboard.putNumber("Closed Loop Error for Arm", arm.getClosedLoopError());
         return (arm.getClosedLoopError() < THRESHOLD) && (arm.getClosedLoopError() > -THRESHOLD);
     }
     
     public void kill() {
-        SmartDashboard.putBoolean("Cargo killed", true);
         arm.set(ControlMode.PercentOutput, 0);
         rollers.set(ControlMode.PercentOutput, 0);
     }

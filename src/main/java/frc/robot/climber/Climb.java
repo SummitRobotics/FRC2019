@@ -1,6 +1,7 @@
 package frc.robot.climber;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.robotcore.RobotConstants;
 
@@ -27,13 +28,11 @@ public class Climb extends Subsystem{
     }
 
     /* ----- CLIMB ACTIONS ----- */
-    public void climbLevel2(){
-        climbPistons.set(DoubleSolenoid.Value.kForward);
-        backPistons.set(DoubleSolenoid.Value.kForward);
-    }
-    public void revertClimb(){
-        climbPistons.set(DoubleSolenoid.Value.kReverse);
-        backPistons.set(DoubleSolenoid.Value.kReverse);
-    }
 
+    public void engageFrontPistons(Value direction){
+        climbPistons.set(direction);
+    }
+    public void engageRearPiston(Value direction){
+        backPistons.set(direction);
+    }
 }

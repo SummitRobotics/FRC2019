@@ -5,10 +5,10 @@ import edu.wpi.first.cameraserver.CameraServer;
 
 public class USBDriverCamera{
 
-    UsbCamera driverCamera;
+    //UsbCamera driverCamera;
 
     public USBDriverCamera(){
-        driverCamera = CameraServer.getInstance().startAutomaticCapture();
+        //driverCamera = CameraServer.getInstance().startAutomaticCapture();
     }
 
     public void init(){

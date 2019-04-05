@@ -2,7 +2,6 @@ package frc.robot.cargointake.cargocommands;
 
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 
 public class SetCargoArm extends Command{
@@ -19,7 +18,6 @@ public class SetCargoArm extends Command{
     @Override
     protected void initialize() {
         super.initialize();
-        SmartDashboard.putBoolean("Cargo arm done", false);
     }
     @Override
     protected void execute() {
@@ -38,6 +36,5 @@ public class SetCargoArm extends Command{
     @Override
     protected void end() {
         super.end();
-        SmartDashboard.putBoolean("Cargo arm done", true);
     }
 }
