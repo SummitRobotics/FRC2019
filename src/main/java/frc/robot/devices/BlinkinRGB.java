@@ -1,39 +1,70 @@
 package frc.robot.devices;
 
 import edu.wpi.first.wpilibj.Spark;
+import frc.robot.drivetrain.Drivetrain;
 import frc.robot.robotcore.RobotConstants;
 
 public class BlinkinRGB{
 
-    public enum Blinkin{
-        RAINBOW_PALETTE(-0.99),
-        RAINBOW_PARTY(-0.97),
-        RAINBOW_OCEAN(-0.95),
-        LARSON_SCANNER_RED(-0.35),
-        COLOR_1_SLOW(0.03),
-        COLOR_1_MED(0.05),
-        COLOR_1_FAST(0.07),
-        COLOR_1_2(0.53),
-        BLUE(0.87),
-        BLUE_VIOLET(0.89),
-        VIOLET(0.91);
+    public enum BlinkinState{
+
+        //Presets
+        RAINBOW(-0.99),
+        TWINKLES(-0.47),
+
+        //Solid colors
+        LIME(0.73),
+        RED(0.61),
+        DARKRED(0.59),
+        
+        //Color 1 Options
+        C1ENDTOENDBLENDTOBLACK(-0.03),
+
+        //Color 2 Options
+        C2ENDTOENDBLENDTOBLACK(0.17),
+        HEARTBEATSLOW(0.23),
+        HEARTBEATMEDIUM(0.25),
+        HEARTBEATFAST(0.27),
+        SHOT(0.33),
+        STROBE(0.35);
 
         public final double value;
 
-        Blinkin(double value){
+        BlinkinState(double value){
             this.value = value;
         }
     }
 
     private Spark blinkin;
-    private Blinkin RGBState;
 
-    public BlinkinRGB(){
+    public BlinkinState stateOne;
+    public BlinkinState stateTwo;
+
+    private static BlinkinRGB instance;
+
+    private BlinkinRGB(){
         blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
-    }    
 
-    public void setLEDColor(Blinkin blinkinValue){
-        blinkin.set(blinkinValue.value);
-        RGBState = blinkinValue;
+        stateOne = BlinkinState.C1ENDTOENDBLENDTOBLACK;
+        stateTwo = BlinkinState.C2ENDTOENDBLENDTOBLACK;
+    }
+
+    public static BlinkinRGB getInstance(){
+        if(instance == null){
+            instance = new BlinkinRGB();
+        }
+        return instance;
+    }
+
+    public void setLEDState(BlinkinState blinkenValue) {
+        blinkin.set(blinkenValue.value);
+    }
+
+    public void shiftSetLEDState(Drivetrain.GearState shiftState) {
+        if (shiftState == Drivetrain.GearState.LOW) {
+            blinkin.set(stateTwo.value);
+        } else {
+            blinkin.set(stateOne.value);
+        }
     }
 }

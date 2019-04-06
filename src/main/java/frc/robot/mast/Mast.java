@@ -10,14 +10,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.robotcore.RobotConstants;
-import frc.robot.robotcore.userinput.ButtonDashboardDriver;
 import frc.robot.robotcore.userinput.OI;
 
 public class Mast extends Subsystem{
     public enum MastState{
         LOW(0, 0),
         MID(20, 22),
-        HIGH(34.8, 36),
+        HIGH(34.3, 36),
         SHIP(11,11);
 
         public final double cargoValue, panelValue;
