@@ -11,6 +11,8 @@ public class BlinkinRGB{
         //Presets
         RAINBOW(-0.99),
         TWINKLES(-0.47),
+        LAVA(-.31),
+        FOREST(.53),
 
         //Solid colors
         LIME(0.73),
@@ -45,8 +47,8 @@ public class BlinkinRGB{
     private BlinkinRGB(){
         blinkin = new Spark(RobotConstants.Ports.BLINKIN_LED);
 
-        stateOne = BlinkinState.C1ENDTOENDBLENDTOBLACK;
-        stateTwo = BlinkinState.C2ENDTOENDBLENDTOBLACK;
+        stateOne = BlinkinState.FOREST;
+        stateTwo = BlinkinState.LAVA;
     }
 
     public static BlinkinRGB getInstance(){
