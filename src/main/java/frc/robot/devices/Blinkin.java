@@ -8,6 +8,9 @@ public class Blinkin{
 
     public enum BlinkinState{
 
+        //Presets
+        RAINBOW(-.99),
+
         //Solid colors
         LIME(0.73),
         RED(0.61),
@@ -56,6 +59,7 @@ public class Blinkin{
         blinkin.set(blinkenValue.value);
     }
 
+    /*
     public void shiftSetLEDState(Drivetrain.GearState shiftState) {
         if (shiftState == Drivetrain.GearState.LOW) {
             blinkin.set(stateTwo.value);
@@ -63,4 +67,5 @@ public class Blinkin{
             blinkin.set(stateOne.value);
         }
     }
+    */
 }
