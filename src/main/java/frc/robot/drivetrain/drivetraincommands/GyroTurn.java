@@ -12,9 +12,9 @@ public class GyroTurn extends PIDCommand{
     
     //TODO - Tuning
     private static final double
-    P = 0.04,
-    I = 0.00,
-    D = 0.4;
+    P = 0.033,
+    I = 0.001,
+    D = 0.15;
 
     public GyroTurn(double angle){
         super(P, I, D, Drivetrain.getInstance());

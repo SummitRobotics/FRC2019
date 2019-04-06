@@ -2,6 +2,7 @@ package frc.robot.cargointake.cargocommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 
 public class EnableRollers{
@@ -27,7 +28,9 @@ public class EnableRollers{
         }
         @Override
         protected void execute() {
-            cargoIntake.setRollers(rollerSpin);;
+            cargoIntake.setRollers(rollerSpin);
+            SmartDashboard.putNumber("We got to this spot", 1);
+
         }
         @Override
         protected boolean isFinished() {
@@ -86,5 +89,31 @@ public class EnableRollers{
         protected void end() {
             super.end();
         }
+    }
+    public class ToggleEjectionRollers extends Command{
+        private CargoIntake.RollerState rollerSpin;
+
+        public ToggleEjectionRollers(){
+            setInterruptible(true);
+            requires(cargoIntake);
+        }
+        @Override
+        protected void initialize() {
+            super.initialize();
+        }
+        @Override
+        protected void execute() {
+            this.rollerSpin = cargoIntake.toggleRollers();
+            cargoIntake.setRollers(CargoIntake.RollerState.ON);
+        }
+        @Override
+        protected boolean isFinished() {
+            return false;
+        }
+        @Override
+        protected void end() {
+            cargoIntake.setRollers(CargoIntake.RollerState.OFF);
+        }
+
     }
 }

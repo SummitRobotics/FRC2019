@@ -10,16 +10,27 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.robotcore.RobotConstants;
+import frc.robot.robotcore.userinput.ButtonDashboardDriver;
+import frc.robot.robotcore.userinput.OI;
 
 public class Mast extends Subsystem{
     public enum MastState{
-        LOW(0),
-        MID(20.2),
-        HIGH(38);
+        LOW(0, 0),
+        MID(20, 22),
+        HIGH(34.8, 36),
+        SHIP(11,11);
 
-        public final double value;
-        MastState(double value){
-            this.value = value;
+        public final double cargoValue, panelValue;
+        MastState(double cargoValue, double panelValue){
+            this.cargoValue = cargoValue;
+            this.panelValue = panelValue;
+        }
+
+        public final double state(boolean type){
+            if (type){
+                return cargoValue;
+            }
+            return panelValue;
         }
     }
 
@@ -81,11 +92,19 @@ public class Mast extends Subsystem{
             mastPID.setReference(power, ControlType.kDutyCycle);
         }
     }
-
     public void setMast(MastState mastPos){
-        double setpoint = mastPos.value;
+        mastPID.setReference(mastPos.state(OI.getInstance().getSideAndHeight()),ControlType.kPosition);
+    }
+    /*
+    public void setMastForCargo(MastState mastPos){
+        double setpoint = mastPos.cargoValue;
         mastPID.setReference(setpoint, ControlType.kPosition);
     }
+    public void setMastForPanel(MastState mastPos){
+        double setpoint = mastPos.panelValue;
+        mastPID.setReference(setpoint, ControlType.kPosition);
+    }
+    */
 
     public boolean getMastLowLimit() {
         return !mastLowLimit.get();

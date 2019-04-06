@@ -16,7 +16,7 @@ public class CargoIntake extends Subsystem {
     public enum IntakeArmState {
         UP(0),
         INTAKE_LOWER(-113),
-        DOWN(-120),
+        DOWN(-125),
         CLIMB(-120);
 
         public final double value;

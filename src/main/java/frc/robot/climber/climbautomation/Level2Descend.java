@@ -8,7 +8,9 @@ import frc.robot.cargointake.cargocommands.SetCargoArm;
 import frc.robot.climber.Climb;
 import frc.robot.climber.climbcommands.EngageFrontPistons;
 import frc.robot.climber.climbcommands.EngageRearPiston;
+import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.EncoderDrive;
+import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.robotcore.universalcommands.Wait;
 
 public class Level2Descend extends CommandGroup {
@@ -19,25 +21,13 @@ public class Level2Descend extends CommandGroup {
     public Level2Descend() {
         requires(climb);
         requires(cargoIntake);
+        requires(Drivetrain.getInstance());
+        setInterruptible(false);
 
-        addSequential(new Wait(2));
-        addSequential(new EncoderDrive(3));
-        addSequential(new Wait(5));
-        addSequential(new EngageFrontPistons(Value.kForward));
-        addSequential(new Wait(0.7));
-        addSequential(new Wait(5));
-        addSequential(new EncoderDrive(3));
-        addSequential(new Wait(0.7));
-        addSequential(new Wait(5));
         addSequential(new EngageRearPiston(Value.kForward));
-        addSequential(new Wait(0.5));
-        addSequential(new Wait(5));
-        addSequential(new EncoderDrive(3));
-        addSequential(new Wait(5));
-        addSequential(new EngageFrontPistons(Value.kReverse));
-        addSequential(new EngageRearPiston(Value.kReverse));
-        addSequential(new Wait(1.2));
-        addSequential(new Wait(5));
-        addSequential(new EncoderDrive(12));
+        addSequential(new Wait(0.8));
+        addParallel(new TempCommandForDescend());
+        addSequential(new PowerDrive(-0.5, 2.2));
+
    }
 }

@@ -4,12 +4,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargocommands.SetCargoArm;
+import frc.robot.cargointake.cargocommands.StupidEnableRollersEncapsulation;
+import frc.robot.cargointake.cargocommands.TrimDetectCargo;
 import frc.robot.chair.Chair;
 import frc.robot.chair.chaircommands.ActuateChair;
 import frc.robot.chair.chaircommands.ActuatePeg;
 import frc.robot.panelclaw.Claw;
 import frc.robot.panelclaw.Claw.ClawState;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
+import frc.robot.panelclaw.clawcommands.LimitClaw;
 import frc.robot.panelclaw.clawcommands.PowerMoveClawWrist;
 import frc.robot.robotcore.universalcommands.Wait;
 import frc.robot.cargointake.cargocommands.EnableRollers;
@@ -30,7 +33,8 @@ public class LoadCargoFromGround extends CommandGroup{
 
         //While initializing, move the claw wrist downwards. 
         //TODO - Make this command positional
-        addParallel(new PowerMoveClawWrist(1.5, Claw.ClawSpeed.FORWARD));
+        addParallel(new LimitClaw(-.25));
+        addParallel(new PowerMoveClawWrist(1.7, Claw.ClawSpeed.FORWARD));
 
         //Lower the cargo arm and wait to execute new commands.
         //TODO - Make SetCargoArm non-instant, remove waits
@@ -38,7 +42,7 @@ public class LoadCargoFromGround extends CommandGroup{
         addSequential(new Wait(1.0));
 
         //Wait until first break beam is broken (meaning cargo is in roller's grasp)
-        addSequential(new DetectCargo(CargoIntake.CargoPosition.DETECTED));
+        addSequential(new TrimDetectCargo(CargoIntake.CargoPosition.DETECTED));
         addSequential(new Wait(0.01));
         //Slow down the rollers
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.SLOW));
@@ -47,22 +51,22 @@ public class LoadCargoFromGround extends CommandGroup{
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.DOWN));
         addSequential(new Wait(0.01));
         //Wait until second break beam is broken (meaning cargo has been fully sucked in)
-        addSequential(new DetectCargo(CargoIntake.CargoPosition.CONSUMED));
+        addSequential(new TrimDetectCargo(CargoIntake.CargoPosition.CONSUMED));
         //Disable the rollers to hold the ball
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
 
         //Bring the cargo arm up, wait until arm is up to execute more commands.
         //TODO - Make SetCargoArm non-instant, remove waits
         addSequential(new SetCargoArm(CargoIntake.IntakeArmState.UP));
-        addSequential(new Wait(1));
+        addSequential(new Wait(1.5));
 
         //Eject Ball into Chair
-        addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
-        addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));
+        addSequential(new StupidEnableRollersEncapsulation());
+        /*addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
+        addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));*/
         
         //move claw up
         addSequential(new PowerMoveClawWrist(.25, Claw.ClawSpeed.REVERSE));
-
     }
 
     @Override

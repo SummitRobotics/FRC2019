@@ -23,7 +23,9 @@ public class RocketLeftBackLow extends CommandGroup{
         requires(Claw.getInstance());
         requires(Chair.getInstance());
 
-        addSequential(new Level2Descend());
+        //addSequential(new Level2Descend());
+        addSequential(new EncoderDrive(12));
+
         addSequential(new GyroTurn(-30));
         addSequential(new EncoderDrive(36));
         addSequential(new GyroTurn(-120));

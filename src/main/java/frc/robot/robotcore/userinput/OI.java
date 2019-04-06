@@ -3,17 +3,21 @@ package frc.robot.robotcore.userinput;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.cargointake.cargoautomation.LoadCargoFromGround;
 import frc.robot.cargointake.cargocommands.EnableRollers;
+import frc.robot.cargointake.cargocommands.HoldEject;
 import frc.robot.cargointake.cargocommands.ResetCargoArm;
 import frc.robot.chair.chairautomation.EjectPanel;
 import frc.robot.chair.chairautomation.FloorIntakePanel;
 import frc.robot.chair.chairautomation.PinPanel;
 import frc.robot.chair.chairautomation.PunchCargo;
 import frc.robot.climber.climbautomation.Level2Climb;
+import frc.robot.climber.climbautomation.Level2Descend;
+import frc.robot.climber.climbcommands.ClimbSafety;
 import frc.robot.drivetrain.drivetraincommands.Shift;
 import frc.robot.drivetrain.drivetraincommands.drivetrainautomation.DriveToPos1;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.mast.Mast;
 import frc.robot.mast.mastcommands.MastAutomation;
+import frc.robot.mast.mastcommands.MoveMast;
 import frc.robot.mast.mastcommands.ResetMastEncoder;
 import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.robotcore.RobotConstants;
@@ -34,11 +38,11 @@ public class OI {
         //robot.claw.isClawUpButton.whenPressed(new ResetClawEncoder());
         Mast.getInstance().mastLowLimitButton.whenPressed(new ResetMastEncoder());
 
-        dashboard.pos1.whenPressed(new DriveToPos1(dashboard.sideAndHeight.get()));
-        /*dashboard.pos2.whenPressed(new DriveToPos2(dashboard.sideAndHeight.get()));
-        dashboard.pos3.whenPressed(new DriveToPos3(dashboard.sideAndHeight.get()));
-        dashboard.pos4.whenPressed(new DriveToPos4(dashboard.sideAndHeight.get()));
-        */
+        dashboard.pos1.whenPressed(new ClimbSafety());
+        dashboard.pos3.whileHeld(new HoldEject());
+        dashboard.pos2.whenPressed(new MastAutomation(Mast.MastState.SHIP));
+        //dashboard.pos3.whenPressed(new DriveToPos3(dashboard.sideAndHeight.get()));
+        //dashboard.pos4.whenPressed(new DriveToPos4(dashboard.sideAndHeight.get()));
         //dashboard.pos1.whenPressed(new EncoderDrive(10));
         //dashboard.pos1.whenPressed(new PowerDrive(-0.7, false, 2));
         //dashboard.pos2.whenPressed(new PowerMoveClawWrist(2, Claw.ClawSpeed.REVERSE));
@@ -48,7 +52,7 @@ public class OI {
         dashboard.mastMid.whenPressed(new MastAutomation(Mast.MastState.MID));
         dashboard.mastLow.whenPressed(new MastAutomation(Mast.MastState.LOW));
         dashboard.panelGround.whenPressed(new FloorIntakePanel());
-        dashboard.climb.whenPressed(new Level2Climb());
+        dashboard.climb.whenPressed(new Level2Descend());;
 
         driver1.AButtonCmd.whileHeld(new TargetAlignment());
         driver1.BButtonCmd.whenPressed(new EjectPanel());
@@ -57,7 +61,7 @@ public class OI {
         driver1.leftBumperCmd.whenPressed(new Shift().new ToggleShift());
         //driver1.YButtonCmd.whenPressed(new EjectCargoToRocket());
 
-        driver1.StartButtonCmd.whenPressed(new EnableRollers().new ToggleRollers());
+        driver1.StartButtonCmd.toggleWhenPressed(new EnableRollers().new ToggleEjectionRollers());
         driver1.backButtonCmd.whenPressed(new ActuateClaw().new ToggleClaw());
         //driver1.backButtonCmd.whenPressed(new RaiseClaw(ClawArmState.DOWN));
         //driver1.StartButtonCmd.whenPressed(new RaiseClaw(ClawArmState.UP));
@@ -106,6 +110,9 @@ public class OI {
         }
     }
 
+    public boolean getSideAndHeight(){
+        return !dashboard.sideAndHeight.get();
+    }
     /*
     public static double truncatePower(double input){
         if(input > 0){

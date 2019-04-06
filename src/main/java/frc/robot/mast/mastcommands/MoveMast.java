@@ -7,7 +7,7 @@ public class MoveMast extends Command{
     private Mast mast = Mast.getInstance();
     private Mast.MastState position;
 
-    public MoveMast (Mast.MastState position){
+    public MoveMast(Mast.MastState position){
         requires(mast);
         this.position = position;
     }
@@ -22,7 +22,7 @@ public class MoveMast extends Command{
     }
     @Override
     protected boolean isFinished() {
-        return mast.withinThreshold(position.value);
+        return mast.withinThreshold(position.cargoValue);
     }
     @Override
     protected void end() {

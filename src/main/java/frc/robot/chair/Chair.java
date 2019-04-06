@@ -57,6 +57,7 @@ public class Chair extends Subsystem{
         
     }
 
+
     /* --- METHODS FOR PEG SERVO --- */
     public void setPeg(PegState pegPosition){
         pegServo.set(pegPosition.value);

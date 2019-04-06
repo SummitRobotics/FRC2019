@@ -7,6 +7,7 @@ import frc.robot.chair.chaircommands.ActuatePeg;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.panelclaw.Claw;
+import frc.robot.panelclaw.clawcommands.ActuateClaw;
 import frc.robot.panelclaw.clawcommands.LimitClaw;
 import frc.robot.robotcore.universalcommands.Wait;
 
@@ -18,6 +19,7 @@ public class EjectPanel extends CommandGroup{
         requires(Claw.getInstance());
         
         addSequential(new ActuateChair().new SetChair(Chair.PneumaticState.IN));
+        addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.OPEN));
         addSequential(new ActuatePeg().new SetPeg(Chair.PegState.DOWN));
         addSequential(new PowerDrive(0.25, 0.4));
         addSequential(new Wait(0.1)); 
@@ -25,7 +27,9 @@ public class EjectPanel extends CommandGroup{
         addSequential(new Wait(0.2));
         addSequential(new ActuateChair().new SetChair(Chair.PneumaticState.IN));
         addSequential(new Wait(0.25));
-        addSequential(new LimitClaw(.1));
+        addSequential(new LimitClaw(-0.2));
+        addSequential(new ActuateClaw().new SetClaw(Claw.ClawState.CLOSE));
+
         //addSequential(new ActuatePeg().new SetPeg(PegState.UP));
         //addSequential(new MoveMast(LiftState.LOW));
     }

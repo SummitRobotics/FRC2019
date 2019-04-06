@@ -21,9 +21,7 @@ public class DetectCargo extends Command{
     }
     @Override
     protected void execute() {
-        if(detectionLevel == CargoIntake.CargoPosition.DETECTED){
-            cargoIntake.moveIntakeArm(OI.getInstance().mastDrive());
-        }
+        super.execute();
     }
     @Override
     protected boolean isFinished() {
@@ -45,5 +43,6 @@ public class DetectCargo extends Command{
     @Override
     protected void end() {
         super.end();
+        System.out.println("Detection Sequence Finished");
     }
 }

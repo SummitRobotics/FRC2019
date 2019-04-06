@@ -13,16 +13,28 @@ import frc.robot.robotcore.universalcommands.Wait;
 public class Level2Climb extends CommandGroup {
 
     Climb climb = Climb.getInstance();
-    CargoIntake cargoIntake = CargoIntake.getInstance();
+    //CargoIntake cargoIntake = CargoIntake.getInstance();
 
     public Level2Climb() {
         requires(climb);
-        requires(cargoIntake);
+        //requires(cargoIntake);
 
-        addSequential(new EngageFrontPistons(Value.kForward));
         addSequential(new EngageRearPiston(Value.kForward));
+        //addSequential(new Wait(5));
+        addSequential(new EngageFrontPistons(Value.kForward));
         addSequential(new Wait(1));
-        addSequential(new SetCargoArm(CargoIntake.IntakeArmState.CLIMB));
-        addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
+        //addSequential(new SetCargoArm(CargoIntake.IntakeArmState.CLIMB));
+       //addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.ON));
+    }
+
+    @Override
+    protected void interrupted() {
+        super.interrupted();
+    }
+
+    @Override
+    protected void end() {
+        climb.engageFrontPistons(Value.kReverse);
+        climb.engageRearPiston(Value.kReverse);
     }
 }
