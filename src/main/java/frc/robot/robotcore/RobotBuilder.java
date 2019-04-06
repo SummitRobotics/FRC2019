@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.chair.Chair;
 import frc.robot.climber.Climb;
+import frc.robot.devices.BlinkinRGB;
 import frc.robot.devices.Limelight;
 import frc.robot.devices.PressureSensor;
 import frc.robot.drivetrain.Drivetrain;
@@ -17,6 +18,7 @@ public class RobotBuilder{
     public Mast mast;
     public CargoIntake cargoIntake;
     public Climb climb;
+    public BlinkinRGB blinkin;
 
     public Limelight lemonlight;
     public PressureSensor pressureSensor;
@@ -30,6 +32,7 @@ public class RobotBuilder{
         cargoIntake = CargoIntake.getInstance();
         mast = Mast.getInstance();
         climb = Climb.getInstance();
+        blinkin = BlinkinRGB.getInstance();
 
         //driverFeed = new USBDriverCamera();
         lemonlight = new Limelight();
@@ -49,6 +52,7 @@ public class RobotBuilder{
         lemonlight.enableLights();
         claw.setArmEncoder(0);
         mast.setEncoderPos(0);
+        blinkin.setLEDState(blinkin.stateOne);
     }
     public void matchInit(){
         chair.setPeg(Chair.PegState.UP);
