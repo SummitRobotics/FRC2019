@@ -65,8 +65,8 @@ public class Drivetrain extends Subsystem{
         leftDrive2 = new CANSparkMax(RobotConstants.Ports.LEFT_DRIVE_1, MotorType.kBrushless);
         //leftDrive2.setInverted(true);
         leftDrive2.follow(leftDrive0);
-        setCurrentLimits(leftDrive0, leftDrive1, leftDrive2, 30);
-        setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.15);
+        setCurrentLimits(leftDrive0, leftDrive1, leftDrive2, 30, 40);
+        setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, 0.0);
 
         leftEncoder = new CANEncoder(leftDrive0);
         leftPID = new CANPIDController(leftDrive0);
@@ -81,8 +81,8 @@ public class Drivetrain extends Subsystem{
         rightDrive2 = new CANSparkMax(RobotConstants.Ports.RIGHT_DRIVE_1, MotorType.kBrushless);
         //rightDrive2.setInverted(true);
         rightDrive2.follow(rightDrive0);
-        setCurrentLimits(rightDrive0, rightDrive1, rightDrive2, 30);
-        setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.15);
+        setCurrentLimits(rightDrive0, rightDrive1, rightDrive2, 30, 40);
+        setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, 0.0);
 
         rightEncoder = new CANEncoder(rightDrive0);
         rightPID = new CANPIDController(rightDrive0);
@@ -121,10 +121,16 @@ public class Drivetrain extends Subsystem{
         controller3.setOpenLoopRampRate(rampRate);
     }
    
-    private void setCurrentLimits(CANSparkMax controller1, CANSparkMax controller2, CANSparkMax controller3, int currentLimit){
-        controller1.setSmartCurrentLimit(currentLimit);
-        controller2.setSmartCurrentLimit(currentLimit);
-        controller3.setSmartCurrentLimit(currentLimit);
+    private void setCurrentLimits(CANSparkMax controller1, CANSparkMax controller2, CANSparkMax controller3, int stallCurrentLimit, int freeCurrentLimit, int stallRPM ){
+        controller1.setSmartCurrentLimit(stallCurrentLimit, freeCurrentLimit, stallRPM);
+        controller2.setSmartCurrentLimit(stallCurrentLimit, freeCurrentLimit, stallRPM);
+        controller3.setSmartCurrentLimit(stallCurrentLimit, freeCurrentLimit, stallRPM);
+    }
+
+    private void setCurrentLimits(CANSparkMax controller1, CANSparkMax controller2, CANSparkMax controller3, int stallCurrentLimit, int freeCurrentLimit){
+        controller1.setSmartCurrentLimit(stallCurrentLimit, freeCurrentLimit);
+        controller2.setSmartCurrentLimit(stallCurrentLimit, freeCurrentLimit);
+        controller3.setSmartCurrentLimit(stallCurrentLimit, freeCurrentLimit);
     }
 
 /* ----- FEEDBACK DEVICES ----- */
@@ -216,5 +222,10 @@ public class Drivetrain extends Subsystem{
     /* ----- INTERRUPT ------ */
     public void kill() {
         robotDrive.tankDrive(0, 0);
+    }
+
+    public void setRampRate(double rate){
+        setOpenRampRates(leftDrive0, leftDrive1, leftDrive2, rate);
+        setOpenRampRates(rightDrive0, rightDrive1, rightDrive2, rate);
     }
 }

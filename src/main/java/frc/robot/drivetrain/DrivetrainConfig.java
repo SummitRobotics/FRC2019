@@ -6,7 +6,7 @@ import com.revrobotics.CANSparkMax;
 public class DrivetrainConfig{
 
     private static double
-        P = 0.2,
+        P = .5,
         I = 0,
         D = 0.01,
         FEED_FWD = 0,

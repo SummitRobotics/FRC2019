@@ -11,9 +11,9 @@ public class TargetAlignment extends PIDCommand {
     private Limelight lemonlight = RobotBuilder.getInstance().lemonlight;
 
     private static final double
-        P = 0.010,
+        P = 0.015,
         I = 0.0,
-        D = 0.005;
+        D = 0.028;
     private double leftFwd, rightFwd;
     private static final double POWER = 0.45;
 

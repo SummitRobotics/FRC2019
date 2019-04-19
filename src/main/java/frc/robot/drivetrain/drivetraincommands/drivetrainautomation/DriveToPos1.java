@@ -1,20 +1,16 @@
 package frc.robot.drivetrain.drivetraincommands.drivetrainautomation;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.climber.climbautomation.Level2Descend;
+import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.GyroTurn;
+import frc.robot.drivetrain.drivetraincommands.PowerDrive;
+
 
 public class DriveToPos1 extends CommandGroup {
 
-    public DriveToPos1(boolean isRight){
-        //addSequential(new EncoderDrive(12));
-        //addSequential(new EncoderDrive(3));
-        addSequential(new Level2Descend());
-        //addSequential(new PowerDrive(-0.35, 2.0));
-        //addSequential(new GyroTurn(45));
-        //addSequential(new PowerDrive(-0.70, false, 2.0));
-        //addSequential(new GyroTurn(-45));
-        //addSequential(new TargetAlignment());
-
+    public DriveToPos1(){
+        addSequential(new GyroTurn(10));
+        addSequential(new PowerDrive(-0.7, 2.4));
+        addSequential(new GyroTurn(35));
     }
 }

@@ -16,18 +16,16 @@ import frc.robot.robotcore.universalcommands.Wait;
 public class Level2Descend extends CommandGroup {
 
     Climb climb = Climb.getInstance();
-    CargoIntake cargoIntake = CargoIntake.getInstance();
 
     public Level2Descend() {
         requires(climb);
-        requires(cargoIntake);
         requires(Drivetrain.getInstance());
         setInterruptible(false);
 
         addSequential(new EngageRearPiston(Value.kForward));
         addSequential(new Wait(0.8));
         addParallel(new TempCommandForDescend());
-        addSequential(new PowerDrive(-0.5, 2.2));
+        addSequential(new PowerDrive(-0.5, 2));
 
    }
 }

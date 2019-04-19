@@ -18,6 +18,7 @@ import frc.robot.autonomous.RightCargoShip;
 import frc.robot.autonomous.RocketLeftBackLow;
 import frc.robot.autonomous.RocketRightBackLow;
 import frc.robot.autonomous.Yeet;
+import frc.robot.drivetrain.Drivetrain;
 import frc.robot.robotcore.userinput.OI;
 import frc.robot.robotcore.RobotBuilder;
 
@@ -55,6 +56,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     robot.run();
+    SmartDashboard.putData("Select Auto", autoChooser);
+    /*
+    SmartDashboard.putNumber("LeftEncoder", Drivetrain.getInstance().getLeftEncoder());
+    SmartDashboard.putNumber("RightEncoder", Drivetrain.getInstance().getRightEncoder());
+    */
     //todo - fix dashboard outputs
   }
 

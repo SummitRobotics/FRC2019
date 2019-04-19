@@ -15,9 +15,11 @@ public class EncoderDrive extends Command{
     }
     @Override
     protected void initialize() {
-        leftTarget = drivetrain.getLeftEncoder() + distance;
+        drivetrain.setDrivetrainEncoders(0);
+        drivetrain.toPosition(distance,distance);
+        /*leftTarget = drivetrain.getLeftEncoder() + distance;
         rightTarget = drivetrain.getRightEncoder() + distance;
-        drivetrain.toPosition(leftTarget, rightTarget);
+        drivetrain.toPosition(leftTarget, rightTarget);*/
 
     }
     @Override

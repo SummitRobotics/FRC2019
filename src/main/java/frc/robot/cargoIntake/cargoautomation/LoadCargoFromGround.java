@@ -61,7 +61,7 @@ public class LoadCargoFromGround extends CommandGroup{
         addSequential(new Wait(1.5));
 
         //Eject Ball into Chair
-        addSequential(new StupidEnableRollersEncapsulation());
+        //addSequential(new StupidEnableRollersEncapsulation());
         /*addSequential(new EnableRollers().new IntakeForTime(CargoIntake.RollerState.ON, 2));
         addSequential(new EnableRollers().new SetRollers(CargoIntake.RollerState.OFF));*/
         

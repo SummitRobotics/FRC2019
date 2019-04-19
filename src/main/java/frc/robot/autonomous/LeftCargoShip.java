@@ -7,6 +7,7 @@ import frc.robot.climber.climbautomation.Level2Descend;
 import frc.robot.drivetrain.Drivetrain;
 import frc.robot.drivetrain.drivetraincommands.EncoderDrive;
 import frc.robot.drivetrain.drivetraincommands.GyroTurn;
+import frc.robot.drivetrain.drivetraincommands.PowerDrive;
 import frc.robot.drivetrain.drivetraincommands.vision.TargetAlignment;
 import frc.robot.panelclaw.Claw;
 import frc.robot.robotcore.universalcommands.Wait;
@@ -20,7 +21,11 @@ public class LeftCargoShip extends CommandGroup{
         requires(Chair.getInstance());
 
         addSequential(new Level2Descend());
-        //addSequential(new );
+        addSequential(new Wait(0.5));
+        addSequential(new GyroTurn(-10));
+        addSequential(new PowerDrive(-0.7, 1.2));
+        addSequential(new GyroTurn(-45));
+
     }
 
     @Override
