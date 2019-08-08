@@ -163,6 +163,7 @@ public class Drivetrain extends Subsystem{
     public double getRightEncoder(){
         return rightEncoder.getPosition();
     }
+
     public void resetGyro(){
         gyro.setYaw(0);
         gyro.setAccumZAngle(0);

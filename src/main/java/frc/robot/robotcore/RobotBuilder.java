@@ -2,6 +2,7 @@ package frc.robot.robotcore;
 
 import frc.robot.panelclaw.Claw;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.cargointake.CargoIntake;
 import frc.robot.chair.Chair;
 import frc.robot.climber.Climb;
@@ -70,6 +71,12 @@ public class RobotBuilder{
     }
     
     public void run(){
+        SmartDashboard.putNumber("Motor 1 Current", Drivetrain.getInstance().leftDrive0.getOutputCurrent());
+        SmartDashboard.putNumber("Motor 2 Current", Drivetrain.getInstance().leftDrive1.getOutputCurrent());
+        SmartDashboard.putNumber("Motor 3 Current", Drivetrain.getInstance().leftDrive2.getOutputCurrent());
+        SmartDashboard.putNumber("Motor 4 Current", Drivetrain.getInstance().rightDrive0.getOutputCurrent());
+        SmartDashboard.putNumber("Motor 5 Current", Drivetrain.getInstance().rightDrive1.getOutputCurrent());
+        SmartDashboard.putNumber("Motor 6 Current", Drivetrain.getInstance().rightDrive2.getOutputCurrent());
 
     }
     public void dashboard(){
